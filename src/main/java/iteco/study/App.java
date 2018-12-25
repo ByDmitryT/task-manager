@@ -1,7 +1,10 @@
 package iteco.study;
 
+import iteco.study.controller.Bootstrap;
+
 public class App {
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        Bootstrap bootstrap = new Bootstrap();
+        bootstrap.start();
     }
 }
