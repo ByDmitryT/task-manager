@@ -4,7 +4,7 @@
 * Java (1.8.0_192)
 * Maven (3.6.0)
 
-*Структура прокета*
+##Структура прокета
 * [command]
 * [repository]
   * ProjectRepository - класс для созднания и управления группами
@@ -19,11 +19,11 @@
   * TaskService - сервис задач
 * App - основной класс 
 
-Сборка проекта
+##Сборка проекта
 bash
  mvn clean install
 
  
-Запуск
+##Запуск
 bash
  java -jar ./target/ToDoList-1.0-SNAPSHOT.jar
