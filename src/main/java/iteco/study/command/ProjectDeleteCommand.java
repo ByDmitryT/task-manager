@@ -23,7 +23,7 @@ public class ProjectDeleteCommand extends AbstractCommand{
     }
 
     @Override
-    public String desription() {
+    public String description() {
         return "delete project by order id";
     }
 }

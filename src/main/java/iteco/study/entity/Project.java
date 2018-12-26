@@ -1,39 +1,18 @@
 package iteco.study.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.UUID;
 
+@Getter
+@Setter
 public class Project {
 
-    private final UUID id = UUID.randomUUID();
+    private String id = UUID.randomUUID().toString();
 
-    private final int orderId;
+    private String name = "new project";
 
-    private String name;
-
-    public Project(int orderId, String name) {
-        this.orderId = orderId;
-        this.name = name;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public int getOrderId() {
-        return orderId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "orderId=" + orderId
-                + ", name='" + name + "'";
+    public Project() {
     }
 }

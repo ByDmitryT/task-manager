@@ -1,6 +1,7 @@
 package iteco.study.command;
 
 import iteco.study.controller.Bootstrap;
+import iteco.study.entity.Task;
 
 public class TaskCreateCommand extends AbstractCommand {
     public TaskCreateCommand(Bootstrap bootstrap) {
@@ -9,12 +10,15 @@ public class TaskCreateCommand extends AbstractCommand {
 
     @Override
     public void execute() {
+        final Task task = new Task();
         System.out.println("Enter task name:");
-        final String taskName = bootstrap.getScanner().nextLine();
+        final String taskName = bootstrap.nextLine();
         System.out.println("Enter task description:");
-        final String taskDescription = bootstrap.getScanner().nextLine();
-        final int orderId = bootstrap.getTaskService().addTask(taskName, taskDescription);
-        System.out.println("Created task with order id " + orderId);
+        final String taskDescription = bootstrap.nextLine();
+        task.setName(taskName);
+        task.setDescription(taskDescription);
+        final Task createdTask = bootstrap.getTaskService().addTask(task);
+        System.out.println("Created task: " + createdTask);
     }
 
     @Override
@@ -23,7 +27,7 @@ public class TaskCreateCommand extends AbstractCommand {
     }
 
     @Override
-    public String desription() {
+    public String description() {
         return "create task in ToDoList";
     }
 }

@@ -18,7 +18,7 @@ public class TaskViewAllCommand extends AbstractCommand {
     }
 
     @Override
-    public String desription() {
+    public String description() {
         return "view all tasks in ToDoList";
     }
 }

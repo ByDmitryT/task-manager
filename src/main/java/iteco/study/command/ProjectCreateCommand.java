@@ -22,7 +22,7 @@ public class ProjectCreateCommand extends AbstractCommand {
     }
 
     @Override
-    public String desription() {
+    public String description() {
         return "create project in ToDoList";
     }
 }

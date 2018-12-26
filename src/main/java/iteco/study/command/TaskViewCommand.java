@@ -22,7 +22,7 @@ public class TaskViewCommand extends AbstractCommand {
     }
 
     @Override
-    public String desription() {
+    public String description() {
         return "view task by order id";
     }
 }

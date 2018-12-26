@@ -6,24 +6,30 @@ import java.util.*;
 
 public class ProjectRepository {
 
-    private final Map<UUID, Project> projects = new HashMap<>();
+    private final Map<String, Project> projects = new HashMap<>();
 
-    public UUID addProject(Project project) {
-        final UUID projectId = project.getId();
+    private final List<String> idMapper = new ArrayList<>();
+
+    public Project addProject(final Project project) {
+        final String projectId = project.getId();
         projects.put(projectId, project);
-        return projectId;
+        idMapper.add(projectId);
+        return project;
     }
 
-    public Project getProjectById(UUID projectId) {
+    public Project getProjectById(final int projectOrderId) {
+        final String projectId = idMapper.get(projectOrderId);
         return projects.get(projectId);
     }
 
-    public void updateProject(Project project) {
+    public Project updateProject(final Project project) {
         projects.put(project.getId(), project);
+        return project;
     }
 
-    public void deleteProjectById(UUID projectId) {
-        projects.remove(projectId);
+    public Project deleteProjectById(final int projectOrderId) {
+        final String projectId = idMapper.get(projectOrderId);
+        return projects.remove(projectId);
     }
 
     public Collection<Project> getAllProjects() {

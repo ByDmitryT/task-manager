@@ -21,7 +21,7 @@ public class TaskDeleteCommand extends AbstractCommand {
     }
 
     @Override
-    public String desription() {
+    public String description() {
         return "delete task by order id";
     }
 }

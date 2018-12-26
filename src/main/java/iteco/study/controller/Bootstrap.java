@@ -5,11 +5,15 @@ import iteco.study.repository.ProjectRepository;
 import iteco.study.repository.TaskRepository;
 import iteco.study.service.ProjectService;
 import iteco.study.service.TaskService;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+@Getter
+@Setter
 public class Bootstrap {
 
     private final ProjectRepository projectRepository = new ProjectRepository();
@@ -54,19 +58,15 @@ public class Bootstrap {
         }
     }
 
-    public ProjectService getProjectService() {
-        return projectService;
+    public String nextLine() {
+        return scanner.nextLine();
     }
 
-    public TaskService getTaskService() {
-        return taskService;
-    }
-
-    public Scanner getScanner() {
-        return scanner;
-    }
-
-    public Map<String, AbstractCommand> getCommandsMapping() {
-        return commandsMapping;
+    public Integer nextInt() {
+        try {
+            return Integer.parseInt(scanner.nextLine());
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

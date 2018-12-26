@@ -9,18 +9,10 @@ import static org.junit.Assert.*;
 
 public class ProjectServiceTest {
 
-    private ProjectRepository projectRepository;
-
-    private ProjectService projectService;
-
-    @Before
-    public void before() {
-        projectRepository = new ProjectRepository();
-        projectService = new ProjectService(projectRepository);
-    }
-
     @Test
     public void addProject() {
+        final ProjectRepository projectRepository = new ProjectRepository();
+        final ProjectService projectService = new ProjectService(projectRepository);
         final int orderId = projectService.addProject("new project");
         Project project = projectService.getProjectByOrderId(orderId);
         assertEquals("new project", project.getName());

@@ -14,5 +14,5 @@ public abstract class AbstractCommand {
 
     public abstract String command();
 
-    public abstract String desription();
+    public abstract String description();
 }

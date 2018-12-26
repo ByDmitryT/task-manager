@@ -23,7 +23,7 @@ public class ProjectUpdateCommand extends AbstractCommand {
     }
 
     @Override
-    public String desription() {
+    public String description() {
         return "update project by order id";
     }
 }

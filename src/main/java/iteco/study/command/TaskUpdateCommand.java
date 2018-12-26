@@ -27,7 +27,7 @@ public class TaskUpdateCommand extends AbstractCommand {
     }
 
     @Override
-    public String desription() {
+    public String description() {
         return "update task by order id";
     }
 }

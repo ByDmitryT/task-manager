@@ -23,7 +23,7 @@ public class ProjectViewCommand extends AbstractCommand {
     }
 
     @Override
-    public String desription() {
+    public String description() {
         return "view project by order id";
     }
 }

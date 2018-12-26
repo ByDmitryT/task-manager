@@ -2,30 +2,33 @@ package iteco.study.repository;
 
 import iteco.study.entity.Task;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 public class TaskRepository {
 
-    private final HashMap<UUID, Task> tasks = new HashMap<>();
+    private final HashMap<String, Task> tasks = new HashMap<>();
 
-    public UUID addTask(Task task) {
-        final UUID taskId = task.getId();
+    private final List<String> idMapper = new ArrayList<>();
+
+    public Task addTask(final Task task) {
+        final String taskId = task.getId();
         tasks.put(taskId, task);
-        return taskId;
+        idMapper.add(taskId);
+        return task;
     }
 
-    public Task getTaskById(UUID taskId) {
+    public Task getTaskById(final int taskOrderId) {
+        final String taskId = idMapper.get(taskOrderId);
         return tasks.get(taskId);
     }
 
-    public void updateTask(Task task) {
-        tasks.put(task.getId(), task);
+    public Task updateTask(final Task task) {
+        return tasks.put(task.getId(), task);
     }
 
-    public void deleteTaskById(UUID taskId) {
-        tasks.remove(taskId);
+    public Task deleteTaskById(final int taskOrderId) {
+        final String taskId = idMapper.get(taskOrderId);
+        return tasks.remove(taskId);
     }
 
     public Collection<Task> getAllTasks() {

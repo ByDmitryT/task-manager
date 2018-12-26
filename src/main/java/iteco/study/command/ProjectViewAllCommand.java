@@ -18,7 +18,7 @@ public class ProjectViewAllCommand extends AbstractCommand {
     }
 
     @Override
-    public String desription() {
+    public String description() {
         return "view all project from ToDoList";
     }
 }

@@ -7,43 +7,27 @@ import java.util.*;
 
 public class TaskService {
 
-    private int currentOrderId = 0;
-
-    private final Map<Integer, UUID> idMapper = new HashMap<>();
-
     private final TaskRepository taskRepository;
 
-    public TaskService(TaskRepository taskRepository) {
+    public TaskService(final TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
 
-    public int addTaskToProject(int projectOrderId, String name, String description) {
-        final Task task = new Task(currentOrderId, projectOrderId, name, description);
-        idMapper.put(currentOrderId, taskRepository.addTask(task));
-        return currentOrderId++;
+    public Task addTask(final Task task) {
+        if (task == null) { return null; }
+        return taskRepository.addTask(task);
     }
 
-    public int addTask(String name, String description) {
-        final Task task = new Task(currentOrderId, name, description);
-        idMapper.put(currentOrderId, taskRepository.addTask(task));
-        return currentOrderId++;
+    public Task getTaskById(final int taskOrderId) {
+        return taskRepository.getTaskById(taskOrderId);
     }
 
-    public Task getTaskByOrderId(int orderId) {
-        return taskRepository.getTaskById(idMapper.get(orderId));
+    public Task updateTask(final Task task) {
+        return taskRepository.updateTask(task);
     }
 
-    public void updateTask(int orderId, int projectId, String name, String description) {
-        final Task task = getTaskByOrderId(orderId);
-        task.setProjectOrderId(projectId);
-        task.setName(name);
-        task.setDescription(description);
-        taskRepository.updateTask(task);
-    }
-
-    public void deleteTask(int orderId) {
-        taskRepository.deleteTaskById(idMapper.get(orderId));
-        idMapper.remove(orderId);
+    public Task deleteTaskById(final int orderTaskId) {
+        return taskRepository.deleteTaskById(orderTaskId);
     }
 
     public Collection<Task> getAllTasks() {

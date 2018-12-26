@@ -10,7 +10,7 @@ public class HelpCommand extends AbstractCommand {
     @Override
     public void execute() {
         bootstrap.getCommandsMapping().values()
-                .forEach(command -> System.out.println(command.command() + " - " + command.desription()));
+                .forEach(command -> System.out.println(command.command() + " - " + command.description()));
     }
 
     @Override
@@ -19,7 +19,7 @@ public class HelpCommand extends AbstractCommand {
     }
 
     @Override
-    public String desription() {
+    public String description() {
         return "view all commands";
     }
 }
