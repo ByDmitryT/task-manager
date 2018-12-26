@@ -3,9 +3,9 @@ package iteco.study.command;
 import iteco.study.controller.Bootstrap;
 import iteco.study.entity.Project;
 
-public class ProjectViewCommand extends AbstractCommand {
+public class ProjectDeleteCommand extends AbstractCommand{
 
-    public ProjectViewCommand(Bootstrap bootstrap) {
+    public ProjectDeleteCommand(Bootstrap bootstrap) {
         super(bootstrap);
     }
 
@@ -13,17 +13,17 @@ public class ProjectViewCommand extends AbstractCommand {
     public void execute() {
         System.out.println("Enter order id:");
         final int orderId = Integer.valueOf(bootstrap.getScanner().nextLine());
-        final Project project = bootstrap.getProjectService().getProjectByOrderId(orderId);
-        System.out.println(project);
+        bootstrap.getProjectService().deleteProject(orderId);
+        System.out.println("Deleted project with order id " + orderId);
     }
 
     @Override
     public String command() {
-        return "view project";
+        return "delete project";
     }
 
     @Override
     public String desription() {
-        return "view project by order id";
+        return "delete project by order id";
     }
 }

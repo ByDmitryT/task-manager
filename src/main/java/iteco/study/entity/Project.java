@@ -33,6 +33,7 @@ public class Project {
 
     @Override
     public String toString() {
-        return "orderId=" + orderId + ", name=" + name;
+        return "orderId=" + orderId
+                + ", name='" + name + "'";
     }
 }

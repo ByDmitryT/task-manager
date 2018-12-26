@@ -2,10 +2,7 @@ package iteco.study.repository;
 
 import iteco.study.entity.Project;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class ProjectRepository {
 
@@ -27,5 +24,9 @@ public class ProjectRepository {
 
     public void deleteProjectById(UUID projectId) {
         projects.remove(projectId);
+    }
+
+    public Collection<Project> getAllProjects() {
+        return projects.values();
     }
 }

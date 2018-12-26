@@ -2,6 +2,7 @@ package iteco.study.repository;
 
 import iteco.study.entity.Task;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -25,5 +26,9 @@ public class TaskRepository {
 
     public void deleteTaskById(UUID taskId) {
         tasks.remove(taskId);
+    }
+
+    public Collection<Task> getAllTasks() {
+        return tasks.values();
     }
 }

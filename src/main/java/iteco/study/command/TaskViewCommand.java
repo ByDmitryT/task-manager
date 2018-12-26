@@ -1,11 +1,10 @@
 package iteco.study.command;
 
 import iteco.study.controller.Bootstrap;
-import iteco.study.entity.Project;
+import iteco.study.entity.Task;
 
-public class ProjectViewCommand extends AbstractCommand {
-
-    public ProjectViewCommand(Bootstrap bootstrap) {
+public class TaskViewCommand extends AbstractCommand {
+    public TaskViewCommand(Bootstrap bootstrap) {
         super(bootstrap);
     }
 
@@ -13,17 +12,17 @@ public class ProjectViewCommand extends AbstractCommand {
     public void execute() {
         System.out.println("Enter order id:");
         final int orderId = Integer.valueOf(bootstrap.getScanner().nextLine());
-        final Project project = bootstrap.getProjectService().getProjectByOrderId(orderId);
-        System.out.println(project);
+        final Task task = bootstrap.getTaskService().getTaskByOrderId(orderId);
+        System.out.println(task);
     }
 
     @Override
     public String command() {
-        return "view project";
+        return "view task";
     }
 
     @Override
     public String desription() {
-        return "view project by order id";
+        return "view task by order id";
     }
 }

@@ -1,12 +1,10 @@
 package iteco.study.controller;
 
+import iteco.study.command.*;
 import iteco.study.repository.ProjectRepository;
 import iteco.study.repository.TaskRepository;
 import iteco.study.service.ProjectService;
 import iteco.study.service.TaskService;
-import iteco.study.command.AbstractCommand;
-import iteco.study.command.ProjectAddCommand;
-import iteco.study.command.ProjectViewCommand;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,8 +23,18 @@ public class Bootstrap {
     private final Scanner scanner = new Scanner(System.in);
 
     private final AbstractCommand[] commands = {
-            new ProjectAddCommand(this),
-            new ProjectViewCommand(this)
+            new ProjectCreateCommand(this),
+            new ProjectViewCommand(this),
+            new ProjectViewAllCommand(this),
+            new ProjectUpdateCommand(this),
+            new ProjectDeleteCommand(this),
+            new TaskCreateCommand(this),
+            new TaskCreateToProjectCommand(this),
+            new TaskViewCommand(this),
+            new TaskViewAllCommand(this),
+            new TaskUpdateCommand(this),
+            new TaskDeleteCommand(this),
+            new HelpCommand(this)
     };
 
     private final Map<String, AbstractCommand> commandsMapping = new HashMap<>();
@@ -56,5 +64,9 @@ public class Bootstrap {
 
     public Scanner getScanner() {
         return scanner;
+    }
+
+    public Map<String, AbstractCommand> getCommandsMapping() {
+        return commandsMapping;
     }
 }

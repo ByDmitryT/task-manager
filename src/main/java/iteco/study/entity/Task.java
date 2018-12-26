@@ -8,7 +8,7 @@ public class Task {
 
     private final int orderId;
 
-    private UUID projectId = null;
+    private int projectOrderId = -1;
 
     private String name;
 
@@ -20,9 +20,9 @@ public class Task {
         this.description = description;
     }
 
-    public Task(int orderId, UUID projectId, String name, String description) {
+    public Task(int orderId, int projectOrderId, String name, String description) {
         this.orderId = orderId;
-        this.projectId = projectId;
+        this.projectOrderId = projectOrderId;
         this.name = name;
         this.description = description;
     }
@@ -35,12 +35,12 @@ public class Task {
         return orderId;
     }
 
-    public UUID getProjectId() {
-        return projectId;
+    public int getProjectOrderId() {
+        return projectOrderId;
     }
 
-    public void setProjectId(UUID projectId) {
-        this.projectId = projectId;
+    public void setProjectOrderId(int projectOrderId) {
+        this.projectOrderId = projectOrderId;
     }
 
     public String getName() {
@@ -59,4 +59,11 @@ public class Task {
         this.description = description;
     }
 
+    @Override
+    public String toString() {
+        return "orderId=" + orderId
+                + " projectOrderId=" + projectOrderId
+                + ", name='" + name + "'"
+                + ", description='" + description + "'";
+    }
 }
