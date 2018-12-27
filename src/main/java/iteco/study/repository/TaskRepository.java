@@ -1,6 +1,7 @@
 package iteco.study.repository;
 
 import iteco.study.entity.Task;
+import iteco.study.error.InvalidInputException;
 
 import java.util.*;
 
@@ -17,7 +18,10 @@ public class TaskRepository {
         return task;
     }
 
-    public Task getTaskById(final int taskOrderId) {
+    public Task getTaskById(final Integer taskOrderId) throws InvalidInputException {
+        if (taskOrderId == null || taskOrderId < 0 || taskOrderId > idMapper.size() - 1) {
+            throw new InvalidInputException("Invalid task order id");
+        }
         final String taskId = idMapper.get(taskOrderId);
         return tasks.get(taskId);
     }
@@ -26,7 +30,10 @@ public class TaskRepository {
         return tasks.put(task.getId(), task);
     }
 
-    public Task deleteTaskById(final int taskOrderId) {
+    public Task deleteTaskById(final Integer taskOrderId) throws InvalidInputException {
+        if (taskOrderId == null || taskOrderId < 0 || taskOrderId > idMapper.size() - 1) {
+            throw new InvalidInputException("Invalid task order id");
+        }
         final String taskId = idMapper.get(taskOrderId);
         return tasks.remove(taskId);
     }

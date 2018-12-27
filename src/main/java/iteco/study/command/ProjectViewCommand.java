@@ -1,20 +1,20 @@
 package iteco.study.command;
 
-import iteco.study.controller.Bootstrap;
 import iteco.study.entity.Project;
+import iteco.study.error.InvalidInputException;
 
 public class ProjectViewCommand extends AbstractCommand {
-
-    public ProjectViewCommand(Bootstrap bootstrap) {
-        super(bootstrap);
-    }
 
     @Override
     public void execute() {
         System.out.println("Enter order id:");
-        final int orderId = Integer.valueOf(bootstrap.getScanner().nextLine());
-        final Project project = bootstrap.getProjectService().getProjectByOrderId(orderId);
-        System.out.println(project);
+        final Integer orderId = bootstrap.nextInt();
+        try {
+            final Project project = bootstrap.getProjectService().getProjectById(orderId);
+            System.out.println(orderId + " " + project);
+        } catch (InvalidInputException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override

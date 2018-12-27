@@ -15,4 +15,9 @@ public class Project {
 
     public Project() {
     }
+
+    @Override
+    public String toString() {
+        return "name='" + name + '\'';
+    }
 }

@@ -1,20 +1,24 @@
 package iteco.study.command;
 
-import iteco.study.controller.Bootstrap;
+import iteco.study.entity.Project;
+import iteco.study.error.InvalidInputException;
 
 public class ProjectUpdateCommand extends AbstractCommand {
-    public ProjectUpdateCommand(Bootstrap bootstrap) {
-        super(bootstrap);
-    }
 
     @Override
     public void execute() {
         System.out.println("Enter order id:");
-        final int orderId = Integer.valueOf(bootstrap.getScanner().nextLine());
+        final Integer orderId = bootstrap.nextInt();
         System.out.println("Enter new project name:");
-        final String projectName = bootstrap.getScanner().nextLine();
-        bootstrap.getProjectService().updateProject(orderId, projectName);
-        System.out.println("Updated project with order id " + orderId);
+        final String projectName = bootstrap.nextLine();
+        try {
+            final Project project = bootstrap.getProjectService().getProjectById(orderId);
+            project.setName(projectName);
+            final Project updatedProject = bootstrap.getProjectService().updateProject(project);
+            System.out.println("Updated project: " + updatedProject);
+        } catch (InvalidInputException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override

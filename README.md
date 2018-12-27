@@ -9,6 +9,7 @@
 * [repository]
   * ProjectRepository - класс для созднания и управления группами
   * TaskRepository - класс для создания и управления задачами
+  [error]
 * [entity]
   * Project - проект
   * Task - задача
@@ -20,10 +21,8 @@
 * App - основной класс 
 
 ## Сборка проекта
-bash
- mvn clean install
+    mvn clean install
 
  
 ## Запуск
-bash
- java -jar ./target/ToDoList-1.0-SNAPSHOT.jar
+    java -jar ./to-do-list.jar

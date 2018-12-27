@@ -1,15 +1,19 @@
 package iteco.study.command;
 
-import iteco.study.controller.Bootstrap;
+import iteco.study.entity.Project;
+
+import java.util.Collection;
 
 public class ProjectViewAllCommand extends AbstractCommand {
-    public ProjectViewAllCommand(Bootstrap bootstrap) {
-        super(bootstrap);
-    }
 
     @Override
     public void execute() {
-        bootstrap.getProjectService().getAllProjects().forEach(System.out::println);
+        final Collection<Project> projects = bootstrap.getProjectService().getAllProjects();
+        int orderId = 0;
+        for (final Project project : projects) {
+            System.out.println(orderId + " " + project);
+            orderId++;
+        }
     }
 
     @Override

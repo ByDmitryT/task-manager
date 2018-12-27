@@ -1,6 +1,7 @@
 package iteco.study.repository;
 
 import iteco.study.entity.Project;
+import iteco.study.error.InvalidInputException;
 
 import java.util.*;
 
@@ -17,7 +18,10 @@ public class ProjectRepository {
         return project;
     }
 
-    public Project getProjectById(final int projectOrderId) {
+    public Project getProjectById(final Integer projectOrderId) throws InvalidInputException {
+        if (projectOrderId == null || projectOrderId < 0 || projectOrderId > idMapper.size() - 1) {
+            throw new InvalidInputException("Invalid project order id");
+        }
         final String projectId = idMapper.get(projectOrderId);
         return projects.get(projectId);
     }
@@ -27,7 +31,10 @@ public class ProjectRepository {
         return project;
     }
 
-    public Project deleteProjectById(final int projectOrderId) {
+    public Project deleteProjectById(final Integer projectOrderId) throws InvalidInputException {
+        if (projectOrderId == null || projectOrderId < 0 || projectOrderId > idMapper.size() - 1) {
+            throw new InvalidInputException("Invalid project order id");
+        }
         final String projectId = idMapper.get(projectOrderId);
         return projects.remove(projectId);
     }

@@ -1,15 +1,19 @@
 package iteco.study.command;
 
-import iteco.study.controller.Bootstrap;
+import iteco.study.entity.Task;
+
+import java.util.Collection;
 
 public class TaskViewAllCommand extends AbstractCommand {
-    public TaskViewAllCommand(Bootstrap bootstrap) {
-        super(bootstrap);
-    }
 
     @Override
     public void execute() {
-        bootstrap.getTaskService().getAllTasks().forEach(System.out::println);
+        final Collection<Task> tasks = bootstrap.getTaskService().getAllTasks();
+        int orderId = 0;
+        for (final Task task : tasks) {
+            System.out.println(orderId + " " + task);
+            orderId++;
+        }
     }
 
     @Override

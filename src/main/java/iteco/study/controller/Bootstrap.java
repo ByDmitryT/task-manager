@@ -1,16 +1,19 @@
 package iteco.study.controller;
 
 import iteco.study.command.*;
+import iteco.study.error.NoSuchCommandsException;
 import iteco.study.repository.ProjectRepository;
 import iteco.study.repository.TaskRepository;
 import iteco.study.service.ProjectService;
 import iteco.study.service.TaskService;
 import lombok.Getter;
 import lombok.Setter;
+import org.reflections.Reflections;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -26,26 +29,17 @@ public class Bootstrap {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    private final AbstractCommand[] commands = {
-            new ProjectCreateCommand(this),
-            new ProjectViewCommand(this),
-            new ProjectViewAllCommand(this),
-            new ProjectUpdateCommand(this),
-            new ProjectDeleteCommand(this),
-            new TaskCreateCommand(this),
-            new TaskCreateToProjectCommand(this),
-            new TaskViewCommand(this),
-            new TaskViewAllCommand(this),
-            new TaskUpdateCommand(this),
-            new TaskDeleteCommand(this),
-            new HelpCommand(this)
-    };
+    private final Reflections reflections = new Reflections("iteco.study.command");
+
+    private final Set<Class<? extends AbstractCommand>> commandClasses = reflections.getSubTypesOf(AbstractCommand.class);
 
     private final Map<String, AbstractCommand> commandsMapping = new HashMap<>();
 
     public void start() {
-        for (AbstractCommand command : commands) {
-            commandsMapping.put(command.command(), command);
+        try {
+            initCommands();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         while (scanner.hasNext()) {
             final String userCommand = scanner.nextLine().toLowerCase().trim();
@@ -55,6 +49,17 @@ public class Bootstrap {
             if (commandsMapping.containsKey(userCommand)) {
                 commandsMapping.get(userCommand).execute();
             }
+        }
+    }
+
+    private void initCommands() throws IllegalAccessException, InstantiationException, NoSuchCommandsException {
+        if (commandClasses.isEmpty()) {
+            throw new NoSuchCommandsException("No commands");
+        }
+        for (final Class<? extends AbstractCommand> commandClass : commandClasses) {
+            AbstractCommand command = commandClass.newInstance();
+            command.setBootstrap(this);
+            commandsMapping.put(command.command(), command);
         }
     }
 

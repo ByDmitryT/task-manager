@@ -1,19 +1,17 @@
 package iteco.study.command;
 
-import iteco.study.controller.Bootstrap;
+import iteco.study.entity.Project;
 
 public class ProjectCreateCommand extends AbstractCommand {
-
-    public ProjectCreateCommand(Bootstrap bootstrap) {
-        super(bootstrap);
-    }
 
     @Override
     public void execute() {
         System.out.println("Enter project name:");
-        final String projectName = bootstrap.getScanner().nextLine();
-        final int orderId = bootstrap.getProjectService().addProject(projectName);
-        System.out.println("Added project with order id " + orderId);
+        final String projectName = bootstrap.nextLine();
+        final Project project = new Project();
+        project.setName(projectName);
+        final Project createdProject = bootstrap.getProjectService().addProject(project);
+        System.out.println("Added project: " + createdProject);
     }
 
     @Override

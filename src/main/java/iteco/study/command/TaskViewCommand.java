@@ -1,19 +1,20 @@
 package iteco.study.command;
 
-import iteco.study.controller.Bootstrap;
 import iteco.study.entity.Task;
+import iteco.study.error.InvalidInputException;
 
 public class TaskViewCommand extends AbstractCommand {
-    public TaskViewCommand(Bootstrap bootstrap) {
-        super(bootstrap);
-    }
 
     @Override
     public void execute() {
         System.out.println("Enter order id:");
-        final int orderId = Integer.valueOf(bootstrap.getScanner().nextLine());
-        final Task task = bootstrap.getTaskService().getTaskByOrderId(orderId);
-        System.out.println(task);
+        final Integer orderId = bootstrap.nextInt();
+        try {
+            final Task task = bootstrap.getTaskService().getTaskById(orderId);
+            System.out.println(orderId + " " + task);
+        } catch (InvalidInputException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override

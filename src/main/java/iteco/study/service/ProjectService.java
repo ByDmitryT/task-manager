@@ -1,6 +1,7 @@
 package iteco.study.service;
 
 import iteco.study.entity.Project;
+import iteco.study.error.InvalidInputException;
 import iteco.study.repository.ProjectRepository;
 
 import java.util.*;
@@ -17,7 +18,7 @@ public class ProjectService {
         return projectRepository.addProject(project);
     }
 
-    public Project getProjectById(final int projectOrderId) {
+    public Project getProjectById(final Integer projectOrderId) throws InvalidInputException {
         return projectRepository.getProjectById(projectOrderId);
     }
 
@@ -25,7 +26,7 @@ public class ProjectService {
         return projectRepository.updateProject(project);
     }
 
-    public Project deleteProjectById(final int projectOrderId) {
+    public Project deleteProjectById(final Integer projectOrderId) throws InvalidInputException {
         return projectRepository.deleteProjectById(projectOrderId);
     }
 

@@ -1,20 +1,20 @@
 package iteco.study.command;
 
-import iteco.study.controller.Bootstrap;
 import iteco.study.entity.Project;
+import iteco.study.error.InvalidInputException;
 
 public class ProjectDeleteCommand extends AbstractCommand{
-
-    public ProjectDeleteCommand(Bootstrap bootstrap) {
-        super(bootstrap);
-    }
 
     @Override
     public void execute() {
         System.out.println("Enter order id:");
-        final int orderId = Integer.valueOf(bootstrap.getScanner().nextLine());
-        bootstrap.getProjectService().deleteProject(orderId);
-        System.out.println("Deleted project with order id " + orderId);
+        final Integer orderId = bootstrap.nextInt();
+        try {
+            final Project deletedProject = bootstrap.getProjectService().deleteProjectById(orderId);
+            System.out.println("Deleted project: " + deletedProject);
+        } catch (InvalidInputException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override

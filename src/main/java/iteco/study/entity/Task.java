@@ -11,12 +11,17 @@ public class Task {
 
     private String id = UUID.randomUUID().toString();
 
-    private int projectOrderId = -1;
+    private String projectId = null;
 
     private String name = "new task";
 
     private String description = "do something";
 
     public Task() {
+    }
+
+    @Override
+    public String toString() {
+        return ", name='" + name + '\'' + ", description='" + description + '\'';
     }
 }

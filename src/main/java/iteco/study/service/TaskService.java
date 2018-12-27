@@ -1,6 +1,7 @@
 package iteco.study.service;
 
 import iteco.study.entity.Task;
+import iteco.study.error.InvalidInputException;
 import iteco.study.repository.TaskRepository;
 
 import java.util.*;
@@ -14,11 +15,10 @@ public class TaskService {
     }
 
     public Task addTask(final Task task) {
-        if (task == null) { return null; }
         return taskRepository.addTask(task);
     }
 
-    public Task getTaskById(final int taskOrderId) {
+    public Task getTaskById(final Integer taskOrderId) throws InvalidInputException {
         return taskRepository.getTaskById(taskOrderId);
     }
 
@@ -26,7 +26,7 @@ public class TaskService {
         return taskRepository.updateTask(task);
     }
 
-    public Task deleteTaskById(final int orderTaskId) {
+    public Task deleteTaskById(final Integer orderTaskId) throws InvalidInputException {
         return taskRepository.deleteTaskById(orderTaskId);
     }
 

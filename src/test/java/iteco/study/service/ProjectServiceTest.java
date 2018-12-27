@@ -13,9 +13,10 @@ public class ProjectServiceTest {
     public void addProject() {
         final ProjectRepository projectRepository = new ProjectRepository();
         final ProjectService projectService = new ProjectService(projectRepository);
-        final int orderId = projectService.addProject("new project");
-        Project project = projectService.getProjectByOrderId(orderId);
-        assertEquals("new project", project.getName());
+        final Project project = new Project();
+        project.setName("new project");
+        final Project createdProject = projectService.addProject(project);
+        assertEquals("new project", createdProject.getName());
     }
 
     @Test

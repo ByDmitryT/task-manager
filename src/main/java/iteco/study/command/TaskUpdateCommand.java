@@ -1,24 +1,32 @@
 package iteco.study.command;
 
-import iteco.study.controller.Bootstrap;
+import iteco.study.entity.Project;
+import iteco.study.entity.Task;
+import iteco.study.error.InvalidInputException;
 
 public class TaskUpdateCommand extends AbstractCommand {
-    public TaskUpdateCommand(Bootstrap bootstrap) {
-        super(bootstrap);
-    }
 
     @Override
     public void execute() {
         System.out.println("Enter task order id:");
-        final int taskOrderId = Integer.valueOf(bootstrap.getScanner().nextLine());
+        final Integer taskOrderId = bootstrap.nextInt();
         System.out.println("Enter new project order id:");
-        final int projectOrderId = Integer.valueOf(bootstrap.getScanner().nextLine());
+        final Integer projectOrderId = bootstrap.nextInt();
         System.out.println("Enter new task name:");
-        final String taskName = bootstrap.getScanner().nextLine();
+        final String taskName = bootstrap.nextLine();
         System.out.println("Enter new task description:");
-        final String taskDescription = bootstrap.getScanner().nextLine();
-        bootstrap.getTaskService().updateTask(taskOrderId, projectOrderId, taskName, taskDescription);
-        System.out.println("Updated task with order id " + taskOrderId);
+        final String taskDescription = bootstrap.nextLine();
+        try {
+            final Task task = bootstrap.getTaskService().getTaskById(taskOrderId);
+            final Project project = bootstrap.getProjectService().getProjectById(projectOrderId);
+            task.setProjectId(project.getId());
+            task.setName(taskName);
+            task.setDescription(taskDescription);
+            final Task updatedTask = bootstrap.getTaskService().updateTask(task);
+            System.out.println("Updated task: " + updatedTask);
+        } catch (InvalidInputException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override

@@ -1,18 +1,20 @@
 package iteco.study.command;
 
-import iteco.study.controller.Bootstrap;
+import iteco.study.entity.Task;
+import iteco.study.error.InvalidInputException;
 
 public class TaskDeleteCommand extends AbstractCommand {
-    public TaskDeleteCommand(Bootstrap bootstrap) {
-        super(bootstrap);
-    }
 
     @Override
     public void execute() {
         System.out.println("Enter task order id:");
-        final int orderId = Integer.valueOf(bootstrap.getScanner().nextLine());
-        bootstrap.getTaskService().deleteTask(orderId);
-        System.out.println("Deleted task with order id " + orderId);
+        final Integer orderId = bootstrap.nextInt();
+        try {
+            final Task deletedTask = bootstrap.getTaskService().deleteTaskById(orderId);
+            System.out.println("Deleted task: " + deletedTask);
+        } catch (InvalidInputException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override
