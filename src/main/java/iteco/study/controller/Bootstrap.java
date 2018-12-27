@@ -57,7 +57,7 @@ public class Bootstrap {
             throw new NoSuchCommandsException("No commands");
         }
         for (final Class<? extends AbstractCommand> commandClass : commandClasses) {
-            AbstractCommand command = commandClass.newInstance();
+            final AbstractCommand command = commandClass.newInstance();
             command.setBootstrap(this);
             commandsMapping.put(command.command(), command);
         }
