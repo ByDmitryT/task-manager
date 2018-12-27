@@ -9,7 +9,7 @@
 * [repository]
   * ProjectRepository - класс для созднания и управления группами
   * TaskRepository - класс для создания и управления задачами
-  [error]
+* [error]
 * [entity]
   * Project - проект
   * Task - задача
