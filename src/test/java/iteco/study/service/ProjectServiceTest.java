@@ -1,6 +1,7 @@
 package iteco.study.service;
 
 import iteco.study.entity.Project;
+import iteco.study.error.InvalidInputException;
 import iteco.study.repository.ProjectRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,7 +11,7 @@ import static org.junit.Assert.*;
 public class ProjectServiceTest {
 
     @Test
-    public void addProject() {
+    public void addProject() throws InvalidInputException {
         final ProjectRepository projectRepository = new ProjectRepository();
         final ProjectService projectService = new ProjectService(projectRepository);
         final Project project = new Project();

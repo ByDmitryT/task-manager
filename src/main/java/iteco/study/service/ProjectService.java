@@ -15,19 +15,31 @@ public class ProjectService {
     }
 
     public Project addProject(final Project project) throws InvalidInputException {
+        if (project == null) { throw new InvalidInputException("Invalid project input"); }
         return projectRepository.addProject(project);
     }
 
     public Project getProjectById(final Integer projectOrderId) throws InvalidInputException {
-        return projectRepository.getProjectById(projectOrderId);
+        if (projectOrderId == null) { throw new InvalidInputException("Invalid project order id"); }
+        try {
+            return projectRepository.getProjectById(projectOrderId);
+        } catch (IndexOutOfBoundsException e) {
+            throw new InvalidInputException("Invalid project order id");
+        }
     }
 
     public Project updateProject(final Project project) throws InvalidInputException {
+        if (project == null) { throw new InvalidInputException("Invalid project input"); }
         return projectRepository.updateProject(project);
     }
 
     public Project deleteProjectById(final Integer projectOrderId) throws InvalidInputException {
-        return projectRepository.deleteProjectById(projectOrderId);
+        if (projectOrderId == null) { throw new InvalidInputException("Invalid project order id"); }
+        try {
+            return projectRepository.deleteProjectById(projectOrderId);
+        } catch (IndexOutOfBoundsException e) {
+            throw new InvalidInputException("Invalid project order id");
+        }
     }
 
     public Collection<Project> getAllProjects() {
