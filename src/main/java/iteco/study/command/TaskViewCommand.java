@@ -6,15 +6,11 @@ import iteco.study.error.InvalidInputException;
 public class TaskViewCommand extends AbstractCommand {
 
     @Override
-    public void execute() {
+    public void execute() throws InvalidInputException {
         System.out.println("Enter order id:");
         final Integer orderId = bootstrap.nextInt();
-        try {
-            final Task task = bootstrap.getTaskService().getTaskById(orderId);
-            System.out.println(orderId + " " + task);
-        } catch (InvalidInputException e) {
-            System.out.println(e.getMessage());
-        }
+        final Task task = bootstrap.getTaskService().getTaskById(orderId);
+        System.out.println(orderId + " " + task);
     }
 
     @Override

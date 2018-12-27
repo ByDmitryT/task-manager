@@ -1,6 +1,7 @@
 package iteco.study.controller;
 
 import iteco.study.command.*;
+import iteco.study.error.InvalidInputException;
 import iteco.study.error.NoSuchCommandsException;
 import iteco.study.repository.ProjectRepository;
 import iteco.study.repository.TaskRepository;
@@ -36,26 +37,24 @@ public class Bootstrap {
     private final Map<String, AbstractCommand> commandsMapping = new HashMap<>();
 
     public void start() {
-        try {
-            initCommands();
-        } catch (Exception e) {
+        try { initCommands(); } catch (Exception e) {
             e.printStackTrace();
         }
         while (scanner.hasNext()) {
             final String userCommand = scanner.nextLine().toLowerCase().trim();
-            if ("exit".equals(userCommand)) {
-                break;
-            }
+            if ("exit".equals(userCommand)) { break; }
             if (commandsMapping.containsKey(userCommand)) {
-                commandsMapping.get(userCommand).execute();
+                try {
+                    commandsMapping.get(userCommand).execute();
+                } catch (InvalidInputException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
     private void initCommands() throws IllegalAccessException, InstantiationException, NoSuchCommandsException {
-        if (commandClasses.isEmpty()) {
-            throw new NoSuchCommandsException("No commands");
-        }
+        if (commandClasses.isEmpty()) { throw new NoSuchCommandsException("No commands"); }
         for (final Class<? extends AbstractCommand> commandClass : commandClasses) {
             final AbstractCommand command = commandClass.newInstance();
             command.setBootstrap(this);

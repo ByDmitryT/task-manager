@@ -1,12 +1,13 @@
 package iteco.study.command;
 
 import iteco.study.controller.Bootstrap;
+import iteco.study.error.InvalidInputException;
 
 public abstract class AbstractCommand {
 
     protected Bootstrap bootstrap;
 
-    public abstract void execute();
+    public abstract void execute() throws InvalidInputException;
 
     public abstract String command();
 

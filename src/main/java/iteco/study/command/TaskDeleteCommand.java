@@ -6,15 +6,11 @@ import iteco.study.error.InvalidInputException;
 public class TaskDeleteCommand extends AbstractCommand {
 
     @Override
-    public void execute() {
+    public void execute() throws InvalidInputException {
         System.out.println("Enter task order id:");
         final Integer orderId = bootstrap.nextInt();
-        try {
-            final Task deletedTask = bootstrap.getTaskService().deleteTaskById(orderId);
-            System.out.println("Deleted task: " + deletedTask);
-        } catch (InvalidInputException e) {
-            System.out.println(e.getMessage());
-        }
+        final Task deletedTask = bootstrap.getTaskService().deleteTaskById(orderId);
+        System.out.println("Deleted task: " + deletedTask);
     }
 
     @Override

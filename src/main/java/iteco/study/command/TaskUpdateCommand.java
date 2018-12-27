@@ -7,7 +7,7 @@ import iteco.study.error.InvalidInputException;
 public class TaskUpdateCommand extends AbstractCommand {
 
     @Override
-    public void execute() {
+    public void execute() throws InvalidInputException {
         System.out.println("Enter task order id:");
         final Integer taskOrderId = bootstrap.nextInt();
         System.out.println("Enter new project order id:");
@@ -16,17 +16,13 @@ public class TaskUpdateCommand extends AbstractCommand {
         final String taskName = bootstrap.nextLine();
         System.out.println("Enter new task description:");
         final String taskDescription = bootstrap.nextLine();
-        try {
-            final Task task = bootstrap.getTaskService().getTaskById(taskOrderId);
-            final Project project = bootstrap.getProjectService().getProjectById(projectOrderId);
-            task.setProjectId(project.getId());
-            task.setName(taskName);
-            task.setDescription(taskDescription);
-            final Task updatedTask = bootstrap.getTaskService().updateTask(task);
-            System.out.println("Updated task: " + updatedTask);
-        } catch (InvalidInputException e) {
-            System.out.println(e.getMessage());
-        }
+        final Task task = bootstrap.getTaskService().getTaskById(taskOrderId);
+        final Project project = bootstrap.getProjectService().getProjectById(projectOrderId);
+        task.setProjectId(project.getId());
+        task.setName(taskName);
+        task.setDescription(taskDescription);
+        final Task updatedTask = bootstrap.getTaskService().updateTask(task);
+        System.out.println("Updated task: " + updatedTask);
     }
 
     @Override

@@ -6,15 +6,11 @@ import iteco.study.error.InvalidInputException;
 public class ProjectViewCommand extends AbstractCommand {
 
     @Override
-    public void execute() {
+    public void execute() throws InvalidInputException {
         System.out.println("Enter order id:");
         final Integer orderId = bootstrap.nextInt();
-        try {
-            final Project project = bootstrap.getProjectService().getProjectById(orderId);
-            System.out.println(orderId + " " + project);
-        } catch (InvalidInputException e) {
-            System.out.println(e.getMessage());
-        }
+        final Project project = bootstrap.getProjectService().getProjectById(orderId);
+        System.out.println(orderId + " " + project);
     }
 
     @Override
