@@ -18,13 +18,13 @@ public class TaskCreateCommand extends AbstractCommand {
         try {
             final Project project = bootstrap.getProjectService().getProjectById(projectOrderId);
             task.setProjectId(project.getId());
+            task.setName(taskName);
+            task.setDescription(taskDescription);
+            final Task createdTask = bootstrap.getTaskService().addTask(task);
+            System.out.println("Created task: " + createdTask);
         } catch (InvalidInputException e) {
             System.out.println(e.getMessage());
         }
-        task.setName(taskName);
-        task.setDescription(taskDescription);
-        final Task createdTask = bootstrap.getTaskService().addTask(task);
-        System.out.println("Created task: " + createdTask);
     }
 
     @Override

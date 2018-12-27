@@ -14,7 +14,7 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
-    public Task addTask(final Task task) {
+    public Task addTask(final Task task) throws InvalidInputException {
         return taskRepository.addTask(task);
     }
 
@@ -22,7 +22,7 @@ public class TaskService {
         return taskRepository.getTaskById(taskOrderId);
     }
 
-    public Task updateTask(final Task task) {
+    public Task updateTask(final Task task) throws InvalidInputException {
         return taskRepository.updateTask(task);
     }
 

@@ -11,7 +11,8 @@ public class TaskRepository {
 
     private final List<String> idMapper = new ArrayList<>();
 
-    public Task addTask(final Task task) {
+    public Task addTask(final Task task) throws InvalidInputException {
+        if (task == null) { throw new InvalidInputException("Invalid task input"); }
         final String taskId = task.getId();
         tasks.put(taskId, task);
         idMapper.add(taskId);
@@ -26,7 +27,8 @@ public class TaskRepository {
         return tasks.get(taskId);
     }
 
-    public Task updateTask(final Task task) {
+    public Task updateTask(final Task task) throws InvalidInputException {
+        if (task == null) { throw new InvalidInputException("Invalid project input"); }
         return tasks.put(task.getId(), task);
     }
 

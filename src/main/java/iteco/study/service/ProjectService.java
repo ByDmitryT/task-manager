@@ -14,7 +14,7 @@ public class ProjectService {
         this.projectRepository = projectRepository;
     }
 
-    public Project addProject(final Project project) {
+    public Project addProject(final Project project) throws InvalidInputException {
         return projectRepository.addProject(project);
     }
 
@@ -22,7 +22,7 @@ public class ProjectService {
         return projectRepository.getProjectById(projectOrderId);
     }
 
-    public Project updateProject(final Project project) {
+    public Project updateProject(final Project project) throws InvalidInputException {
         return projectRepository.updateProject(project);
     }
 

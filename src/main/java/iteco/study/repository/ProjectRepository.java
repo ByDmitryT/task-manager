@@ -11,7 +11,8 @@ public class ProjectRepository {
 
     private final List<String> idMapper = new ArrayList<>();
 
-    public Project addProject(final Project project) {
+    public Project addProject(final Project project) throws InvalidInputException {
+        if (project == null) { throw new InvalidInputException("Invalid project input"); }
         final String projectId = project.getId();
         projects.put(projectId, project);
         idMapper.add(projectId);
@@ -26,7 +27,8 @@ public class ProjectRepository {
         return projects.get(projectId);
     }
 
-    public Project updateProject(final Project project) {
+    public Project updateProject(final Project project) throws InvalidInputException {
+        if (project == null) { throw new InvalidInputException("Invalid project input"); }
         projects.put(project.getId(), project);
         return project;
     }
