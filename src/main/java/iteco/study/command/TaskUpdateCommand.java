@@ -16,8 +16,8 @@ public class TaskUpdateCommand extends AbstractCommand {
         final String taskName = bootstrap.nextLine();
         System.out.println("Enter new task description:");
         final String taskDescription = bootstrap.nextLine();
-        final Task task = bootstrap.getTaskService().getTaskById(taskOrderId);
-        final Project project = bootstrap.getProjectService().getProjectById(projectOrderId);
+        final Task task = bootstrap.getTaskService().getTaskByOrderIndex(taskOrderId);
+        final Project project = bootstrap.getProjectService().getProjectByOrderIndex(projectOrderId);
         task.setProjectId(project.getId());
         task.setName(taskName);
         task.setDescription(taskDescription);
@@ -27,7 +27,7 @@ public class TaskUpdateCommand extends AbstractCommand {
 
     @Override
     public String command() {
-        return "update task";
+        return "update_task";
     }
 
     @Override

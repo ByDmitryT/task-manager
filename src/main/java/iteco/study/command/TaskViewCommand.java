@@ -9,13 +9,13 @@ public class TaskViewCommand extends AbstractCommand {
     public void execute() throws InvalidInputException {
         System.out.println("Enter order id:");
         final Integer orderId = bootstrap.nextInt();
-        final Task task = bootstrap.getTaskService().getTaskById(orderId);
+        final Task task = bootstrap.getTaskService().getTaskByOrderIndex(orderId);
         System.out.println(orderId + " " + task);
     }
 
     @Override
     public String command() {
-        return "view task";
+        return "view_task";
     }
 
     @Override

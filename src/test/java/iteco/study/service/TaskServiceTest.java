@@ -15,14 +15,14 @@ public class TaskServiceTest {
 
     @Test
     public void testAddTaskPositive() throws InvalidInputException {
-        final String TASK_NAME = "created task";
+        final String taskName = "created task";
         final ITaskRepository ITaskRepository = new TaskRepository();
         final TaskService taskService = new TaskService(ITaskRepository);
         final Task task = new Task();
-        task.setName(TASK_NAME);
+        task.setName(taskName);
         taskService.addTask(task);
-        final Task createdTask = taskService.getTaskById(0);
-        assertEquals(TASK_NAME, createdTask.getName());
+        final Task createdTask = taskService.getTaskByOrderIndex(0);
+        assertEquals(taskName, createdTask.getName());
     }
 
     @Test(expected = InvalidInputException.class)
@@ -34,16 +34,16 @@ public class TaskServiceTest {
 
     @Test
     public void testUpdateTaskPositive() throws InvalidInputException {
-        final String UPDATED_NAME = "updated task name";
+        final String updatedName = "updated task name";
         final ITaskRepository ITaskRepository = new TaskRepository();
         final TaskService taskService = new TaskService(ITaskRepository);
         final Task task = new Task();
         taskService.addTask(task);
-        final Task createdTask = taskService.getTaskById(0);
-        createdTask.setName(UPDATED_NAME);
+        final Task createdTask = taskService.getTaskByOrderIndex(0);
+        createdTask.setName(updatedName);
         taskService.updateTask(task);
-        final Task updatedTask = taskService.getTaskById(0);
-        assertEquals(UPDATED_NAME, updatedTask.getName());
+        final Task updatedTask = taskService.getTaskByOrderIndex(0);
+        assertEquals(updatedName, updatedTask.getName());
     }
 
     @Test(expected = InvalidInputException.class)
@@ -59,8 +59,8 @@ public class TaskServiceTest {
         final TaskService taskService = new TaskService(ITaskRepository);
         final Task task = new Task();
         taskService.addTask(task);
-        taskService.deleteTaskById(0);
-        final List<Task> projects = taskService.getAllTasks();
+        taskService.deleteTaskByOrderIndex(0);
+        final List<Task> projects = taskService.getTasks();
         assertTrue(projects.isEmpty());
     }
 
@@ -68,6 +68,6 @@ public class TaskServiceTest {
     public void testDeleteTaskNegative() throws InvalidInputException {
         final ITaskRepository ITaskRepository = new TaskRepository();
         final TaskService taskService = new TaskService(ITaskRepository);
-        taskService.deleteTaskById(0);
+        taskService.deleteTaskByOrderIndex(0);
     }
 }

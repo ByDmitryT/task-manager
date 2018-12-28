@@ -17,7 +17,7 @@ public class ProjectCreateCommand extends AbstractCommand {
 
     @Override
     public String command() {
-        return "create project";
+        return "create_project";
     }
 
     @Override

@@ -7,14 +7,18 @@ import java.util.List;
 
 public interface ITaskService {
 
-    Task addTask(final Task task) throws InvalidInputException;
+    Task addTask(Task task) throws InvalidInputException;
 
-    Task getTaskById(final Integer taskOrderId) throws InvalidInputException;
+    Task getTaskByOrderIndex(Integer taskOrderIndex) throws InvalidInputException;
 
-    Task updateTask(final Task task) throws InvalidInputException;
+    Task getTaskById(String taskId) throws InvalidInputException;
 
-    Task deleteTaskById(final Integer taskOrderId) throws InvalidInputException;
+    Task updateTask(Task task) throws InvalidInputException;
 
-    List<Task> getAllTasks();
+    Task deleteTaskByOrderIndex(Integer taskOrderIndex) throws InvalidInputException;
+
+    Task deleteTaskById(String taskId) throws InvalidInputException;
+
+    List<Task> getTasks();
 
 }

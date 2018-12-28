@@ -3,7 +3,9 @@ package iteco.study.controller;
 import iteco.study.api.controller.IBootstrap;
 import iteco.study.api.repository.IProjectRepository;
 import iteco.study.api.repository.ITaskRepository;
-import iteco.study.command.*;
+import iteco.study.api.service.IProjectService;
+import iteco.study.api.service.ITaskService;
+import iteco.study.command.AbstractCommand;
 import iteco.study.error.InvalidInputException;
 import iteco.study.error.NoSuchCommandsException;
 import iteco.study.repository.ProjectRepository;
@@ -23,13 +25,13 @@ import java.util.Set;
 @Setter
 public class Bootstrap implements IBootstrap {
 
-    private final IProjectRepository IProjectRepository = new ProjectRepository();
+    private final IProjectRepository projectRepository = new ProjectRepository();
 
-    private final ITaskRepository ITaskRepository = new TaskRepository();
+    private final ITaskRepository taskRepository = new TaskRepository();
 
-    private final ProjectService projectService = new ProjectService(IProjectRepository);
+    private final IProjectService projectService = new ProjectService(projectRepository);
 
-    private final TaskService taskService = new TaskService(ITaskRepository);
+    private final ITaskService taskService = new TaskService(taskRepository);
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -44,6 +46,7 @@ public class Bootstrap implements IBootstrap {
         try { initCommands(); } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("PROJECT MANAGER");
         while (scanner.hasNext()) {
             final String userCommand = scanner.nextLine().toLowerCase().trim();
             if ("exit".equals(userCommand)) { break; }
@@ -51,7 +54,7 @@ public class Bootstrap implements IBootstrap {
                 try {
                     commandsMapping.get(userCommand).execute();
                 } catch (InvalidInputException e) {
-                    e.printStackTrace();
+                    System.out.println(e.getMessage());
                 }
             }
         }

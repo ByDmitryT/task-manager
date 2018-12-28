@@ -5,13 +5,21 @@ import iteco.study.entity.Task;
 import java.util.List;
 
 public interface ITaskRepository {
+
     Task addTask(Task task);
 
-    Task getTaskById(Integer taskOrderId);
+    Task getTaskByOrderIndex(int taskOrderIndex);
+
+    Task getTaskById(String taskId);
 
     Task updateTask(Task task);
 
-    Task deleteTaskById(Integer taskOrderId);
+    Task deleteTaskByOrderIndex(int taskOrderIndex);
 
-    List<Task> getAllTasks();
+    Task deleteTaskById(String taskId);
+
+    boolean isTaskCreated(String taskId);
+
+    List<Task> getTasks();
+
 }

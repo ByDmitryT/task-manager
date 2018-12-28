@@ -8,7 +8,7 @@ public class TaskViewAllCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        final Collection<Task> tasks = bootstrap.getTaskService().getAllTasks();
+        final Collection<Task> tasks = bootstrap.getTaskService().getTasks();
         int orderId = 0;
         for (final Task task : tasks) {
             System.out.println(orderId + " " + task);
@@ -18,7 +18,7 @@ public class TaskViewAllCommand extends AbstractCommand {
 
     @Override
     public String command() {
-        return "view all tasks";
+        return "view_tasks";
     }
 
     @Override

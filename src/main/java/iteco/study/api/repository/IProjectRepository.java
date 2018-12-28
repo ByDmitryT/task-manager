@@ -5,13 +5,21 @@ import iteco.study.entity.Project;
 import java.util.List;
 
 public interface IProjectRepository {
+
     Project addProject(Project project);
 
-    Project getProjectById(Integer projectOrderId);
+    Project getProjectByOrderIndex(int projectOrderIndex);
+
+    Project getProjectById(String projectId);
 
     Project updateProject(Project project);
 
-    Project deleteProjectById(Integer projectOrderId);
+    Project deleteProjectByOrderIndex(int projectOrderIndex);
 
-    List<Project> getAllProjects();
+    Project deleteProjectById(String projectId);
+
+    boolean isProjectCreated(String projectId);
+
+    List<Project> getProjects();
+
 }

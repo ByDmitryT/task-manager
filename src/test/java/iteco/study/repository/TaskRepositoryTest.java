@@ -25,15 +25,15 @@ public class TaskRepositoryTest {
 
     @Test
     public void testUpdateTaskPositive() {
-        final String UPDATED_NAME = "updated task name";
+        final String updatedName = "updated task name";
         final TaskRepository taskRepository = new TaskRepository();
         final Task task = new Task();
         taskRepository.addTask(task);
-        final Task createdTask = taskRepository.getTaskById(0);
-        createdTask.setName(UPDATED_NAME);
+        final Task createdTask = taskRepository.getTaskByOrderIndex(0);
+        createdTask.setName(updatedName);
         taskRepository.updateTask(createdTask);
         final String updatedTaskName = taskRepository.getTasksMap().get(createdTask.getId()).getName();
-        assertEquals(UPDATED_NAME, updatedTaskName);
+        assertEquals(updatedName, updatedTaskName);
     }
 
     @Test(expected = NullPointerException.class)
@@ -47,13 +47,13 @@ public class TaskRepositoryTest {
         final TaskRepository taskRepository = new TaskRepository();
         final Task task = new Task();
         taskRepository.addTask(task);
-        taskRepository.deleteTaskById(0);
+        taskRepository.deleteTaskByOrderIndex(0);
         assertTrue(taskRepository.getTasksMap().isEmpty());
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testDeleteTaskByIdNegative() {
         final ITaskRepository ITaskRepository = new TaskRepository();
-        ITaskRepository.deleteTaskById(0);
+        ITaskRepository.deleteTaskByOrderIndex(0);
     }
 }

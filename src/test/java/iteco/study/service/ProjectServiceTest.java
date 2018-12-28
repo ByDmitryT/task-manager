@@ -15,14 +15,14 @@ public class ProjectServiceTest {
 
     @Test
     public void testAddProjectPositive() throws InvalidInputException {
-        final String PROJECT_NAME = "created project";
+        final String projectName = "created project";
         final IProjectRepository IProjectRepository = new ProjectRepository();
         final ProjectService projectService = new ProjectService(IProjectRepository);
         final Project project = new Project();
-        project.setName(PROJECT_NAME);
+        project.setName(projectName);
         projectService.addProject(project);
-        final Project createdProject = projectService.getProjectById(0);
-        assertEquals(PROJECT_NAME, createdProject.getName());
+        final Project createdProject = projectService.getProjectByOrderIndex(0);
+        assertEquals(projectName, createdProject.getName());
     }
 
     @Test(expected = InvalidInputException.class)
@@ -34,16 +34,16 @@ public class ProjectServiceTest {
 
     @Test
     public void testUpdateProjectPositive() throws InvalidInputException {
-        final String UPDATED_NAME = "updated project name";
+        final String updatedName = "updated project name";
         final IProjectRepository IProjectRepository = new ProjectRepository();
         final ProjectService projectService = new ProjectService(IProjectRepository);
         final Project project = new Project();
         projectService.addProject(project);
-        final Project createdProject = projectService.getProjectById(0);
-        createdProject.setName(UPDATED_NAME);
+        final Project createdProject = projectService.getProjectByOrderIndex(0);
+        createdProject.setName(updatedName);
         projectService.updateProject(project);
-        final Project updatedProject = projectService.getProjectById(0);
-        assertEquals(UPDATED_NAME, updatedProject.getName());
+        final Project updatedProject = projectService.getProjectByOrderIndex(0);
+        assertEquals(updatedName, updatedProject.getName());
     }
 
     @Test(expected = InvalidInputException.class)
@@ -59,8 +59,8 @@ public class ProjectServiceTest {
         final ProjectService projectService = new ProjectService(IProjectRepository);
         final Project project = new Project();
         projectService.addProject(project);
-        projectService.deleteProjectById(0);
-        final List<Project> projects = projectService.getAllProjects();
+        projectService.deleteProjectByOrderIndex(0);
+        final List<Project> projects = projectService.getProjects();
         assertTrue(projects.isEmpty());
     }
 
@@ -68,7 +68,7 @@ public class ProjectServiceTest {
     public void testDeleteProjectNegative() throws InvalidInputException {
         final IProjectRepository IProjectRepository = new ProjectRepository();
         final ProjectService projectService = new ProjectService(IProjectRepository);
-        projectService.deleteProjectById(0);
+        projectService.deleteProjectByOrderIndex(0);
     }
 
 }

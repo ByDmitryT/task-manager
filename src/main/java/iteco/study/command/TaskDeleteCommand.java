@@ -9,13 +9,13 @@ public class TaskDeleteCommand extends AbstractCommand {
     public void execute() throws InvalidInputException {
         System.out.println("Enter task order id:");
         final Integer orderId = bootstrap.nextInt();
-        final Task deletedTask = bootstrap.getTaskService().deleteTaskById(orderId);
+        final Task deletedTask = bootstrap.getTaskService().deleteTaskByOrderIndex(orderId);
         System.out.println("Deleted task: " + deletedTask);
     }
 
     @Override
     public String command() {
-        return "delete task";
+        return "delete_task";
     }
 
     @Override

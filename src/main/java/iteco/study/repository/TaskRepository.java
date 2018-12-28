@@ -6,12 +6,13 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Getter
 public class TaskRepository implements ITaskRepository {
 
-    private final HashMap<String, Task> tasksMap = new HashMap<>();
+    private final HashMap<String, Task> tasksMap = new LinkedHashMap<>();
 
     @Override
     public Task addTask(final Task task) {
@@ -21,9 +22,14 @@ public class TaskRepository implements ITaskRepository {
     }
 
     @Override
-    public Task getTaskById(final Integer taskOrderId) {
-        final List<Task> tasks = getAllTasks();
-        return tasks.get(taskOrderId);
+    public Task getTaskByOrderIndex(final int taskOrderIndex) {
+        final List<Task> tasks = getTasks();
+        return tasks.get(taskOrderIndex);
+    }
+
+    @Override
+    public Task getTaskById(String taskId) {
+        return tasksMap.get(taskId);
     }
 
     @Override
@@ -33,13 +39,23 @@ public class TaskRepository implements ITaskRepository {
     }
 
     @Override
-    public Task deleteTaskById(final Integer taskOrderId) {
-        final Task task = getTaskById(taskOrderId);
-        return tasksMap.remove(task.getId());
+    public Task deleteTaskByOrderIndex(final int taskOrderIndex) {
+        final Task task = getTaskByOrderIndex(taskOrderIndex);
+        return deleteTaskById(task.getId());
     }
 
     @Override
-    public List<Task> getAllTasks() {
+    public Task deleteTaskById(final String taskId) {
+        return tasksMap.remove(taskId);
+    }
+
+    @Override
+    public boolean isTaskCreated(String taskId) {
+        return tasksMap.containsKey(taskId);
+    }
+
+    @Override
+    public List<Task> getTasks() {
         return new ArrayList<>(tasksMap.values());
     }
 }

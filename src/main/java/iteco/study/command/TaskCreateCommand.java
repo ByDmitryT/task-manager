@@ -15,7 +15,7 @@ public class TaskCreateCommand extends AbstractCommand {
         System.out.println("Enter task description:");
         final String taskDescription = bootstrap.nextLine();
         final Task task = new Task();
-        final Project project = bootstrap.getProjectService().getProjectById(projectOrderId);
+        final Project project = bootstrap.getProjectService().getProjectByOrderIndex(projectOrderId);
         task.setProjectId(project.getId());
         task.setName(taskName);
         task.setDescription(taskDescription);
@@ -25,7 +25,7 @@ public class TaskCreateCommand extends AbstractCommand {
 
     @Override
     public String command() {
-        return "create task";
+        return "create_task";
     }
 
     @Override

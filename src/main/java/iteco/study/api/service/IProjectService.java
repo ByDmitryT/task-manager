@@ -7,13 +7,18 @@ import java.util.List;
 
 public interface IProjectService {
 
-    Project addProject(final Project project) throws InvalidInputException;
+    Project addProject(Project project) throws InvalidInputException;
 
-    Project getProjectById(final Integer projectOrderId) throws InvalidInputException;
+    Project getProjectByOrderIndex(Integer projectOrderIndex) throws InvalidInputException;
 
-    Project updateProject(final Project project) throws InvalidInputException;
+    Project getProjectById(String projectId) throws InvalidInputException;
 
-    Project deleteProjectById(final Integer projectOrderId) throws InvalidInputException;
+    Project updateProject(Project project) throws InvalidInputException;
 
-    List<Project> getAllProjects();
+    Project deleteProjectByOrderIndex(Integer projectOrderIndex) throws InvalidInputException;
+
+    Project deleteProjectById(String projectId) throws InvalidInputException;
+
+    List<Project> getProjects();
+
 }

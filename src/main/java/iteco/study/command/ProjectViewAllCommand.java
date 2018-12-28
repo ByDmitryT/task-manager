@@ -8,7 +8,7 @@ public class ProjectViewAllCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        final Collection<Project> projects = bootstrap.getProjectService().getAllProjects();
+        final Collection<Project> projects = bootstrap.getProjectService().getProjects();
         int orderId = 0;
         for (final Project project : projects) {
             System.out.println(orderId + " " + project);
@@ -18,7 +18,7 @@ public class ProjectViewAllCommand extends AbstractCommand {
 
     @Override
     public String command() {
-        return "view all projects";
+        return "view_projects";
     }
 
     @Override

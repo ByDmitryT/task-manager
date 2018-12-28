@@ -9,7 +9,7 @@ import java.util.*;
 @Getter
 public class ProjectRepository implements IProjectRepository {
 
-    private final Map<String, Project> projectsMap = new HashMap<>();
+    private final Map<String, Project> projectsMap = new LinkedHashMap<>();
 
     @Override
     public Project addProject(final Project project) {
@@ -19,9 +19,14 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     @Override
-    public Project getProjectById(final Integer projectOrderId) {
-        final List<Project> projects = getAllProjects();
-        return projects.get(projectOrderId);
+    public Project getProjectByOrderIndex(final int projectOrderIndex) {
+        final List<Project> projects = getProjects();
+        return projects.get(projectOrderIndex);
+    }
+
+    @Override
+    public Project getProjectById(final String projectId) {
+        return projectsMap.get(projectId);
     }
 
     @Override
@@ -31,13 +36,23 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     @Override
-    public Project deleteProjectById(final Integer projectOrderId) {
-        final Project project = getProjectById(projectOrderId);
-        return projectsMap.remove(project.getId());
+    public Project deleteProjectByOrderIndex(final int projectOrderIndex) {
+        final Project project = getProjectByOrderIndex(projectOrderIndex);
+        return deleteProjectById(project.getId());
     }
 
     @Override
-    public List<Project> getAllProjects() {
+    public Project deleteProjectById(final String projectId) {
+        return projectsMap.remove(projectId);
+    }
+
+    @Override
+    public boolean isProjectCreated(String projectId) {
+        return projectsMap.containsKey(projectId);
+    }
+
+    @Override
+    public List<Project> getProjects() {
         return new ArrayList<>(projectsMap.values());
     }
 }

@@ -9,13 +9,13 @@ public class ProjectDeleteCommand extends AbstractCommand {
     public void execute() throws InvalidInputException {
         System.out.println("Enter order id:");
         final Integer orderId = bootstrap.nextInt();
-        final Project deletedProject = bootstrap.getProjectService().deleteProjectById(orderId);
+        final Project deletedProject = bootstrap.getProjectService().deleteProjectByOrderIndex(orderId);
         System.out.println("Deleted project: " + deletedProject);
     }
 
     @Override
     public String command() {
-        return "delete project";
+        return "delete_project";
     }
 
     @Override

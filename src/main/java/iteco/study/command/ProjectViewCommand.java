@@ -9,13 +9,13 @@ public class ProjectViewCommand extends AbstractCommand {
     public void execute() throws InvalidInputException {
         System.out.println("Enter order id:");
         final Integer orderId = bootstrap.nextInt();
-        final Project project = bootstrap.getProjectService().getProjectById(orderId);
+        final Project project = bootstrap.getProjectService().getProjectByOrderIndex(orderId);
         System.out.println(orderId + " " + project);
     }
 
     @Override
     public String command() {
-        return "view project";
+        return "view_project";
     }
 
     @Override

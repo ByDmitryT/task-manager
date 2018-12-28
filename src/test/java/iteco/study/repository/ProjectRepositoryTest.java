@@ -25,15 +25,15 @@ public class ProjectRepositoryTest {
 
     @Test
     public void testUpdateProjectPositive() {
-        final String UPDATED_NAME = "updated project name";
+        final String updatedName = "updated project name";
         final ProjectRepository projectRepository = new ProjectRepository();
         final Project project = new Project();
         projectRepository.addProject(project);
-        final Project createdProject = projectRepository.getProjectById(0);
-        createdProject.setName(UPDATED_NAME);
+        final Project createdProject = projectRepository.getProjectByOrderIndex(0);
+        createdProject.setName(updatedName);
         projectRepository.updateProject(createdProject);
         final String updatedProjectName = projectRepository.getProjectsMap().get(createdProject.getId()).getName();
-        assertEquals(UPDATED_NAME, updatedProjectName);
+        assertEquals(updatedName, updatedProjectName);
     }
 
     @Test(expected = NullPointerException.class)
@@ -47,13 +47,13 @@ public class ProjectRepositoryTest {
         final ProjectRepository projectRepository = new ProjectRepository();
         final Project project = new Project();
         projectRepository.addProject(project);
-        projectRepository.deleteProjectById(0);
+        projectRepository.deleteProjectByOrderIndex(0);
         assertTrue(projectRepository.getProjectsMap().isEmpty());
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testDeleteProjectByIdNegative() {
         final IProjectRepository IProjectRepository = new ProjectRepository();
-        IProjectRepository.deleteProjectById(0);
+        IProjectRepository.deleteProjectByOrderIndex(0);
     }
 }

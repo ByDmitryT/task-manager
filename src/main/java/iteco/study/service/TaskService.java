@@ -4,46 +4,71 @@ import iteco.study.api.repository.ITaskRepository;
 import iteco.study.api.service.ITaskService;
 import iteco.study.entity.Task;
 import iteco.study.error.InvalidInputException;
+import iteco.study.error.TaskErrorMessage;
 
 import java.util.*;
 
 public class TaskService implements ITaskService {
 
-    private final ITaskRepository ITaskRepository;
+    private final ITaskRepository taskRepository;
 
-    public TaskService(final ITaskRepository ITaskRepository) {
-        this.ITaskRepository = ITaskRepository;
+    public TaskService(final ITaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
     }
 
     public Task addTask(final Task task) throws InvalidInputException {
-        if (task == null) { throw new InvalidInputException("Invalid project input"); }
-        return ITaskRepository.addTask(task);
+        if (task == null) { throw new InvalidInputException(TaskErrorMessage.INVALID_TASK_INPUT); }
+        return taskRepository.addTask(task);
     }
 
-    public Task getTaskById(final Integer taskOrderId) throws InvalidInputException {
-        if (taskOrderId == null) { throw new InvalidInputException("Invalid task order id"); }
+    @Override
+    public Task getTaskByOrderIndex(Integer taskOrderIndex) throws InvalidInputException {
+        if (taskOrderIndex == null) { throw new InvalidInputException(TaskErrorMessage.INVALID_TASK_ORDER_INDEX); }
         try {
-            return ITaskRepository.getTaskById(taskOrderId);
+            return taskRepository.getTaskByOrderIndex(taskOrderIndex);
         } catch (IndexOutOfBoundsException e) {
-            throw new InvalidInputException("Invalid task order id");
+            throw new InvalidInputException(TaskErrorMessage.INVALID_TASK_ORDER_INDEX);
+        }
+    }
+
+    @Override
+    public Task getTaskById(String taskId) throws InvalidInputException {
+        if (taskId == null) { throw new InvalidInputException(TaskErrorMessage.INVALID_TASK_ID); }
+        try {
+            return taskRepository.getTaskById(taskId);
+        } catch (IndexOutOfBoundsException e) {
+            throw new InvalidInputException(TaskErrorMessage.INVALID_TASK_ID);
         }
     }
 
     public Task updateTask(final Task task) throws InvalidInputException {
-        if (task == null) { throw new InvalidInputException("Invalid project input"); }
-        return ITaskRepository.updateTask(task);
+        if (task == null) { throw new InvalidInputException(TaskErrorMessage.INVALID_TASK_INPUT); }
+        return taskRepository.updateTask(task);
     }
 
-    public Task deleteTaskById(final Integer taskOrderId) throws InvalidInputException {
-        if (taskOrderId == null) { throw new InvalidInputException("Invalid task order id"); }
+    @Override
+    public Task deleteTaskByOrderIndex(Integer taskOrderIndex) throws InvalidInputException {
+        if (taskOrderIndex == null) { throw new InvalidInputException(TaskErrorMessage.INVALID_TASK_ORDER_INDEX); }
         try {
-            return ITaskRepository.deleteTaskById(taskOrderId);
+            return taskRepository.deleteTaskByOrderIndex(taskOrderIndex);
         } catch (IndexOutOfBoundsException e) {
-            throw new InvalidInputException("Invalid task order id");
+            throw new InvalidInputException(TaskErrorMessage.INVALID_TASK_ORDER_INDEX);
         }
     }
 
-    public List<Task> getAllTasks() {
-        return ITaskRepository.getAllTasks();
+    @Override
+    public Task deleteTaskById(String taskId) throws InvalidInputException {
+        if (taskId == null) { throw new InvalidInputException(TaskErrorMessage.INVALID_TASK_ID); }
+        try {
+            return taskRepository.deleteTaskById(taskId);
+        } catch (IndexOutOfBoundsException e) {
+            throw new InvalidInputException(TaskErrorMessage.INVALID_TASK_ID);
+        }
     }
+
+    @Override
+    public List<Task> getTasks() {
+        return taskRepository.getTasks();
+    }
+
 }
