@@ -1,5 +1,8 @@
 package iteco.study.controller;
 
+import iteco.study.api.controller.IBootstrap;
+import iteco.study.api.repository.IProjectRepository;
+import iteco.study.api.repository.ITaskRepository;
 import iteco.study.command.*;
 import iteco.study.error.InvalidInputException;
 import iteco.study.error.NoSuchCommandsException;
@@ -18,15 +21,15 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class Bootstrap {
+public class Bootstrap implements IBootstrap {
 
-    private final ProjectRepository projectRepository = new ProjectRepository();
+    private final IProjectRepository IProjectRepository = new ProjectRepository();
 
-    private final TaskRepository taskRepository = new TaskRepository();
+    private final ITaskRepository ITaskRepository = new TaskRepository();
 
-    private final ProjectService projectService = new ProjectService(projectRepository);
+    private final ProjectService projectService = new ProjectService(IProjectRepository);
 
-    private final TaskService taskService = new TaskService(taskRepository);
+    private final TaskService taskService = new TaskService(ITaskRepository);
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -36,6 +39,7 @@ public class Bootstrap {
 
     private final Map<String, AbstractCommand> commandsMapping = new HashMap<>();
 
+    @Override
     public void start() {
         try { initCommands(); } catch (Exception e) {
             e.printStackTrace();
@@ -62,10 +66,12 @@ public class Bootstrap {
         }
     }
 
+    @Override
     public String nextLine() {
         return scanner.nextLine();
     }
 
+    @Override
     public Integer nextInt() {
         try {
             return Integer.parseInt(scanner.nextLine());

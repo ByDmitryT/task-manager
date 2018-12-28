@@ -1,5 +1,6 @@
 package iteco.study.command;
 
+import iteco.study.api.controller.IBootstrap;
 import iteco.study.controller.Bootstrap;
 import iteco.study.error.InvalidInputException;
 
@@ -13,7 +14,7 @@ public abstract class AbstractCommand {
 
     public abstract String description();
 
-    public Bootstrap getBootstrap() {
+    public IBootstrap getBootstrap() {
         return bootstrap;
     }
 
