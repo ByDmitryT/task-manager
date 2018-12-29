@@ -5,14 +5,15 @@
 * Maven (3.6.0)
 
 ## Структура прокета
+* [api]
 * [command]
-* [repository]
-  * ProjectRepository - класс для созднания и управления группами
-  * TaskRepository - класс для создания и управления задачами
-* [error]
 * [entity]
   * Project - проект
   * Task - задача
+* [error]
+* [repository]
+  * ProjectRepository - класс для созднания и управления группами
+  * TaskRepository - класс для создания и управления задачами
 * [controller]
   * Bootstrap - класс объединяющий сервисы и команды 
 * [service]
