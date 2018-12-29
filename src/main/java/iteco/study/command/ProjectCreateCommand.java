@@ -11,8 +11,8 @@ public class ProjectCreateCommand extends AbstractCommand {
         final String projectName = bootstrap.nextLine();
         final Project project = new Project();
         project.setName(projectName);
-        final Project createdProject = bootstrap.getProjectService().addProject(project);
-        System.out.println("Added project: " + createdProject);
+        bootstrap.getProjectService().addProject(project);
+        System.out.println("OK");
     }
 
     @Override

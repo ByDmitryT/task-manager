@@ -4,12 +4,10 @@ import iteco.study.api.repository.ITaskRepository;
 import iteco.study.entity.Task;
 import iteco.study.error.InvalidInputException;
 import iteco.study.repository.TaskRepository;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class TaskServiceTest {
 
@@ -22,7 +20,7 @@ public class TaskServiceTest {
         task.setName(taskName);
         taskService.addTask(task);
         final Task createdTask = taskService.getTaskByOrderIndex(0);
-        assertEquals(taskName, createdTask.getName());
+        Assert.assertEquals(taskName, createdTask.getName());
     }
 
     @Test(expected = InvalidInputException.class)
@@ -43,7 +41,7 @@ public class TaskServiceTest {
         createdTask.setName(updatedName);
         taskService.updateTask(task);
         final Task updatedTask = taskService.getTaskByOrderIndex(0);
-        assertEquals(updatedName, updatedTask.getName());
+        Assert.assertEquals(updatedName, updatedTask.getName());
     }
 
     @Test(expected = InvalidInputException.class)
@@ -61,7 +59,7 @@ public class TaskServiceTest {
         taskService.addTask(task);
         taskService.deleteTaskByOrderIndex(0);
         final List<Task> projects = taskService.getTasks();
-        assertTrue(projects.isEmpty());
+        Assert.assertTrue(projects.isEmpty());
     }
 
     @Test(expected = InvalidInputException.class)

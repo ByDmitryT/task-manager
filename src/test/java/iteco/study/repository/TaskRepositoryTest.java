@@ -2,10 +2,8 @@ package iteco.study.repository;
 
 import iteco.study.api.repository.ITaskRepository;
 import iteco.study.entity.Task;
+import org.junit.Assert;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class TaskRepositoryTest {
 
@@ -14,7 +12,7 @@ public class TaskRepositoryTest {
         final TaskRepository taskRepository = new TaskRepository();
         final Task task = new Task();
         taskRepository.addTask(task);
-        assertTrue(taskRepository.getTasksMap().containsKey(task.getId()));
+        Assert.assertTrue(taskRepository.getTasksMap().containsKey(task.getId()));
     }
 
     @Test(expected = NullPointerException.class)
@@ -33,7 +31,7 @@ public class TaskRepositoryTest {
         createdTask.setName(updatedName);
         taskRepository.updateTask(createdTask);
         final String updatedTaskName = taskRepository.getTasksMap().get(createdTask.getId()).getName();
-        assertEquals(updatedName, updatedTaskName);
+        Assert.assertEquals(updatedName, updatedTaskName);
     }
 
     @Test(expected = NullPointerException.class)
@@ -48,7 +46,7 @@ public class TaskRepositoryTest {
         final Task task = new Task();
         taskRepository.addTask(task);
         taskRepository.deleteTaskByOrderIndex(0);
-        assertTrue(taskRepository.getTasksMap().isEmpty());
+        Assert.assertTrue(taskRepository.getTasksMap().isEmpty());
     }
 
     @Test(expected = IndexOutOfBoundsException.class)

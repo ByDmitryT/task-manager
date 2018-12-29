@@ -8,9 +8,9 @@ public class TaskUpdateCommand extends AbstractCommand {
 
     @Override
     public void execute() throws InvalidInputException {
-        System.out.println("Enter task order id:");
+        System.out.println("Enter task order index:");
         final Integer taskOrderId = bootstrap.nextInt();
-        System.out.println("Enter new project order id:");
+        System.out.println("Enter new project order index:");
         final Integer projectOrderId = bootstrap.nextInt();
         System.out.println("Enter new task name:");
         final String taskName = bootstrap.nextLine();
@@ -21,8 +21,8 @@ public class TaskUpdateCommand extends AbstractCommand {
         task.setProjectId(project.getId());
         task.setName(taskName);
         task.setDescription(taskDescription);
-        final Task updatedTask = bootstrap.getTaskService().updateTask(task);
-        System.out.println("Updated task: " + updatedTask);
+        bootstrap.getTaskService().updateTask(task);
+        System.out.println("OK");
     }
 
     @Override
@@ -32,6 +32,6 @@ public class TaskUpdateCommand extends AbstractCommand {
 
     @Override
     public String description() {
-        return "update task by order id";
+        return "update task by order index";
     }
 }

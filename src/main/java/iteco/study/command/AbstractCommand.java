@@ -4,11 +4,13 @@ import iteco.study.api.controller.IBootstrap;
 import iteco.study.controller.Bootstrap;
 import iteco.study.error.InvalidInputException;
 
+import java.io.IOException;
+
 public abstract class AbstractCommand {
 
     protected Bootstrap bootstrap;
 
-    public abstract void execute() throws InvalidInputException;
+    public abstract void execute() throws InvalidInputException, IOException, ClassNotFoundException;
 
     public abstract String command();
 

@@ -2,10 +2,8 @@ package iteco.study.repository;
 
 import iteco.study.api.repository.IProjectRepository;
 import iteco.study.entity.Project;
+import org.junit.Assert;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class ProjectRepositoryTest {
 
@@ -14,7 +12,7 @@ public class ProjectRepositoryTest {
         final ProjectRepository projectRepository = new ProjectRepository();
         final Project project = new Project();
         projectRepository.addProject(project);
-        assertTrue(projectRepository.getProjectsMap().containsKey(project.getId()));
+        Assert.assertTrue(projectRepository.getProjectsMap().containsKey(project.getId()));
     }
 
     @Test(expected = NullPointerException.class)
@@ -33,7 +31,7 @@ public class ProjectRepositoryTest {
         createdProject.setName(updatedName);
         projectRepository.updateProject(createdProject);
         final String updatedProjectName = projectRepository.getProjectsMap().get(createdProject.getId()).getName();
-        assertEquals(updatedName, updatedProjectName);
+        Assert.assertEquals(updatedName, updatedProjectName);
     }
 
     @Test(expected = NullPointerException.class)
@@ -48,7 +46,7 @@ public class ProjectRepositoryTest {
         final Project project = new Project();
         projectRepository.addProject(project);
         projectRepository.deleteProjectByOrderIndex(0);
-        assertTrue(projectRepository.getProjectsMap().isEmpty());
+        Assert.assertTrue(projectRepository.getProjectsMap().isEmpty());
     }
 
     @Test(expected = IndexOutOfBoundsException.class)

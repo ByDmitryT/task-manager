@@ -2,6 +2,8 @@ package iteco.study.api.repository;
 
 import iteco.study.entity.Project;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 public interface IProjectRepository {
@@ -21,5 +23,9 @@ public interface IProjectRepository {
     boolean isProjectCreated(String projectId);
 
     List<Project> getProjects();
+
+    void saveData() throws IOException;
+
+    void loadData() throws IOException, ClassNotFoundException;
 
 }

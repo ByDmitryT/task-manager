@@ -8,7 +8,7 @@ public class TaskCreateCommand extends AbstractCommand {
 
     @Override
     public void execute() throws InvalidInputException {
-        System.out.println("Enter project order id:");
+        System.out.println("Enter project order index:");
         final Integer projectOrderId = bootstrap.nextInt();
         System.out.println("Enter task name:");
         final String taskName = bootstrap.nextLine();
@@ -19,8 +19,8 @@ public class TaskCreateCommand extends AbstractCommand {
         task.setProjectId(project.getId());
         task.setName(taskName);
         task.setDescription(taskDescription);
-        final Task createdTask = bootstrap.getTaskService().addTask(task);
-        System.out.println("Created task: " + createdTask);
+        bootstrap.getTaskService().addTask(task);
+        System.out.println("OK");
     }
 
     @Override

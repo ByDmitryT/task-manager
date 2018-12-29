@@ -7,7 +7,7 @@ public class ProjectViewCommand extends AbstractCommand {
 
     @Override
     public void execute() throws InvalidInputException {
-        System.out.println("Enter order id:");
+        System.out.println("Enter order index:");
         final Integer orderId = bootstrap.nextInt();
         final Project project = bootstrap.getProjectService().getProjectByOrderIndex(orderId);
         System.out.println(orderId + " " + project);
@@ -20,6 +20,6 @@ public class ProjectViewCommand extends AbstractCommand {
 
     @Override
     public String description() {
-        return "view project by order id";
+        return "view project by order index";
     }
 }

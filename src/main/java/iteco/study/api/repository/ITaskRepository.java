@@ -2,6 +2,7 @@ package iteco.study.api.repository;
 
 import iteco.study.entity.Task;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ITaskRepository {
@@ -21,5 +22,9 @@ public interface ITaskRepository {
     boolean isTaskCreated(String taskId);
 
     List<Task> getTasks();
+
+    void saveData() throws IOException;
+
+    void loadData() throws IOException, ClassNotFoundException;
 
 }

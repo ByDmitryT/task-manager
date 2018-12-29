@@ -7,7 +7,7 @@ public class TaskViewCommand extends AbstractCommand {
 
     @Override
     public void execute() throws InvalidInputException {
-        System.out.println("Enter order id:");
+        System.out.println("Enter order index:");
         final Integer orderId = bootstrap.nextInt();
         final Task task = bootstrap.getTaskService().getTaskByOrderIndex(orderId);
         System.out.println(orderId + " " + task);
@@ -20,6 +20,6 @@ public class TaskViewCommand extends AbstractCommand {
 
     @Override
     public String description() {
-        return "view task by order id";
+        return "view task by order index";
     }
 }
