@@ -10,7 +10,7 @@ public abstract class AbstractCommand {
 
     protected Bootstrap bootstrap;
 
-    public abstract void execute() throws InvalidInputException, IOException, ClassNotFoundException;
+    public abstract void execute() throws Exception;
 
     public abstract String command();
 

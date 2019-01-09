@@ -4,7 +4,6 @@ import iteco.study.api.repository.ITaskRepository;
 import iteco.study.entity.Task;
 import lombok.Getter;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -60,29 +59,4 @@ public class TaskRepository implements ITaskRepository {
         return new ArrayList<>(tasksMap.values());
     }
 
-    @Override
-    public void saveData() throws IOException {
-        final File file = new File("task_data");
-        final FileOutputStream fileOutputStream = new FileOutputStream(file);
-        final ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-        objectOutputStream.writeObject(getTasks());
-        objectOutputStream.flush();
-        objectOutputStream.close();
-        fileOutputStream.close();
-    }
-
-    @Override
-    public void loadData() throws IOException, ClassNotFoundException {
-        final File file = new File("task_data");
-        final FileInputStream fileInputStream = new FileInputStream(file);
-        final ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-        final List tasks = (List) objectInputStream.readObject();
-        for (final Object task : tasks) {
-            if (task instanceof Task) {
-                addTask((Task) task);
-            }
-        }
-        objectInputStream.close();
-        fileInputStream.close();
-    }
 }

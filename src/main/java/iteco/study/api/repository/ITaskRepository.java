@@ -23,8 +23,4 @@ public interface ITaskRepository {
 
     List<Task> getTasks();
 
-    void saveData() throws IOException;
-
-    void loadData() throws IOException, ClassNotFoundException;
-
 }

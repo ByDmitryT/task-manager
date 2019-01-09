@@ -24,8 +24,4 @@ public interface IProjectRepository {
 
     List<Project> getProjects();
 
-    void saveData() throws IOException;
-
-    void loadData() throws IOException, ClassNotFoundException;
-
 }

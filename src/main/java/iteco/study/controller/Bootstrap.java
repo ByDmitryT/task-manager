@@ -4,21 +4,17 @@ import iteco.study.api.controller.IBootstrap;
 import iteco.study.api.repository.IProjectRepository;
 import iteco.study.api.repository.ITaskRepository;
 import iteco.study.api.service.IProjectService;
-import iteco.study.api.service.IProjectTaskService;
 import iteco.study.api.service.ITaskService;
 import iteco.study.command.AbstractCommand;
-import iteco.study.error.InvalidInputException;
 import iteco.study.error.NoSuchCommandsException;
 import iteco.study.repository.ProjectRepository;
 import iteco.study.repository.TaskRepository;
 import iteco.study.service.ProjectService;
-import iteco.study.service.ProjectTaskService;
 import iteco.study.service.TaskService;
 import lombok.Getter;
 import lombok.Setter;
 import org.reflections.Reflections;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -35,8 +31,6 @@ public class Bootstrap implements IBootstrap {
     private final IProjectService projectService = new ProjectService(projectRepository);
 
     private final ITaskService taskService = new TaskService(taskRepository);
-
-    private final IProjectTaskService projectTaskService = new ProjectTaskService(projectRepository, taskRepository);
 
     private final Scanner scanner = new Scanner(System.in);
 
