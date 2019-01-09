@@ -14,7 +14,7 @@ public class Task implements Serializable {
 
     private String id = UUID.randomUUID().toString();
 
-    private String projectId = null;
+    private String projectId;
 
     private String name = "new task";
 

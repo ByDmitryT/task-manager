@@ -1,5 +1,6 @@
-package iteco.study.command;
+package iteco.study.command.data;
 
+import iteco.study.command.AbstractCommand;
 import iteco.study.entity.Project;
 import iteco.study.entity.Task;
 
@@ -14,6 +15,7 @@ public class DataLoadCommand extends AbstractCommand {
 
     @Override
     public void execute() throws Exception {
+        System.out.println("[LOAD DATA]");
         final File file = new File(FILE_NAME);
         final FileInputStream fileInputStream = new FileInputStream(file);
         final ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
@@ -31,12 +33,12 @@ public class DataLoadCommand extends AbstractCommand {
         }
         objectInputStream.close();
         fileInputStream.close();
-        System.out.println("OK");
+        System.out.println("[OK]");
     }
 
     @Override
     public String command() {
-        return "load_data";
+        return "load-data";
     }
 
     @Override

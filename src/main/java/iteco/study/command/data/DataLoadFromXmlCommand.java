@@ -1,7 +1,8 @@
-package iteco.study.command;
+package iteco.study.command.data;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import iteco.study.command.AbstractCommand;
 import iteco.study.entity.Data;
 import iteco.study.entity.Project;
 import iteco.study.entity.Task;
@@ -14,6 +15,7 @@ public class DataLoadFromXmlCommand extends AbstractCommand {
 
     @Override
     public void execute() throws Exception {
+        System.out.println("[LOAD DATA FROM XML]");
         final File file = new File(FILE_NAME);
         final FileInputStream fileInputStream = new FileInputStream(file);
         final ObjectMapper objectMapper = new XmlMapper();
@@ -26,12 +28,12 @@ public class DataLoadFromXmlCommand extends AbstractCommand {
             bootstrap.getTaskService().addTask(task);
         }
         fileInputStream.close();
-        System.out.println("OK");
+        System.out.println("[OK]");
     }
 
     @Override
     public String command() {
-        return "load_data_from_xml";
+        return "load-data-from-xml";
     }
 
     @Override

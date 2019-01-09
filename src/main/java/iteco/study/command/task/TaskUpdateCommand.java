@@ -1,5 +1,6 @@
-package iteco.study.command;
+package iteco.study.command.task;
 
+import iteco.study.command.AbstractCommand;
 import iteco.study.entity.Project;
 import iteco.study.entity.Task;
 import iteco.study.error.InvalidInputException;
@@ -8,6 +9,7 @@ public class TaskUpdateCommand extends AbstractCommand {
 
     @Override
     public void execute() throws InvalidInputException {
+        System.out.println("[UPDATE TASK]");
         System.out.println("Enter task order index:");
         final Integer taskOrderId = bootstrap.nextInt();
         System.out.println("Enter new project order index:");
@@ -22,12 +24,12 @@ public class TaskUpdateCommand extends AbstractCommand {
         task.setName(taskName);
         task.setDescription(taskDescription);
         bootstrap.getTaskService().updateTask(task);
-        System.out.println("OK");
+        System.out.println("[OK]");
     }
 
     @Override
     public String command() {
-        return "update_task";
+        return "update-task";
     }
 
     @Override

@@ -34,8 +34,7 @@ public class ProjectRepository implements IProjectRepository {
 
     @Override
     public Project updateProject(final Project project) {
-        projectsMap.put(project.getId(), project);
-        return project;
+        return projectsMap.put(project.getId(), project);
     }
 
     @Override

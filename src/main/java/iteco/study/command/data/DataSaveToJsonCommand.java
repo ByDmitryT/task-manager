@@ -1,6 +1,7 @@
-package iteco.study.command;
+package iteco.study.command.data;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import iteco.study.command.AbstractCommand;
 import iteco.study.entity.Data;
 
 import java.io.File;
@@ -12,6 +13,7 @@ public class DataSaveToJsonCommand extends AbstractCommand {
 
     @Override
     public void execute() throws Exception {
+        System.out.println("[SAVE DATA TO JSON]");
         final File file = new File(FILE_NAME);
         final FileOutputStream fileOutputStream = new FileOutputStream(file);
         final ObjectMapper objectMapper = new ObjectMapper();
@@ -20,12 +22,12 @@ public class DataSaveToJsonCommand extends AbstractCommand {
         data.setTasks(bootstrap.getTaskService().getTasks());
         objectMapper.writeValue(fileOutputStream, data);
         fileOutputStream.close();
-        System.out.println("OK");
+        System.out.println("[OK]");
     }
 
     @Override
     public String command() {
-        return "save_data_to_json";
+        return "save-data-to-json";
     }
 
     @Override

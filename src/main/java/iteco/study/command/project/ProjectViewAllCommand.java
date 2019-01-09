@@ -1,5 +1,6 @@
-package iteco.study.command;
+package iteco.study.command.project;
 
+import iteco.study.command.AbstractCommand;
 import iteco.study.entity.Project;
 
 import java.util.Collection;
@@ -8,6 +9,7 @@ public class ProjectViewAllCommand extends AbstractCommand {
 
     @Override
     public void execute() {
+        System.out.println("[VIEW PROJECT]");
         final Collection<Project> projects = bootstrap.getProjectService().getProjects();
         int orderId = 0;
         if (projects.isEmpty()) { System.out.println("Projects not found"); }
@@ -19,7 +21,7 @@ public class ProjectViewAllCommand extends AbstractCommand {
 
     @Override
     public String command() {
-        return "view_projects";
+        return "view-projects";
     }
 
     @Override

@@ -1,5 +1,6 @@
-package iteco.study.command;
+package iteco.study.command.task;
 
+import iteco.study.command.AbstractCommand;
 import iteco.study.entity.Task;
 
 import java.util.Collection;
@@ -8,6 +9,7 @@ public class TaskViewAllCommand extends AbstractCommand {
 
     @Override
     public void execute() {
+        System.out.println("[VIEW TASKS]");
         final Collection<Task> tasks = bootstrap.getTaskService().getTasks();
         int orderId = 0;
         if (tasks.isEmpty()) { System.out.println("Tasks not found"); }
@@ -19,7 +21,7 @@ public class TaskViewAllCommand extends AbstractCommand {
 
     @Override
     public String command() {
-        return "view_tasks";
+        return "view-tasks";
     }
 
     @Override

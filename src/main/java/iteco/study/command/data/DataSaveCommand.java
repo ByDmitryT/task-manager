@@ -1,4 +1,6 @@
-package iteco.study.command;
+package iteco.study.command.data;
+
+import iteco.study.command.AbstractCommand;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -11,6 +13,7 @@ public class DataSaveCommand extends AbstractCommand {
 
     @Override
     public void execute() throws IOException {
+        System.out.println("[SAVE DATA]");
         final File file = new File(FILE_NAME);
         final FileOutputStream fileOutputStream = new FileOutputStream(file);
         final ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -19,12 +22,12 @@ public class DataSaveCommand extends AbstractCommand {
         objectOutputStream.flush();
         objectOutputStream.close();
         fileOutputStream.close();
-        System.out.println("OK");
+        System.out.println("[OK]");
     }
 
     @Override
     public String command() {
-        return "save_data";
+        return "save-data";
     }
 
     @Override

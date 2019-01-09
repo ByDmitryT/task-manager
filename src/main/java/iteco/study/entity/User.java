@@ -4,10 +4,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
 public class User {
+
+    private String id = UUID.randomUUID().toString();
 
     private String firstName = "first name";
 
@@ -15,6 +19,6 @@ public class User {
 
     private String login;
 
-    private String password;
+    private int password;
 
 }

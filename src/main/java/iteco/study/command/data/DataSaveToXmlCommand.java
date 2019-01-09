@@ -1,18 +1,20 @@
-package iteco.study.command;
+package iteco.study.command.data;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import iteco.study.command.AbstractCommand;
 import iteco.study.entity.Data;
 
 import java.io.File;
 import java.io.FileOutputStream;
 
-public class DataSaveToXmlCommand extends AbstractCommand{
+public class DataSaveToXmlCommand extends AbstractCommand {
 
     private final static String FILE_NAME = "data.xml";
 
     @Override
     public void execute() throws Exception {
+        System.out.println("[SAVE DATA TO XML]");
         final File file = new File(FILE_NAME);
         final FileOutputStream fileOutputStream = new FileOutputStream(file);
         final ObjectMapper objectMapper = new XmlMapper();
@@ -21,12 +23,12 @@ public class DataSaveToXmlCommand extends AbstractCommand{
         data.setTasks(bootstrap.getTaskService().getTasks());
         objectMapper.writeValue(fileOutputStream, data);
         fileOutputStream.close();
-        System.out.println("OK");
+        System.out.println("[OK]");
     }
 
     @Override
     public String command() {
-        return "save_data_to_xml";
+        return "save-data-to-xml";
     }
 
     @Override

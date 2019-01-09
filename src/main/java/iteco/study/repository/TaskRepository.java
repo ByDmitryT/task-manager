@@ -17,7 +17,7 @@ public class TaskRepository implements ITaskRepository {
     @Override
     public Task addTask(final Task task) {
         final String taskId = task.getId();
-        tasksMap.put(taskId, task);
+        tasksMap.putIfAbsent(taskId, task);
         return task;
     }
 
@@ -34,8 +34,7 @@ public class TaskRepository implements ITaskRepository {
 
     @Override
     public Task updateTask(final Task task) {
-        tasksMap.put(task.getId(), task);
-        return task;
+        return tasksMap.put(task.getId(), task);
     }
 
     @Override

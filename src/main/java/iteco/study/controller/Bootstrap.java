@@ -3,14 +3,18 @@ package iteco.study.controller;
 import iteco.study.api.controller.IBootstrap;
 import iteco.study.api.repository.IProjectRepository;
 import iteco.study.api.repository.ITaskRepository;
+import iteco.study.api.repository.IUserRepository;
 import iteco.study.api.service.IProjectService;
 import iteco.study.api.service.ITaskService;
+import iteco.study.api.service.IUserService;
 import iteco.study.command.AbstractCommand;
 import iteco.study.error.NoSuchCommandsException;
 import iteco.study.repository.ProjectRepository;
 import iteco.study.repository.TaskRepository;
+import iteco.study.repository.UserRepository;
 import iteco.study.service.ProjectService;
 import iteco.study.service.TaskService;
+import iteco.study.service.UserService;
 import lombok.Getter;
 import lombok.Setter;
 import org.reflections.Reflections;
@@ -32,6 +36,10 @@ public class Bootstrap implements IBootstrap {
 
     private final ITaskService taskService = new TaskService(taskRepository);
 
+    private final IUserRepository userRepository = new UserRepository();
+
+    private final IUserService userService = new UserService(userRepository);
+
     private final Scanner scanner = new Scanner(System.in);
 
     private final Reflections reflections = new Reflections("iteco.study.command");
@@ -45,7 +53,7 @@ public class Bootstrap implements IBootstrap {
         try { initCommands(); } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("PROJECT MANAGER");
+        System.out.println("[PROJECT MANAGER]");
         while (scanner.hasNext()) {
             final String userCommand = scanner.nextLine().toLowerCase().trim();
             if ("exit".equals(userCommand)) { break; }
