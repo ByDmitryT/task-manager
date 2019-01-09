@@ -19,15 +19,11 @@ public class DataLoadFromXmlCommand extends AbstractCommand {
         final ObjectMapper objectMapper = new XmlMapper();
         final String json = inputStreamToString(fileInputStream);
         final Data data = objectMapper.readValue(json, Data.class);
-        for (final Object project : data.getProjects()) {
-            if (project instanceof Project) {
-                bootstrap.getProjectService().addProject((Project) project);
-            }
+        for (final Project project : data.getProjects()) {
+            bootstrap.getProjectService().addProject(project);
         }
-        for (final Object task : data.getTasks()) {
-            if (task instanceof Task) {
-                bootstrap.getTaskService().addTask((Task) task);
-            }
+        for (final Task task : data.getTasks()) {
+            bootstrap.getTaskService().addTask(task);
         }
         fileInputStream.close();
         System.out.println("OK");
