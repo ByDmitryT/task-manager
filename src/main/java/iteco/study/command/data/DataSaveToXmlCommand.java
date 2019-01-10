@@ -13,6 +13,11 @@ public class DataSaveToXmlCommand extends AbstractCommand {
     private final static String FILE_NAME = "data.xml";
 
     @Override
+    public boolean secure() {
+        return true;
+    }
+
+    @Override
     public void execute() throws Exception {
         System.out.println("[SAVE DATA TO XML]");
         final File file = new File(FILE_NAME);

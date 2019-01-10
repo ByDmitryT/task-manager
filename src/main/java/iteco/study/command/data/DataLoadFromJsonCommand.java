@@ -13,6 +13,11 @@ public class DataLoadFromJsonCommand extends AbstractCommand {
     private final static String FILE_NAME = "data.json";
 
     @Override
+    public boolean secure() {
+        return true;
+    }
+
+    @Override
     public void execute() throws Exception {
         System.out.println("[LOAD DATA FROM JSON]");
         final File file = new File(FILE_NAME);

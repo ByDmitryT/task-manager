@@ -14,6 +14,11 @@ public class DataLoadCommand extends AbstractCommand {
     private final static String FILE_NAME = "data.bin";
 
     @Override
+    public boolean secure() {
+        return true;
+    }
+
+    @Override
     public void execute() throws Exception {
         System.out.println("[LOAD DATA]");
         final File file = new File(FILE_NAME);

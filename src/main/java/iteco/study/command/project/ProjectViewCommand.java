@@ -7,6 +7,11 @@ import iteco.study.error.InvalidInputException;
 public class ProjectViewCommand extends AbstractCommand {
 
     @Override
+    public boolean secure() {
+        return true;
+    }
+
+    @Override
     public void execute() throws InvalidInputException {
         System.out.println("[VIEW PROJECT]");
         System.out.println("Enter order index:");

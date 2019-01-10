@@ -12,6 +12,11 @@ public class DataSaveCommand extends AbstractCommand {
     private final static String FILE_NAME = "data.bin";
 
     @Override
+    public boolean secure() {
+        return true;
+    }
+
+    @Override
     public void execute() throws IOException {
         System.out.println("[SAVE DATA]");
         final File file = new File(FILE_NAME);

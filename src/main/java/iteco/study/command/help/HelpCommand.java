@@ -1,6 +1,13 @@
-package iteco.study.command;
+package iteco.study.command.help;
+
+import iteco.study.command.AbstractCommand;
 
 public class HelpCommand extends AbstractCommand {
+
+    @Override
+    public boolean secure() {
+        return false;
+    }
 
     @Override
     public void execute() {

@@ -8,6 +8,11 @@ import iteco.study.error.InvalidInputException;
 public class TaskUpdateCommand extends AbstractCommand {
 
     @Override
+    public boolean secure() {
+        return true;
+    }
+
+    @Override
     public void execute() throws InvalidInputException {
         System.out.println("[UPDATE TASK]");
         System.out.println("Enter task order index:");

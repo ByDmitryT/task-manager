@@ -16,6 +16,8 @@ public class Project implements Serializable {
 
     private String name = "new project";
 
+    private String userId;
+
     @Override
     public String toString() {
         return "name='" + name + '\'';

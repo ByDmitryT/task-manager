@@ -1,14 +1,12 @@
 package iteco.study.command;
 
 import iteco.study.api.controller.IBootstrap;
-import iteco.study.controller.Bootstrap;
-import iteco.study.error.InvalidInputException;
-
-import java.io.IOException;
 
 public abstract class AbstractCommand {
 
-    protected Bootstrap bootstrap;
+    protected IBootstrap bootstrap;
+
+    public abstract boolean secure();
 
     public abstract void execute() throws Exception;
 
@@ -20,7 +18,7 @@ public abstract class AbstractCommand {
         return bootstrap;
     }
 
-    public void setBootstrap(Bootstrap bootstrap) {
+    public void setBootstrap(IBootstrap bootstrap) {
         this.bootstrap = bootstrap;
     }
 }

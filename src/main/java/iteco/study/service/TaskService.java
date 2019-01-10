@@ -9,11 +9,11 @@ import java.util.List;
 
 public class TaskService implements ITaskService {
 
-    private final static String INVALID_TASK_INPUT = "Invalid task input";
+    private final static String INVALID_TASK_INPUT = "[FAIL: Invalid task input]";
 
-    private final static String INVALID_TASK_ORDER_INDEX = "Invalid task order index";
+    private final static String INVALID_TASK_ORDER_INDEX = "[FAIL: Invalid task order index]";
 
-    private final static String INVALID_TASK_ID = "Invalid task id";
+    private final static String INVALID_TASK_ID = "[FAIL: Invalid task id]";
 
     private final ITaskRepository taskRepository;
 

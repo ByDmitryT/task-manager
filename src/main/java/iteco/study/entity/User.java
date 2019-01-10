@@ -4,21 +4,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class User {
+public class User implements Serializable {
 
     private String id = UUID.randomUUID().toString();
 
-    private String firstName = "first name";
-
-    private String lastName = "last name";
-
     private String login;
 
-    private int password;
+    private String passwordHash;
 
+    @Override
+    public String toString() {
+        return login + " (" + id + ")";
+    }
 }

@@ -53,22 +53,28 @@ public class Bootstrap implements IBootstrap {
         try { initCommands(); } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("[PROJECT MANAGER]");
-        while (scanner.hasNext()) {
-            final String userCommand = scanner.nextLine().toLowerCase().trim();
-            if ("exit".equals(userCommand)) { break; }
-            if (commandsMapping.containsKey(userCommand)) {
-                try {
-                    commandsMapping.get(userCommand).execute();
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
+        try {
+            userService.init();
+            System.out.println("[PROJECT MANAGER]");
+            while (scanner.hasNext()) {
+                final String userCommand = scanner.nextLine().toLowerCase().trim();
+                if ("exit".equals(userCommand)) break;
+                if (commandsMapping.containsKey(userCommand)) {
+                    final AbstractCommand command = commandsMapping.get(userCommand);
+                    if (userService.getCurrentUser() == null && command.secure()) {
+                        System.out.println("[FAIL: You must be signed in]");
+                        continue;
+                    }
+                    command.execute();
                 }
             }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
     private void initCommands() throws IllegalAccessException, InstantiationException, NoSuchCommandsException {
-        if (commandClasses.isEmpty()) { throw new NoSuchCommandsException("No commands"); }
+        if (commandClasses.isEmpty()) throw new NoSuchCommandsException("No commands");
         for (final Class<? extends AbstractCommand> commandClass : commandClasses) {
             final AbstractCommand command = commandClass.newInstance();
             command.setBootstrap(this);

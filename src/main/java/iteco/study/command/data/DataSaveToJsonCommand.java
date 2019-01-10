@@ -12,6 +12,11 @@ public class DataSaveToJsonCommand extends AbstractCommand {
     private final static String FILE_NAME = "data.json";
 
     @Override
+    public boolean secure() {
+        return true;
+    }
+
+    @Override
     public void execute() throws Exception {
         System.out.println("[SAVE DATA TO JSON]");
         final File file = new File(FILE_NAME);

@@ -3,9 +3,15 @@ package iteco.study.command.task;
 import iteco.study.command.AbstractCommand;
 import iteco.study.entity.Project;
 import iteco.study.entity.Task;
+import iteco.study.entity.User;
 import iteco.study.error.InvalidInputException;
 
 public class TaskCreateCommand extends AbstractCommand {
+
+    @Override
+    public boolean secure() {
+        return true;
+    }
 
     @Override
     public void execute() throws InvalidInputException {
@@ -21,6 +27,8 @@ public class TaskCreateCommand extends AbstractCommand {
         task.setProjectId(project.getId());
         task.setName(taskName);
         task.setDescription(taskDescription);
+        final User user = bootstrap.getUserService().getCurrentUser();
+        task.setUserId(user.getId());
         bootstrap.getTaskService().addTask(task);
         System.out.println("[OK]");
     }

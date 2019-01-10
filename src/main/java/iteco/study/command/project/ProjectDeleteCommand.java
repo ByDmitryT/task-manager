@@ -6,6 +6,11 @@ import iteco.study.error.InvalidInputException;
 public class ProjectDeleteCommand extends AbstractCommand {
 
     @Override
+    public boolean secure() {
+        return true;
+    }
+
+    @Override
     public void execute() throws InvalidInputException {
         System.out.println("[DELETE PROJECT]");
         System.out.println("Enter order index:");

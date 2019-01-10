@@ -20,6 +20,8 @@ public class Task implements Serializable {
 
     private String description = "do something";
 
+    private String userId;
+
     @Override
     public String toString() {
         return "name='" + name + '\'' + ", description='" + description + '\'';
