@@ -1,7 +1,11 @@
 package ru.titov.taskmanager.command;
 
+import lombok.Getter;
+import lombok.Setter;
 import ru.titov.taskmanager.api.controller.Bootstrap;
 
+@Getter
+@Setter
 public abstract class AbstractCommand {
 
     protected Bootstrap bootstrap;
@@ -14,11 +18,4 @@ public abstract class AbstractCommand {
 
     public abstract String description();
 
-    public Bootstrap getBootstrap() {
-        return bootstrap;
-    }
-
-    public void setBootstrap(Bootstrap bootstrap) {
-        this.bootstrap = bootstrap;
-    }
 }

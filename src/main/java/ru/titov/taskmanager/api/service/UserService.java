@@ -2,6 +2,7 @@ package ru.titov.taskmanager.api.service;
 
 import ru.titov.taskmanager.entity.User;
 import ru.titov.taskmanager.error.user.AbstractUserException;
+import ru.titov.taskmanager.error.user.InvalidUserPasswordException;
 
 import java.util.List;
 
@@ -13,13 +14,15 @@ public interface UserService {
 
     void init() throws AbstractUserException;
 
+    User add(User user) throws AbstractUserException;
+
     void logout();
 
     User getByLogin(String login) throws AbstractUserException;
 
     User getById(String id) throws AbstractUserException;
 
-    User update(User user) throws AbstractUserException;
+    User changePassword(String passwordHash) throws InvalidUserPasswordException;
 
     User removeByLogin(String login) throws AbstractUserException;
 

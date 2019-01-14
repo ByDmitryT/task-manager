@@ -23,31 +23,41 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User signUp(final String login, final String password) throws AbstractUserException {
+    public User signUp(final String login, final String passwordHash) {
         if (login == null || login.isEmpty()) throw new InvalidUserLoginException();
-        if (password == null || password.isEmpty()) throw new InvalidUserPasswordException();
+        if (passwordHash == null || passwordHash.isEmpty()) throw new InvalidUserPasswordException();
         if (userRepository.isExists(login)) throw new UserLoginExistsException();
         final User user = new User();
         user.setLogin(login);
-        user.setPasswordHash(PasswordHashUtil.md5(password));
-        return userRepository.add(user);
+        user.setPasswordHash(passwordHash);
+        return userRepository.merge(user);
     }
 
     @Override
-    public void signIn(final String login, final String password) throws AbstractUserException {
+    public void signIn(final String login, final String passwordHash) {
         if (login == null || login.isEmpty()) throw new InvalidUserLoginException();
-        if (password == null || password.isEmpty()) throw new InvalidUserPasswordException();
+        if (passwordHash == null || passwordHash.isEmpty()) throw new InvalidUserPasswordException();
         if (userRepository.isExists(login)) throw new InvalidUserInputException();
         final User user = getByLogin(login);
-        if (user.getPasswordHash().equals(PasswordHashUtil.md5(password))) {
+        if (user.getPasswordHash().equals(passwordHash)) {
             currentUser = user;
         } else throw new InvalidUserInputException();
     }
 
     @Override
-    public void init() throws AbstractUserException {
-        signUp("test", "test");
-        signUp("admin", "admin");
+    public void init() {
+        signUp("test", PasswordHashUtil.md5("test"));
+        signUp("admin", PasswordHashUtil.md5("admin"));
+    }
+
+    @Override
+    public User add(User user) {
+        if (user == null) throw new InvalidUserInputException();
+        if (user.getLogin() == null || user.getLogin().isEmpty()) throw new InvalidUserLoginException();
+        if (user.getPasswordHash() == null || user.getPasswordHash().isEmpty()) {
+            throw new InvalidUserPasswordException();
+        }
+        return userRepository.merge(user);
     }
 
     @Override
@@ -56,7 +66,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getByLogin(final String login) throws AbstractUserException {
+    public User getByLogin(final String login) {
         if (login == null || login.isEmpty()) throw new InvalidUserLoginException();
         final User receiveUser = userRepository.getByLogin(login);
         if (receiveUser == null) throw new InvalidUserLoginException();
@@ -64,7 +74,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getById(final String id) throws AbstractUserException {
+    public User getById(final String id) {
         if (id == null || id.isEmpty()) throw new InvalidUserInputException();
         final User receiveUser = userRepository.getById(id);
         if (receiveUser == null) throw new InvalidUserInputException();
@@ -72,15 +82,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User update(final User user) throws AbstractUserException {
-        if (user == null || !userRepository.isExists(user.getLogin())) {
-            throw new InvalidUserInputException();
-        }
-        return userRepository.update(user);
+    public User changePassword(final String passwordHash) {
+        if (passwordHash == null || passwordHash.isEmpty()) throw new InvalidUserPasswordException();
+        final User user = getCurrentUser();
+        user.setPasswordHash(passwordHash);
+        return userRepository.merge(user);
     }
 
     @Override
-    public User removeByLogin(final String login) throws AbstractUserException {
+    public User removeByLogin(final String login) {
         if (login == null) throw new InvalidUserLoginException();
         final User deletedUser = userRepository.removeByLogin(login);
         if (deletedUser == null) throw new InvalidUserLoginException();
@@ -88,7 +98,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User removeById(final String id) throws AbstractUserException {
+    public User removeById(final String id) {
         if (id == null || id.isEmpty()) throw new InvalidUserInputException();
         final User deletedUser = userRepository.removeById(id);
         if (deletedUser == null) throw new InvalidUserInputException();
@@ -96,7 +106,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isExists(final String login) throws AbstractUserException {
+    public boolean isExists(final String login) {
         if (login == null || login.isEmpty()) throw new InvalidUserLoginException();
         return userRepository.isExists(login);
     }

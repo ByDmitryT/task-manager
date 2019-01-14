@@ -1,9 +1,9 @@
 package ru.titov.taskmanager.repository;
 
-import ru.titov.taskmanager.api.repository.ProjectRepository;
-import ru.titov.taskmanager.entity.Project;
 import org.junit.Assert;
 import org.junit.Test;
+import ru.titov.taskmanager.api.repository.ProjectRepository;
+import ru.titov.taskmanager.entity.Project;
 
 public class ProjectRepositoryTest {
 
@@ -11,14 +11,15 @@ public class ProjectRepositoryTest {
     public void testAddProjectPositive() {
         final ProjectRepository projectRepository = new ProjectRepositoryImpl();
         final Project project = new Project();
-        projectRepository.add(project);
-        Assert.assertTrue(projectRepository.getProjectsMap().containsKey(project.getId()));
+        projectRepository.merge(project);
+        Assert.assertTrue(projectRepository.getData().containsKey(project.getId()));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test()
     public void testAddProjectNegative() {
         final ProjectRepository projectRepository = new ProjectRepositoryImpl();
-        projectRepository.add(null);
+        final Project project = projectRepository.merge(null);
+        Assert.assertNull(project);
     }
 
     @Test
@@ -26,27 +27,21 @@ public class ProjectRepositoryTest {
         final String updatedName = "updated project name";
         final ProjectRepository projectRepository = new ProjectRepositoryImpl();
         final Project project = new Project();
-        projectRepository.add(project);
+        projectRepository.merge(project);
         final Project createdProject = projectRepository.getById(project.getId());
         createdProject.setName(updatedName);
-        projectRepository.update(createdProject);
-        final String updatedProjectName = projectRepository.getProjectsMap().get(createdProject.getId()).getName();
+        projectRepository.merge(createdProject);
+        final String updatedProjectName = projectRepository.getData().get(createdProject.getId()).getName();
         Assert.assertEquals(updatedName, updatedProjectName);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testUpdateProjectNegative() {
-        final ProjectRepository projectRepository = new ProjectRepositoryImpl();
-        projectRepository.update(null);
     }
 
     @Test
     public void testDeleteProjectByIdPositive() {
-        final ProjectRepositoryImpl projectRepository = new ProjectRepositoryImpl();
+        final ProjectRepository projectRepository = new ProjectRepositoryImpl();
         final Project project = new Project();
-        projectRepository.add(project);
+        projectRepository.merge(project);
         projectRepository.removeById(project.getId());
-        Assert.assertTrue(projectRepository.getProjectsMap().isEmpty());
+        Assert.assertTrue(projectRepository.getData().isEmpty());
     }
 
 }

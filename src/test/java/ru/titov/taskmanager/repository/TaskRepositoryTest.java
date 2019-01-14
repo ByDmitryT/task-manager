@@ -11,14 +11,15 @@ public class TaskRepositoryTest {
     public void testAddTaskPositive() {
         final TaskRepository taskRepository = new TaskRepositoryImpl();
         final Task task = new Task();
-        taskRepository.add(task);
-        Assert.assertTrue(taskRepository.getTasksMap().containsKey(task.getId()));
+        taskRepository.merge(task);
+        Assert.assertTrue(taskRepository.getData().containsKey(task.getId()));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test()
     public void testAddTaskNegative() {
         final TaskRepository taskRepository = new TaskRepositoryImpl();
-        taskRepository.add(null);
+        final Task task = taskRepository.merge(null);
+        Assert.assertNull(task);
     }
 
     @Test
@@ -26,27 +27,21 @@ public class TaskRepositoryTest {
         final String updatedName = "updated task name";
         final TaskRepository taskRepository = new TaskRepositoryImpl();
         final Task task = new Task();
-        taskRepository.add(task);
+        taskRepository.merge(task);
         final Task createdTask = taskRepository.getById(task.getId());
         createdTask.setName(updatedName);
-        taskRepository.update(createdTask);
-        final String updatedTaskName = taskRepository.getTasksMap().get(createdTask.getId()).getName();
+        taskRepository.merge(createdTask);
+        final String updatedTaskName = taskRepository.getData().get(createdTask.getId()).getName();
         Assert.assertEquals(updatedName, updatedTaskName);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testUpdateTaskNegative() {
-        final TaskRepository taskRepository = new TaskRepositoryImpl();
-        taskRepository.update(null);
     }
 
     @Test
     public void testDeleteTaskByIdPositive() {
         final TaskRepository taskRepository = new TaskRepositoryImpl();
         final Task task = new Task();
-        taskRepository.add(task);
+        taskRepository.merge(task);
         taskRepository.removeById(task.getId());
-        Assert.assertTrue(taskRepository.getTasksMap().isEmpty());
+        Assert.assertTrue(taskRepository.getData().isEmpty());
     }
 
 }

@@ -3,11 +3,9 @@ package ru.titov.taskmanager.service;
 import ru.titov.taskmanager.api.repository.TaskRepository;
 import ru.titov.taskmanager.api.service.TaskService;
 import ru.titov.taskmanager.entity.Task;
-import ru.titov.taskmanager.error.task.AbstractTaskException;
 import ru.titov.taskmanager.error.task.InvalidTaskIdException;
 import ru.titov.taskmanager.error.task.InvalidTaskInputException;
 import ru.titov.taskmanager.error.task.InvalidTaskOrderIndexException;
-import ru.titov.taskmanager.error.user.AbstractUserException;
 import ru.titov.taskmanager.error.user.InvalidUserInputException;
 
 import java.util.ArrayList;
@@ -24,13 +22,13 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task add(final Task task) throws AbstractTaskException {
+    public Task add(final Task task) {
         if (task == null) throw new InvalidTaskInputException();
-        return taskRepository.add(task);
+        return taskRepository.merge(task);
     }
 
     @Override
-    public Task getByOrderIndex(final String userId, final Integer taskOrderIndex) throws AbstractTaskException, AbstractUserException {
+    public Task getByOrderIndex(final String userId, final Integer taskOrderIndex) {
         if (taskOrderIndex == null) throw new InvalidTaskOrderIndexException();
         final List<Task> tasks = getAllByUserId(userId);
         try {
@@ -41,7 +39,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task getById(String taskId) throws AbstractTaskException {
+    public Task getById(String taskId) {
         if (taskId == null) throw new InvalidTaskIdException();
         final Task receivedTask = taskRepository.getById(taskId);
         if (receivedTask == null) throw new InvalidTaskIdException();
@@ -49,22 +47,22 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task update(final Task task) throws AbstractTaskException {
+    public Task update(final Task task) {
         if (task == null || !taskRepository.isExists(task.getId())) {
             throw new InvalidTaskInputException();
         }
-        return taskRepository.update(task);
+        return taskRepository.merge(task);
     }
 
     @Override
-    public Task removeByOrderIndex(final String userId, final Integer taskOrderIndex) throws AbstractTaskException, AbstractUserException {
+    public Task removeByOrderIndex(final String userId, final Integer taskOrderIndex) {
         if (taskOrderIndex == null) throw new InvalidTaskOrderIndexException();
         final Task task = getByOrderIndex(userId, taskOrderIndex);
         return removeById(task.getId());
     }
 
     @Override
-    public Task removeById(final String taskId) throws AbstractTaskException {
+    public Task removeById(final String taskId) {
         if (taskId == null) throw new InvalidTaskIdException();
         final Task deletedTask = taskRepository.removeById(taskId);
         if (deletedTask == null) throw new InvalidTaskIdException();
@@ -77,7 +75,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> getAllByUserId(final String userId) throws AbstractUserException {
+    public List<Task> getAllByUserId(final String userId) {
         if (userId == null || userId.isEmpty()) throw new InvalidUserInputException();
         final Collection<Task> tasks = getAll();
         if (tasks.isEmpty()) return Collections.emptyList();

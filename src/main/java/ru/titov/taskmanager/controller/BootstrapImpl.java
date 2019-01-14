@@ -39,10 +39,6 @@ public class BootstrapImpl implements Bootstrap {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    private final Reflections reflections = new Reflections("ru.titov.taskmanager.command");
-
-    private final Set<Class<? extends AbstractCommand>> commandClasses = reflections.getSubTypesOf(AbstractCommand.class);
-
     private final Map<String, AbstractCommand> commandsMapping = new LinkedHashMap<>();
 
     @Override
@@ -73,6 +69,8 @@ public class BootstrapImpl implements Bootstrap {
 }
 
     private void initCommands() throws IllegalAccessException, InstantiationException, NoSuchCommandsException {
+        final Reflections reflections = new Reflections("ru.titov.taskmanager.command");
+        final Set<Class<? extends AbstractCommand>> commandClasses = reflections.getSubTypesOf(AbstractCommand.class);
         if (commandClasses.isEmpty()) throw new NoSuchCommandsException();
         for (final Class<? extends AbstractCommand> commandClass : commandClasses) {
             final AbstractCommand command = commandClass.newInstance();

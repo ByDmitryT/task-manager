@@ -3,32 +3,28 @@ package ru.titov.taskmanager.command.user;
 import ru.titov.taskmanager.command.AbstractCommand;
 import ru.titov.taskmanager.util.PasswordHashUtil;
 
-public class UserSignUpCommand extends AbstractCommand {
-
+public class UserChangePassword extends AbstractCommand {
     @Override
     public boolean secure() {
-        return false;
+        return true;
     }
 
     @Override
     public void execute() throws Exception {
-        System.out.println("[REGISTER USER]");
-        System.out.println("Enter login:");
-        final String login = bootstrap.nextLine();
-        System.out.println("Enter password:");
+        System.out.println("[CHANGE PASSWORD]");
+        System.out.println("Enter new password");
         final String password = bootstrap.nextLine();
-        bootstrap.getUserService().signUp(login, PasswordHashUtil.md5(password));
+        bootstrap.getUserService().changePassword(PasswordHashUtil.md5(password));
         System.out.println("[OK]");
     }
 
     @Override
     public String command() {
-        return "sign-up";
+        return "password-change";
     }
 
     @Override
     public String description() {
-        return "sign up user in TaskManager";
+        return "change user password in TaskManager";
     }
-
 }

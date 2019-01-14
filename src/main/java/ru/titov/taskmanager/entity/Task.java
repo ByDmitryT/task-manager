@@ -5,14 +5,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class Task implements Serializable {
-
-    private String id = UUID.randomUUID().toString();
+public class Task extends AbstractEntity implements Serializable {
 
     private String projectId;
 
@@ -24,7 +21,7 @@ public class Task implements Serializable {
 
     @Override
     public String toString() {
-        return "name='" + name + '\'' + ", description='" + description + '\'';
+        return "name: " + name + " description:" + description;
     }
 
 }

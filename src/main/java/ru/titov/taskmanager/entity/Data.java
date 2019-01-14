@@ -16,4 +16,6 @@ public class Data implements Serializable {
 
     private List<Task> tasks;
 
+    private List<User> users;
+
 }

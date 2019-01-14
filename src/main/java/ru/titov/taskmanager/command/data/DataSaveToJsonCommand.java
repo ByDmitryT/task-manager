@@ -25,6 +25,7 @@ public class DataSaveToJsonCommand extends AbstractCommand {
         final Data data = new Data();
         data.setProjects(bootstrap.getProjectService().getAll());
         data.setTasks(bootstrap.getTaskService().getAll());
+        data.setUsers(bootstrap.getUserService().getAll());
         objectMapper.writeValue(fileOutputStream, data);
         fileOutputStream.close();
         System.out.println("[OK]");

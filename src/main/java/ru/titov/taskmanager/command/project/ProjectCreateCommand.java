@@ -32,6 +32,6 @@ public class ProjectCreateCommand extends AbstractCommand {
 
     @Override
     public String description() {
-        return "create project in ToDoList";
+        return "create project in TaskManager";
     }
 }

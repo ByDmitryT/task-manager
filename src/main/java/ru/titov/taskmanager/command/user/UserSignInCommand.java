@@ -2,6 +2,7 @@ package ru.titov.taskmanager.command.user;
 
 import ru.titov.taskmanager.command.AbstractCommand;
 import ru.titov.taskmanager.error.user.AbstractUserException;
+import ru.titov.taskmanager.util.PasswordHashUtil;
 
 public class UserSignInCommand extends AbstractCommand {
     @Override
@@ -16,7 +17,7 @@ public class UserSignInCommand extends AbstractCommand {
         final String login = bootstrap.nextLine();
         System.out.println("Enter password:");
         final String password = bootstrap.nextLine();
-        bootstrap.getUserService().signIn(login, password);
+        bootstrap.getUserService().signIn(login, PasswordHashUtil.md5(password));
         System.out.println("[OK]");
     }
 
@@ -27,6 +28,6 @@ public class UserSignInCommand extends AbstractCommand {
 
     @Override
     public String description() {
-        return "sign in user in ToDoList";
+        return "sign in user in TaskManager";
     }
 }

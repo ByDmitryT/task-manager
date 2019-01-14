@@ -5,14 +5,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class User implements Serializable {
-
-    private String id = UUID.randomUUID().toString();
+public class User extends AbstractEntity implements Serializable {
 
     private String login;
 

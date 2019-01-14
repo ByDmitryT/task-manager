@@ -1,6 +1,6 @@
 package ru.titov.taskmanager.error.user;
 
-public abstract class AbstractUserException extends Exception {
+public abstract class AbstractUserException extends RuntimeException {
 
     public AbstractUserException(String message) {
         super(message);

@@ -86,7 +86,7 @@
     mvn clean install
  
 ## Запуск
-    java -jar ./taskmanager.jar
+    java -jar ./task-manager.jar
 
 ## Учетные записи по умолчанию
     [Логин]     [Пароль]

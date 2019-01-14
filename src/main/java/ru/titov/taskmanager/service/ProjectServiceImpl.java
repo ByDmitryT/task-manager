@@ -3,11 +3,9 @@ package ru.titov.taskmanager.service;
 import ru.titov.taskmanager.api.repository.ProjectRepository;
 import ru.titov.taskmanager.api.service.ProjectService;
 import ru.titov.taskmanager.entity.Project;
-import ru.titov.taskmanager.error.project.AbstractProjectException;
 import ru.titov.taskmanager.error.project.InvalidProjectIdException;
 import ru.titov.taskmanager.error.project.InvalidProjectInputException;
 import ru.titov.taskmanager.error.project.InvalidProjectOrderIndexException;
-import ru.titov.taskmanager.error.user.AbstractUserException;
 import ru.titov.taskmanager.error.user.InvalidUserInputException;
 
 import java.util.ArrayList;
@@ -24,13 +22,13 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project add(final Project project) throws AbstractProjectException {
+    public Project add(final Project project) {
         if (project == null) throw new InvalidProjectInputException();
-        return projectRepository.add(project);
+        return projectRepository.merge(project);
     }
 
     @Override
-    public Project getByOrderIndex(final String userId, final Integer projectOrderIndex) throws AbstractProjectException, AbstractUserException {
+    public Project getByOrderIndex(final String userId, final Integer projectOrderIndex) {
         if (projectOrderIndex == null) throw new InvalidProjectOrderIndexException();
         final List<Project> projects = getAllByUserId(userId);
         try {
@@ -41,7 +39,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project getById(final String projectId) throws AbstractProjectException {
+    public Project getById(final String projectId) {
         if (projectId == null) throw new InvalidProjectIdException();
         final Project receiveProject = projectRepository.getById(projectId);
         if (receiveProject == null) throw new InvalidProjectIdException();
@@ -49,22 +47,22 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project update(final Project project) throws AbstractProjectException {
+    public Project update(final Project project) {
         if (project == null || !projectRepository.isExists(project.getId())) {
             throw new InvalidProjectInputException();
         }
-        return projectRepository.update(project);
+        return projectRepository.merge(project);
     }
 
     @Override
-    public Project removeByOrderIndex(final String userId, final Integer projectOrderIndex) throws AbstractProjectException, AbstractUserException {
+    public Project removeByOrderIndex(final String userId, final Integer projectOrderIndex) {
         if (projectOrderIndex == null) throw new InvalidProjectOrderIndexException();
         final Project project = getByOrderIndex(userId, projectOrderIndex);
         return removeById(project.getId());
     }
 
     @Override
-    public Project removeById(final String projectId) throws AbstractProjectException {
+    public Project removeById(final String projectId) {
         if (projectId == null || !projectRepository.isExists(projectId)) {
             throw new InvalidProjectIdException();
         }
@@ -79,7 +77,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<Project> getAllByUserId(final String userId) throws AbstractUserException {
+    public List<Project> getAllByUserId(final String userId) {
         if (userId == null || userId.isEmpty()) throw new InvalidUserInputException();
         final Collection<Project> projects = getAll();
         if (projects.isEmpty()) return Collections.emptyList();

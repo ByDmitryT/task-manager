@@ -3,6 +3,7 @@ package ru.titov.taskmanager.command.data;
 import ru.titov.taskmanager.command.AbstractCommand;
 import ru.titov.taskmanager.entity.Project;
 import ru.titov.taskmanager.entity.Task;
+import ru.titov.taskmanager.entity.User;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,6 +35,12 @@ public class DataLoadCommand extends AbstractCommand {
         for (final Object task : tasks) {
             if (task instanceof Task) {
                 bootstrap.getTaskService().add((Task) task);
+            }
+        }
+        final List users = (List) objectInputStream.readObject();
+        for (final Object user : users) {
+            if (user instanceof User) {
+                bootstrap.getUserService().add((User) user);
             }
         }
         objectInputStream.close();

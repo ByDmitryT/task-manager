@@ -30,6 +30,6 @@ public class UserViewAllCommand extends AbstractCommand {
 
     @Override
     public String description() {
-        return "view all users in ToDoList";
+        return "view all users";
     }
 }

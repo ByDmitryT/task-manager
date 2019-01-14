@@ -22,6 +22,6 @@ public class UserLogoutCommand extends AbstractCommand {
 
     @Override
     public String description() {
-        return "logout user from ToDoList";
+        return "logout user from TaskManager";
     }
 }

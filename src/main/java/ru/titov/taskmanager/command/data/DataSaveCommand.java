@@ -24,6 +24,7 @@ public class DataSaveCommand extends AbstractCommand {
         final ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
         objectOutputStream.writeObject(bootstrap.getProjectService().getAll());
         objectOutputStream.writeObject(bootstrap.getTaskService().getAll());
+        objectOutputStream.writeObject(bootstrap.getUserService().getAll());
         objectOutputStream.flush();
         objectOutputStream.close();
         fileOutputStream.close();

@@ -6,6 +6,7 @@ import ru.titov.taskmanager.command.AbstractCommand;
 import ru.titov.taskmanager.entity.Data;
 import ru.titov.taskmanager.entity.Project;
 import ru.titov.taskmanager.entity.Task;
+import ru.titov.taskmanager.entity.User;
 
 import java.io.*;
 
@@ -31,6 +32,9 @@ public class DataLoadFromXmlCommand extends AbstractCommand {
         }
         for (final Task task : data.getTasks()) {
             bootstrap.getTaskService().add(task);
+        }
+        for (final User user : data.getUsers()) {
+            bootstrap.getUserService().add(user);
         }
         fileInputStream.close();
         System.out.println("[OK]");
