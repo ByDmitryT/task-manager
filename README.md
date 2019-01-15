@@ -7,15 +7,15 @@
 ## Структура прокета
 * [api]
     * [controller]
-        * IBootstrap
+        * Bootstrap
     * [repository]
-        * IProjectRepository
-        * ITaskRepository
-        * IUserRepository
+        * ProjectRepository
+        * TaskRepository
+        * UserRepository
     * [service]
-        * IProjectService
-        * ITaskService
-        * IUserService
+        * ProjectService
+        * TaskService
+        * UserService
 * [command]
     * [data]
         * DataLoadCommand
@@ -45,7 +45,7 @@
         * UserViewAllCommand
     * AbstractCommand
 * [controller]
-    * Bootstrap
+    * BootstrapImpl
 * [entity]
     * Data
     * Project
@@ -71,13 +71,13 @@
         * InvalidUserPasswordException
         * UserLoginExistsException
 * [repository]
-    * ProjectRepository
-    * TaskRepository
-    * UserRepository
+    * ProjectRepositoryImpl
+    * TaskRepositoryImpl
+    * UserRepositoryImpl
 * [service]
-    * ProjectService
-    * TaskService
-    * UserService
+    * ProjectServiceImpl
+    * TaskServiceImpl
+    * UserServiceImpl
 * [util]
     * PasswordHashUtil
 * App
@@ -85,8 +85,11 @@
 ## Сборка проекта
     mvn clean install
  
-## Запуск
-    java -jar ./task-manager.jar
+## Запуск сервера
+    java -jar ./task-manager-server.jar
+
+## Запуск клиента
+    java -jar ./task-manager-сlient.jar
 
 ## Учетные записи по умолчанию
     [Логин]     [Пароль]
