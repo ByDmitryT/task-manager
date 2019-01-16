@@ -3,10 +3,9 @@ package ru.titov.taskmanagerserver.service;
 import ru.titov.taskmanagerserver.api.repository.TaskRepository;
 import ru.titov.taskmanagerserver.api.service.TaskService;
 import ru.titov.taskmanagerserver.entity.Task;
-import ru.titov.taskmanagerserver.error.task.AbstractTaskException;
-import ru.titov.taskmanagerserver.error.task.InvalidTaskIdException;
-import ru.titov.taskmanagerserver.error.task.InvalidTaskInputException;
-import ru.titov.taskmanagerserver.error.task.InvalidTaskOrderIndexException;
+import ru.titov.taskmanagerserver.error.project.AbstractProjectException;
+import ru.titov.taskmanagerserver.error.project.InvalidProjectIdException;
+import ru.titov.taskmanagerserver.error.task.*;
 import ru.titov.taskmanagerserver.error.user.AbstractUserException;
 import ru.titov.taskmanagerserver.error.user.InvalidUserInputException;
 
@@ -26,6 +25,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task add(final Task task) throws AbstractTaskException {
         if (task == null) throw new InvalidTaskInputException();
+        if (task.getName() == null || task.getName().isEmpty()) throw new InvalidTaskNameException();
         return taskRepository.merge(task);
     }
 
@@ -53,6 +53,7 @@ public class TaskServiceImpl implements TaskService {
         if (task == null || !taskRepository.isExists(task.getId())) {
             throw new InvalidTaskInputException();
         }
+        if (task.getName() == null || task.getName().isEmpty()) throw new InvalidTaskNameException();
         return taskRepository.merge(task);
     }
 
@@ -80,11 +81,25 @@ public class TaskServiceImpl implements TaskService {
     public List<Task> getAllByUserId(final String userId) throws AbstractUserException {
         if (userId == null || userId.isEmpty()) throw new InvalidUserInputException();
         final Collection<Task> tasks = getAll();
-        if (tasks.isEmpty()) return Collections.emptyList();
         final List<Task> userTasks = new ArrayList<>();
         for (Task task : tasks) {
             if (task == null) continue;
             if (userId.equals(task.getUserId())) {
+                userTasks.add(task);
+            }
+        }
+        if (userTasks.isEmpty()) return Collections.emptyList();
+        return userTasks;
+    }
+
+    @Override
+    public List<Task> getAllByProjectId(final String projectId) throws AbstractProjectException {
+        if (projectId == null || projectId.isEmpty()) throw new InvalidProjectIdException();
+        final Collection<Task> tasks = getAll();
+        final List<Task> userTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task == null) continue;
+            if (projectId.equals(task.getProjectId())) {
                 userTasks.add(task);
             }
         }

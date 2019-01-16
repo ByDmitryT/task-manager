@@ -9,7 +9,9 @@ import ru.titov.taskmanagerserver.api.repository.UserRepository;
 import ru.titov.taskmanagerserver.api.service.ProjectService;
 import ru.titov.taskmanagerserver.api.service.TaskService;
 import ru.titov.taskmanagerserver.api.service.UserService;
-import ru.titov.taskmanagerserver.endpoint.UserEndpoint;
+import ru.titov.taskmanagerserver.endpoint.project.ProjectEndpoint;
+import ru.titov.taskmanagerserver.endpoint.task.TaskEndpoint;
+import ru.titov.taskmanagerserver.endpoint.user.UserEndpoint;
 import ru.titov.taskmanagerserver.error.user.AbstractUserException;
 import ru.titov.taskmanagerserver.repository.ProjectRepositoryImpl;
 import ru.titov.taskmanagerserver.repository.TaskRepositoryImpl;
@@ -46,6 +48,8 @@ public class BootstrapImpl implements Bootstrap {
             e.printStackTrace();
         }
         Endpoint.publish("http://localhost:8080/UserEndpoint?wsdl", new UserEndpoint(userService));
+        Endpoint.publish("http://localhost:8080/TaskEndpoint?wsdl", new TaskEndpoint(taskService, projectService));
+        Endpoint.publish("http://localhost:8080/ProjectEndpoint?wsdl", new ProjectEndpoint(projectService, taskService));
     }
 
 }

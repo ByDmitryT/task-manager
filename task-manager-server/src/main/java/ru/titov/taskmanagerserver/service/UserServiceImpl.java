@@ -87,6 +87,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User removeByLogin(final String login) throws AbstractUserException {
         if (login == null) throw new InvalidUserLoginException();
+        if (!isExistsByLogin(login)) throw new InvalidUserLoginException();
         final User deletedUser = userRepository.removeByLogin(login);
         if (deletedUser == null) throw new InvalidUserLoginException();
         return deletedUser;

@@ -1,8 +1,8 @@
 package ru.titov.taskmanagerclient.command.user;
 
 import ru.titov.taskmanagerclient.command.AbstractCommand;
-import ru.titov.taskmanagerserver.endpoint.SimpleUser;
-import ru.titov.taskmanagerserver.endpoint.UserListResponse;
+import ru.titov.taskmanagerserver.endpoint.user.SimpleUser;
+import ru.titov.taskmanagerserver.endpoint.user.UserListResponse;
 
 import java.util.Collection;
 
@@ -19,11 +19,11 @@ public class UserViewAllCommand extends AbstractCommand {
             if (users.isEmpty()) System.out.println("Users not found");
             int orderId = 1;
             for (final SimpleUser user : users) {
-                System.out.println(orderId + ". " + user);
+                System.out.println(orderId + ". " + user.getLogin());
                 orderId++;
             }
-            System.out.println(userListResponse.getMessage());
-        } else System.out.println(userListResponse.getMessage());
+        }
+        System.out.println(userListResponse.getMessage());
     }
 
     @Override

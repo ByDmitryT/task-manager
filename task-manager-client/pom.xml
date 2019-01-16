@@ -30,6 +30,8 @@
                                     <wsdlOptions>
                                         <wsdlOption>
                                             <wsdl>http://localhost:8080/UserEndpoint?wsdl</wsdl>
+                                            <wsdl>http://localhost:8080/TaskEndpoint?wsdl</wsdl>
+                                            <wsdl>http://localhost:8080/ProjectEndpoint?wsdl</wsdl>
                                         </wsdlOption>
                                     </wsdlOptions>
                                 </configuration>
@@ -38,6 +40,34 @@
                                 </goals>
                             </execution>
                         </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>soap-test</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <groups>ru.titov.taskmanagerclient.group.SoapGroup</groups>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>unit-test</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <groups>ru.titov.taskmanagerclient.group.UnitGroup</groups>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
@@ -71,14 +101,6 @@
         <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-xml</artifactId>
         </dependency>
     </dependencies>
 

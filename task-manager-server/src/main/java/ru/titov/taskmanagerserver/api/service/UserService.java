@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserService {
 
-    User signUp(String login, String password) throws AbstractUserException;
+    User signUp(String login, String passwordHash) throws AbstractUserException;
 
     String signIn(String login, String passwordHash) throws AbstractUserException;
 

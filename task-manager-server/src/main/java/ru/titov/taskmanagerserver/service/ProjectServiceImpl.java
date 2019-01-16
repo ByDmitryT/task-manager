@@ -3,10 +3,7 @@ package ru.titov.taskmanagerserver.service;
 import ru.titov.taskmanagerserver.api.repository.ProjectRepository;
 import ru.titov.taskmanagerserver.api.service.ProjectService;
 import ru.titov.taskmanagerserver.entity.Project;
-import ru.titov.taskmanagerserver.error.project.AbstractProjectException;
-import ru.titov.taskmanagerserver.error.project.InvalidProjectIdException;
-import ru.titov.taskmanagerserver.error.project.InvalidProjectInputException;
-import ru.titov.taskmanagerserver.error.project.InvalidProjectOrderIndexException;
+import ru.titov.taskmanagerserver.error.project.*;
 import ru.titov.taskmanagerserver.error.user.AbstractUserException;
 import ru.titov.taskmanagerserver.error.user.InvalidUserInputException;
 
@@ -26,6 +23,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Project add(final Project project) throws AbstractProjectException {
         if (project == null) throw new InvalidProjectInputException();
+        if (project.getName() == null || project.getName().isEmpty()) throw new InvalidProjectNameException();
         return projectRepository.merge(project);
     }
 

@@ -6,8 +6,12 @@ import org.reflections.Reflections;
 import ru.titov.taskmanagerclient.api.controller.Bootstrap;
 import ru.titov.taskmanagerclient.command.AbstractCommand;
 import ru.titov.taskmanagerclient.error.command.NoSuchCommandsException;
-import ru.titov.taskmanagerserver.endpoint.UserEndpoint;
-import ru.titov.taskmanagerserver.endpoint.UserEndpointService;
+import ru.titov.taskmanagerserver.endpoint.project.ProjectEndpoint;
+import ru.titov.taskmanagerserver.endpoint.project.ProjectEndpointService;
+import ru.titov.taskmanagerserver.endpoint.task.TaskEndpoint;
+import ru.titov.taskmanagerserver.endpoint.task.TaskEndpointService;
+import ru.titov.taskmanagerserver.endpoint.user.UserEndpoint;
+import ru.titov.taskmanagerserver.endpoint.user.UserEndpointService;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -19,6 +23,10 @@ import java.util.Set;
 public class BootstrapImpl implements Bootstrap {
 
     private final UserEndpoint userEndpoint = new UserEndpointService().getUserEndpointPort();
+
+    private final TaskEndpoint taskEndpoint = new TaskEndpointService().getTaskEndpointPort();
+
+    private final ProjectEndpoint projectEndpoint = new ProjectEndpointService().getProjectEndpointPort();
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -33,15 +41,11 @@ public class BootstrapImpl implements Bootstrap {
         }
         System.out.println("[PROJECT MANAGER]");
         while (scanner.hasNext()) {
-            final String userCommand = scanner.nextLine().toLowerCase().trim();
+            final String userCommand = nextLine();
             if ("exit".equals(userCommand)) break;
             if (commandsMapping.containsKey(userCommand)) {
                 final AbstractCommand command = commandsMapping.get(userCommand);
-                try {
-                    command.execute();
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
+                command.execute();
             }
         }
     }

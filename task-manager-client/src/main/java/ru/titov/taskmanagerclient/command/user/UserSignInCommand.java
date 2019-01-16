@@ -1,7 +1,7 @@
 package ru.titov.taskmanagerclient.command.user;
 
 import ru.titov.taskmanagerclient.command.AbstractCommand;
-import ru.titov.taskmanagerserver.endpoint.TokenResponse;
+import ru.titov.taskmanagerserver.endpoint.user.TokenResponse;
 
 public class UserSignInCommand extends AbstractCommand {
 

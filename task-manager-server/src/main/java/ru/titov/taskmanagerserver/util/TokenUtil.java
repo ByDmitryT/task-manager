@@ -6,6 +6,7 @@ import ru.titov.taskmanagerserver.dto.secure.TokenData;
 import ru.titov.taskmanagerserver.error.user.AbstractUserException;
 import ru.titov.taskmanagerserver.error.user.InvalidUserInputException;
 import ru.titov.taskmanagerserver.error.user.InvalidUserTokenException;
+import ru.titov.taskmanagerserver.error.user.UserTokenTimeOutException;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -13,11 +14,14 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Date;
 
 public enum TokenUtil {
     ;
 
-    private static final String SECRET = "qweuoijf";
+    private static final String SECRET = "qweuoijforikepwjk";
+
+    private static final long TIMEOUT = 300L;
 
     private static SecretKeySpec secretKey;
 
@@ -48,15 +52,18 @@ public enum TokenUtil {
     }
 
     public static TokenData decrypt(final String token) throws AbstractUserException {
+        final TokenData tokenData;
         try {
             final Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             final String tokenDataJson = new String(cipher.doFinal(Base64.getDecoder().decode(token)));
             final ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(tokenDataJson, TokenData.class);
+            tokenData = objectMapper.readValue(tokenDataJson, TokenData.class);
         } catch (Exception e) {
             throw new InvalidUserTokenException();
         }
+        if (tokenData.getCreated() / 1000 + TIMEOUT < new Date().getTime() / 1000) throw new UserTokenTimeOutException();
+        return tokenData;
     }
 
 }

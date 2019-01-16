@@ -1,6 +1,7 @@
 package ru.titov.taskmanagerserver.api.service;
 
 import ru.titov.taskmanagerserver.entity.Task;
+import ru.titov.taskmanagerserver.error.project.AbstractProjectException;
 import ru.titov.taskmanagerserver.error.task.AbstractTaskException;
 import ru.titov.taskmanagerserver.error.user.AbstractUserException;
 
@@ -23,4 +24,6 @@ public interface TaskService {
     List<Task> getAll();
 
     List<Task> getAllByUserId(String userId) throws AbstractUserException;
+
+    List<Task> getAllByProjectId(String projectId) throws AbstractProjectException;
 }
