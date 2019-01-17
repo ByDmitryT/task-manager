@@ -21,7 +21,7 @@ public enum TokenUtil {
 
     private static final String SECRET = "qweuoijforikepwjk";
 
-    private static final long TIMEOUT = 300L;
+    private static final long TIMEOUT = 1800L;
 
     private static SecretKeySpec secretKey;
 

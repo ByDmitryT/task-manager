@@ -35,7 +35,7 @@ public class UserEndpoint {
         try {
             final String token = userService.signIn(login, PasswordHashUtil.md5(password));
             tokenResponse.setToken(token);
-        } catch (AbstractUserException e) {
+        } catch (Exception e) {
             tokenResponse.setSuccess(false);
             tokenResponse.setMessage(e.getMessage());
         }
@@ -50,7 +50,7 @@ public class UserEndpoint {
         final Response response = new Response();
         try {
             userService.signUp(login, PasswordHashUtil.md5(password));
-        } catch (AbstractUserException e) {
+        } catch (Exception e) {
             response.setSuccess(false);
             response.setMessage(e.getMessage());
         }
@@ -65,7 +65,7 @@ public class UserEndpoint {
         final Response resultResponse = new Response();
         try {
             userService.changePassword(token, PasswordHashUtil.md5(newPassword));
-        } catch (AbstractUserException e) {
+        } catch (Exception e) {
             resultResponse.setSuccess(false);
             resultResponse.setMessage(e.getMessage());
         }
@@ -86,7 +86,7 @@ public class UserEndpoint {
                 users.add(new SimpleUser(user));
             }
             userListResponse.setUsers(users);
-        } catch (AbstractUserException e) {
+        } catch (Exception e) {
             userListResponse.setSuccess(false);
             userListResponse.setMessage(e.getMessage());
         }

@@ -7,6 +7,7 @@ import ru.titov.taskmanagerserver.error.project.*;
 import ru.titov.taskmanagerserver.error.user.AbstractUserException;
 import ru.titov.taskmanagerserver.error.user.InvalidUserInputException;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -21,14 +22,14 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project add(final Project project) throws AbstractProjectException {
+    public Project add(final Project project) throws AbstractProjectException, SQLException {
         if (project == null) throw new InvalidProjectInputException();
         if (project.getName() == null || project.getName().isEmpty()) throw new InvalidProjectNameException();
         return projectRepository.merge(project);
     }
 
     @Override
-    public Project getByOrderIndex(final String userId, final Integer projectOrderIndex) throws AbstractProjectException, AbstractUserException {
+    public Project getByOrderIndex(final String userId, final Integer projectOrderIndex) throws AbstractProjectException, AbstractUserException, SQLException {
         if (projectOrderIndex == null) throw new InvalidProjectOrderIndexException();
         final List<Project> projects = getAllByUserId(userId);
         try {
@@ -39,7 +40,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project getById(final String projectId) throws AbstractProjectException {
+    public Project getById(final String projectId) throws AbstractProjectException, SQLException {
         if (projectId == null) throw new InvalidProjectIdException();
         final Project receiveProject = projectRepository.getById(projectId);
         if (receiveProject == null) throw new InvalidProjectIdException();
@@ -47,7 +48,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project update(final Project project) throws AbstractProjectException {
+    public Project update(final Project project) throws AbstractProjectException, SQLException {
         if (project == null || !projectRepository.isExists(project.getId())) {
             throw new InvalidProjectInputException();
         }
@@ -55,14 +56,14 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project removeByOrderIndex(final String userId, final Integer projectOrderIndex) throws AbstractProjectException, AbstractUserException {
+    public Project removeByOrderIndex(final String userId, final Integer projectOrderIndex) throws AbstractProjectException, AbstractUserException, SQLException {
         if (projectOrderIndex == null) throw new InvalidProjectOrderIndexException();
         final Project project = getByOrderIndex(userId, projectOrderIndex);
         return removeById(project.getId());
     }
 
     @Override
-    public Project removeById(final String projectId) throws AbstractProjectException {
+    public Project removeById(final String projectId) throws AbstractProjectException, SQLException {
         if (projectId == null || !projectRepository.isExists(projectId)) {
             throw new InvalidProjectIdException();
         }
@@ -72,12 +73,12 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<Project> getAll() {
+    public List<Project> getAll() throws SQLException {
         return projectRepository.getAll();
     }
 
     @Override
-    public List<Project> getAllByUserId(final String userId) throws AbstractUserException {
+    public List<Project> getAllByUserId(final String userId) throws AbstractUserException, SQLException {
         if (userId == null || userId.isEmpty()) throw new InvalidUserInputException();
         final Collection<Project> projects = getAll();
         if (projects.isEmpty()) return Collections.emptyList();

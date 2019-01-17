@@ -5,25 +5,28 @@ import ru.titov.taskmanagerserver.entity.Task;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.sql.SQLException;
+
 public class TaskRepositoryTest {
 
     @Test
-    public void testAddTaskPositive() {
+    public void testAddTaskPositive() throws SQLException {
         final TaskRepository taskRepository = new TaskRepositoryImpl();
         final Task task = new Task();
         taskRepository.merge(task);
-        Assert.assertTrue(taskRepository.getData().containsKey(task.getId()));
+        Assert.assertTrue(taskRepository.isExists(task.getId()));
+        taskRepository.removeById(task.getId());
     }
 
     @Test()
-    public void testAddTaskNegative() {
+    public void testAddTaskNegative() throws SQLException {
         final TaskRepository taskRepository = new TaskRepositoryImpl();
         final Task task = taskRepository.merge(null);
         Assert.assertNull(task);
     }
 
     @Test
-    public void testUpdateTaskPositive() {
+    public void testUpdateTaskPositive() throws SQLException {
         final String updatedName = "updated task name";
         final TaskRepository taskRepository = new TaskRepositoryImpl();
         final Task task = new Task();
@@ -31,17 +34,18 @@ public class TaskRepositoryTest {
         final Task createdTask = taskRepository.getById(task.getId());
         createdTask.setName(updatedName);
         taskRepository.merge(createdTask);
-        final String updatedTaskName = taskRepository.getData().get(createdTask.getId()).getName();
+        final String updatedTaskName = taskRepository.getById(createdTask.getId()).getName();
         Assert.assertEquals(updatedName, updatedTaskName);
+        taskRepository.removeById(createdTask.getId());
     }
 
     @Test
-    public void testDeleteTaskByIdPositive() {
+    public void testDeleteTaskByIdPositive() throws SQLException {
         final TaskRepository taskRepository = new TaskRepositoryImpl();
         final Task task = new Task();
         taskRepository.merge(task);
         taskRepository.removeById(task.getId());
-        Assert.assertTrue(taskRepository.getData().isEmpty());
+        Assert.assertFalse(taskRepository.isExists(task.getId()));
     }
 
 }

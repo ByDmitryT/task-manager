@@ -44,7 +44,7 @@ public class BootstrapImpl implements Bootstrap {
     public void run() {
         try {
             userService.init();
-        } catch (AbstractUserException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         Endpoint.publish("http://localhost:8080/UserEndpoint?wsdl", new UserEndpoint(userService));

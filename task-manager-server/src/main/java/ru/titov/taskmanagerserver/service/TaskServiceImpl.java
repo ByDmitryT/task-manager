@@ -9,6 +9,7 @@ import ru.titov.taskmanagerserver.error.task.*;
 import ru.titov.taskmanagerserver.error.user.AbstractUserException;
 import ru.titov.taskmanagerserver.error.user.InvalidUserInputException;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -23,14 +24,14 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task add(final Task task) throws AbstractTaskException {
+    public Task add(final Task task) throws AbstractTaskException, SQLException {
         if (task == null) throw new InvalidTaskInputException();
         if (task.getName() == null || task.getName().isEmpty()) throw new InvalidTaskNameException();
         return taskRepository.merge(task);
     }
 
     @Override
-    public Task getByOrderIndex(final String userId, final Integer taskOrderIndex) throws AbstractTaskException, AbstractUserException {
+    public Task getByOrderIndex(final String userId, final Integer taskOrderIndex) throws AbstractTaskException, AbstractUserException, SQLException {
         if (taskOrderIndex == null) throw new InvalidTaskOrderIndexException();
         final List<Task> tasks = getAllByUserId(userId);
         try {
@@ -41,7 +42,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task getById(String taskId) throws AbstractTaskException {
+    public Task getById(String taskId) throws AbstractTaskException, SQLException {
         if (taskId == null) throw new InvalidTaskIdException();
         final Task receivedTask = taskRepository.getById(taskId);
         if (receivedTask == null) throw new InvalidTaskIdException();
@@ -49,7 +50,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task update(final Task task) throws AbstractTaskException {
+    public Task update(final Task task) throws AbstractTaskException, SQLException {
         if (task == null || !taskRepository.isExists(task.getId())) {
             throw new InvalidTaskInputException();
         }
@@ -58,14 +59,14 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task removeByOrderIndex(final String userId, final Integer taskOrderIndex) throws AbstractTaskException, AbstractUserException {
+    public Task removeByOrderIndex(final String userId, final Integer taskOrderIndex) throws AbstractTaskException, AbstractUserException, SQLException {
         if (taskOrderIndex == null) throw new InvalidTaskOrderIndexException();
         final Task task = getByOrderIndex(userId, taskOrderIndex);
         return removeById(task.getId());
     }
 
     @Override
-    public Task removeById(final String taskId) throws AbstractTaskException {
+    public Task removeById(final String taskId) throws AbstractTaskException, SQLException {
         if (taskId == null) throw new InvalidTaskIdException();
         final Task deletedTask = taskRepository.removeById(taskId);
         if (deletedTask == null) throw new InvalidTaskIdException();
@@ -73,12 +74,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> getAll() {
+    public List<Task> getAll() throws SQLException {
         return taskRepository.getAll();
     }
 
     @Override
-    public List<Task> getAllByUserId(final String userId) throws AbstractUserException {
+    public List<Task> getAllByUserId(final String userId) throws AbstractUserException, SQLException {
         if (userId == null || userId.isEmpty()) throw new InvalidUserInputException();
         final Collection<Task> tasks = getAll();
         final List<Task> userTasks = new ArrayList<>();
@@ -93,7 +94,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> getAllByProjectId(final String projectId) throws AbstractProjectException {
+    public List<Task> getAllByProjectId(final String projectId) throws AbstractProjectException, SQLException {
         if (projectId == null || projectId.isEmpty()) throw new InvalidProjectIdException();
         final Collection<Task> tasks = getAll();
         final List<Task> userTasks = new ArrayList<>();
