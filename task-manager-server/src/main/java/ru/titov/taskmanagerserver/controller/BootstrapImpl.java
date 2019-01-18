@@ -12,7 +12,6 @@ import ru.titov.taskmanagerserver.api.service.UserService;
 import ru.titov.taskmanagerserver.endpoint.project.ProjectEndpoint;
 import ru.titov.taskmanagerserver.endpoint.task.TaskEndpoint;
 import ru.titov.taskmanagerserver.endpoint.user.UserEndpoint;
-import ru.titov.taskmanagerserver.error.user.AbstractUserException;
 import ru.titov.taskmanagerserver.repository.ProjectRepositoryImpl;
 import ru.titov.taskmanagerserver.repository.TaskRepositoryImpl;
 import ru.titov.taskmanagerserver.repository.UserRepositoryImpl;
@@ -21,6 +20,8 @@ import ru.titov.taskmanagerserver.service.TaskServiceImpl;
 import ru.titov.taskmanagerserver.service.UserServiceImpl;
 
 import javax.xml.ws.Endpoint;
+import java.io.InputStream;
+import java.util.Properties;
 import java.util.Scanner;
 
 @Getter
@@ -42,14 +43,26 @@ public class BootstrapImpl implements Bootstrap {
     private final Scanner scanner = new Scanner(System.in);
 
     public void run() {
+        final Properties properties = new Properties();
+        final InputStream inputStream = getClass().getClassLoader().getResourceAsStream("application.properties");
         try {
+            properties.load(inputStream);
             userService.init();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Endpoint.publish("http://localhost:8080/UserEndpoint?wsdl", new UserEndpoint(userService));
-        Endpoint.publish("http://localhost:8080/TaskEndpoint?wsdl", new TaskEndpoint(taskService, projectService));
-        Endpoint.publish("http://localhost:8080/ProjectEndpoint?wsdl", new ProjectEndpoint(projectService, taskService));
+        final StringBuilder endpointAddress = new StringBuilder();
+        endpointAddress.append("http://");
+        endpointAddress.append(properties.getProperty("server.host"));
+        endpointAddress.append(":");
+        endpointAddress.append(properties.getProperty("server.port"));
+        endpointAddress.append("/");
+        Endpoint.publish(endpointAddress.toString() + ("UserEndpoint?wsdl"),
+                new UserEndpoint(userService));
+        Endpoint.publish(endpointAddress.toString() + ("TaskEndpoint?wsdl"),
+                new TaskEndpoint(taskService, projectService));
+        Endpoint.publish(endpointAddress.toString() + ("ProjectEndpoint?wsdl"),
+                new ProjectEndpoint(projectService, taskService));
     }
 
 }

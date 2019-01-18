@@ -44,8 +44,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void init() throws AbstractUserException, SQLException {
-        signUp("test", PasswordHashUtil.md5("test"));
-        signUp("admin", PasswordHashUtil.md5("admin"));
+        final String testUserName = "test";
+        final String adminUserName = "admin";
+        if (!isExistsByLogin(testUserName)) {
+            signUp("test", PasswordHashUtil.md5("test"));
+        }
+        if (!isExistsByLogin(adminUserName)) {
+            signUp("admin", PasswordHashUtil.md5("admin"));
+        }
     }
 
     @Override

@@ -5,6 +5,7 @@ import org.junit.Test;
 import ru.titov.taskmanagerserver.api.repository.ProjectRepository;
 import ru.titov.taskmanagerserver.api.service.ProjectService;
 import ru.titov.taskmanagerserver.entity.Project;
+import ru.titov.taskmanagerserver.entity.User;
 import ru.titov.taskmanagerserver.error.project.AbstractProjectException;
 import ru.titov.taskmanagerserver.repository.ProjectRepositoryImpl;
 
@@ -18,7 +19,9 @@ public class ProjectServiceTest {
         final String projectName = "created project";
         final ProjectRepository projectRepository = new ProjectRepositoryImpl();
         final ProjectService projectService = new ProjectServiceImpl(projectRepository);
+        final User user = new User();
         final Project project = new Project();
+        project.setUserId(user.getId());
         project.setName(projectName);
         projectService.add(project);
         final Project createdProject = projectService.getById(project.getId());
@@ -38,7 +41,9 @@ public class ProjectServiceTest {
         final String updatedName = "updated project name";
         final ProjectRepository projectRepository = new ProjectRepositoryImpl();
         final ProjectService projectService = new ProjectServiceImpl(projectRepository);
+        final User user = new User();
         final Project project = new Project();
+        project.setUserId(user.getId());
         projectService.add(project);
         final Project createdProject = projectService.getById(project.getId());
         createdProject.setName(updatedName);
@@ -59,7 +64,9 @@ public class ProjectServiceTest {
     public void testDeleteProjectPositive() throws AbstractProjectException, SQLException {
         final ProjectRepository projectRepository = new ProjectRepositoryImpl();
         final ProjectService projectService = new ProjectServiceImpl(projectRepository);
+        final User user = new User();
         final Project project = new Project();
+        project.setUserId(user.getId());
         projectService.add(project);
         projectService.removeById(project.getId());
         projectService.getById(project.getId());

@@ -11,9 +11,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Project extends AbstractEntity implements Serializable {
 
-    private String name = "new project";
-
     private String userId;
+
+    private String name = "new project";
 
     @Override
     public String toString() {
