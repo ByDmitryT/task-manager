@@ -20,8 +20,6 @@ import java.util.Date;
 public enum TokenUtil {
     ;
 
-    private static final String RESOURCE = "mybatis-config.xm";
-
     private static final String SECRET = AppConfig.TOKEN_SECRET;
 
     private static final long TIMEOUT = AppConfig.TOKEN_TIMEOUT;
@@ -65,7 +63,8 @@ public enum TokenUtil {
         } catch (Exception e) {
             throw new InvalidUserTokenException();
         }
-        if (tokenData.getCreated() / 1000 + TIMEOUT < new Date().getTime() / 1000) throw new UserTokenTimeOutException();
+        if (tokenData.getCreated() / 1000 + TIMEOUT < new Date().getTime() / 1000)
+            throw new UserTokenTimeOutException();
         return tokenData;
     }
 
