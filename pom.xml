@@ -9,8 +9,8 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>task-manager-server</module>
-        <module>task-manager-client</module>
+        <module>taskmanagerserver</module>
+        <module>taskmanagerclient</module>
     </modules>
 
     <name>taskmanager</name>
