@@ -1,27 +1,25 @@
 package ru.titov.taskmanagerserver.repository;
 
+import org.apache.ibatis.session.SqlSession;
 import org.junit.Assert;
 import org.junit.Test;
-import ru.titov.taskmanagerserver.api.repository.Repository;
 import ru.titov.taskmanagerserver.api.repository.UserRepository;
 import ru.titov.taskmanagerserver.entity.User;
-
-import java.sql.SQLException;
-
-import static org.junit.Assert.*;
+import ru.titov.taskmanagerserver.util.MyBatisUtil;
 
 public class UserRepositoryTest {
 
     @Test
-    public void getByLoginPositive() throws SQLException {
+    public void getByLoginPositive() {
         final String login = "login";
-        final UserRepository userRepository = new UserRepositoryImpl();
+        final SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+        final UserRepository userRepository = sqlSession.getMapper(UserRepository.class);
         final User user = new User();
         user.setLogin(login);
-        userRepository.merge(user);
-        final User createdUser = userRepository.getByLogin(login);
+        userRepository.insertUser(user);
+        final User createdUser = userRepository.selectUserByLogin(login);
         Assert.assertEquals(createdUser.getLogin(), login);
-        userRepository.removeById(createdUser.getId());
+        userRepository.deleteUserById(createdUser.getId());
     }
 
 }

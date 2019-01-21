@@ -7,6 +7,8 @@ import java.util.Properties;
 public enum  AppConfig {
     ;
 
+    public static final String RESOURCE = "application.properties";
+
     public static final String JDBC_DRIVER;
 
     public static final String DB_URL;
@@ -19,9 +21,13 @@ public enum  AppConfig {
 
     public static final String SERVER_PORT;
 
+    public static final String TOKEN_SECRET;
+
+    public static final long TOKEN_TIMEOUT;
+
     static {
         final Properties properties = new Properties();
-        try (final InputStream inputStream = AppConfig.class.getClassLoader().getResourceAsStream("application.properties")){
+        try (final InputStream inputStream = AppConfig.class.getClassLoader().getResourceAsStream(RESOURCE)){
             properties.load(inputStream);
         } catch (IOException e) {
             e.printStackTrace();
@@ -32,6 +38,8 @@ public enum  AppConfig {
         DB_PASSWORD = properties.getProperty("datasource.password");
         SERVER_HOST = properties.getProperty("server.host");
         SERVER_PORT = properties.getProperty("server.port");
+        TOKEN_SECRET = properties.getProperty("token.secret");
+        TOKEN_TIMEOUT = Long.parseLong(properties.getProperty("token.timeout"));
     }
 
 }

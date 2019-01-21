@@ -1,43 +1,45 @@
 package ru.titov.taskmanagerserver.controller;
 
 import lombok.Getter;
-import lombok.Setter;
+import org.apache.ibatis.session.SqlSession;
 import ru.titov.taskmanagerserver.api.controller.Bootstrap;
 import ru.titov.taskmanagerserver.api.repository.ProjectRepository;
 import ru.titov.taskmanagerserver.api.repository.TaskRepository;
 import ru.titov.taskmanagerserver.api.repository.UserRepository;
-import ru.titov.taskmanagerserver.api.service.ProjectService;
-import ru.titov.taskmanagerserver.api.service.TaskService;
-import ru.titov.taskmanagerserver.api.service.UserService;
+import ru.titov.taskmanagerserver.api.service.*;
 import ru.titov.taskmanagerserver.config.AppConfig;
 import ru.titov.taskmanagerserver.endpoint.project.ProjectEndpoint;
 import ru.titov.taskmanagerserver.endpoint.task.TaskEndpoint;
 import ru.titov.taskmanagerserver.endpoint.user.UserEndpoint;
-import ru.titov.taskmanagerserver.repository.ProjectRepositoryImpl;
-import ru.titov.taskmanagerserver.repository.TaskRepositoryImpl;
-import ru.titov.taskmanagerserver.repository.UserRepositoryImpl;
 import ru.titov.taskmanagerserver.service.ProjectServiceImpl;
 import ru.titov.taskmanagerserver.service.TaskServiceImpl;
+import ru.titov.taskmanagerserver.service.TransactionServiceImpl;
 import ru.titov.taskmanagerserver.service.UserServiceImpl;
+import ru.titov.taskmanagerserver.util.MyBatisUtil;
 
 import javax.xml.ws.Endpoint;
-import java.util.Scanner;
 
-public class BootstrapImpl implements Bootstrap {
+public class BootstrapImpl implements Bootstrap, ServiceLocator {
 
-    private final ProjectRepository projectRepository = new ProjectRepositoryImpl();
+    private final SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
 
-    private final TaskRepository taskRepository = new TaskRepositoryImpl();
+    @Getter
+    private final TransactionService transactionService = new TransactionServiceImpl(session);
 
-    private final ProjectService projectService = new ProjectServiceImpl(projectRepository);
+    private final ProjectRepository projectRepository = session.getMapper(ProjectRepository.class);
 
-    private final TaskService taskService = new TaskServiceImpl(taskRepository);
+    @Getter
+    private final ProjectService projectService = new ProjectServiceImpl(projectRepository, this);
 
-    private final UserRepository userRepository = new UserRepositoryImpl();
+    private final TaskRepository taskRepository = session.getMapper(TaskRepository.class);
 
-    private final UserService userService = new UserServiceImpl(userRepository);
+    @Getter
+    private final TaskService taskService = new TaskServiceImpl(taskRepository, this);
 
-    private final Scanner scanner = new Scanner(System.in);
+    private final UserRepository userRepository = session.getMapper(UserRepository.class);
+
+    @Getter
+    private final UserService userService = new UserServiceImpl(userRepository, this);
 
     public void run() {
         try {
@@ -57,6 +59,7 @@ public class BootstrapImpl implements Bootstrap {
                 new TaskEndpoint(taskService, projectService));
         Endpoint.publish(endpointAddress.toString() + ("ProjectEndpoint?wsdl"),
                 new ProjectEndpoint(projectService, taskService));
+        System.out.println("[SERVER START]");
     }
 
 }

@@ -8,28 +8,28 @@ import java.util.List;
 
 public interface UserService {
 
-    User signUp(String login, String passwordHash) throws AbstractUserException, SQLException;
+    void signUp(String login, String passwordHash) throws AbstractUserException;
 
-    String signIn(String login, String passwordHash) throws AbstractUserException, SQLException;
+    String signIn(String login, String passwordHash) throws AbstractUserException;
 
-    void init() throws AbstractUserException, SQLException;
+    void init() throws AbstractUserException;
 
-    User add(User user) throws AbstractUserException, SQLException;
+    void add(User user) throws AbstractUserException;
 
-    User getByLogin(String login) throws AbstractUserException, SQLException;
+    User getByLogin(String login) throws AbstractUserException;
 
-    User getById(String id) throws AbstractUserException, SQLException;
+    User getById(String id) throws AbstractUserException;
 
-    User changePassword(String token, String newPasswordHash) throws AbstractUserException, SQLException;
+    void changePassword(String token, String newPasswordHash) throws AbstractUserException;
 
-    User removeByLogin(String login) throws AbstractUserException, SQLException;
+    void removeByLogin(String login) throws AbstractUserException;
 
-    User removeById(String id) throws AbstractUserException, SQLException;
+    void removeById(String id) throws AbstractUserException;
 
-    boolean isExistsById(String id) throws AbstractUserException, SQLException;
+    boolean doesExistsById(String id) throws AbstractUserException;
 
-    boolean isExistsByLogin(String login) throws AbstractUserException, SQLException;
+    boolean doesExistsByLogin(String login) throws AbstractUserException;
 
-    List<User> getAll() throws SQLException;
+    List<User> getAll();
 
 }

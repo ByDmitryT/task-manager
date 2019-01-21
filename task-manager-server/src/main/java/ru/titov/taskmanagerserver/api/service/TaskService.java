@@ -10,21 +10,23 @@ import java.util.List;
 
 public interface TaskService {
 
-    Task add(Task task) throws AbstractTaskException, SQLException;
+    void add(Task task) throws AbstractTaskException;
 
-    Task getByOrderIndex(String userId, Integer taskOrderIndex) throws AbstractTaskException, AbstractUserException, SQLException;
+    Task getByOrderIndex(String userId, Integer taskOrderIndex) throws AbstractTaskException, AbstractUserException;
 
-    Task getById(String taskId) throws AbstractTaskException, SQLException;
+    Task getById(String taskId) throws AbstractTaskException;
 
-    Task update(Task task) throws AbstractTaskException, SQLException;
+    void update(Task task) throws AbstractTaskException;
 
-    Task removeByOrderIndex(String userId, Integer taskOrderIndex) throws AbstractTaskException, AbstractUserException, SQLException;
+    void removeByOrderIndex(String userId, Integer taskOrderIndex) throws AbstractTaskException, AbstractUserException;
 
-    Task removeById(String taskId) throws AbstractTaskException, SQLException;
+    void removeById(String taskId) throws AbstractTaskException;
 
-    List<Task> getAll() throws SQLException;
+    boolean doesExists(String taskId);
 
-    List<Task> getAllByUserId(String userId) throws AbstractUserException, SQLException;
+    List<Task> getAll();
 
-    List<Task> getAllByProjectId(String projectId) throws AbstractProjectException, SQLException;
+    List<Task> getAllByUserId(String userId) throws AbstractUserException;
+
+    List<Task> getAllByProjectId(String projectId) throws AbstractProjectException;
 }

@@ -56,7 +56,8 @@ public class ProjectEndpoint {
         final Response response = new Response();
         try {
             final TokenData tokenData = TokenUtil.decrypt(token);
-            final Project project = projectService.removeByOrderIndex(tokenData.getUserId(), projectOrderIndex);
+            final Project project = projectService.getByOrderIndex(tokenData.getUserId(), projectOrderIndex);
+            projectService.removeByOrderIndex(tokenData.getUserId(), projectOrderIndex);
             for (final Task task : taskService.getAll()) {
                 if (task == null) continue;
                 if (project.getId().equals(task.getProjectId())) {

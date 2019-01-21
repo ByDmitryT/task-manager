@@ -2,6 +2,7 @@ package ru.titov.taskmanagerserver.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import ru.titov.taskmanagerserver.config.AppConfig;
 import ru.titov.taskmanagerserver.dto.secure.TokenData;
 import ru.titov.taskmanagerserver.error.user.AbstractUserException;
 import ru.titov.taskmanagerserver.error.user.InvalidUserInputException;
@@ -19,9 +20,11 @@ import java.util.Date;
 public enum TokenUtil {
     ;
 
-    private static final String SECRET = "qweuoijforikepwjk";
+    private static final String RESOURCE = "mybatis-config.xm";
 
-    private static final long TIMEOUT = 1800L;
+    private static final String SECRET = AppConfig.TOKEN_SECRET;
+
+    private static final long TIMEOUT = AppConfig.TOKEN_TIMEOUT;
 
     private static SecretKeySpec secretKey;
 

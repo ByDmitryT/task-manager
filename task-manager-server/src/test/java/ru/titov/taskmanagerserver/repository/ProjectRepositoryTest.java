@@ -1,59 +1,57 @@
 package ru.titov.taskmanagerserver.repository;
 
+import org.apache.ibatis.session.SqlSession;
 import org.junit.Assert;
 import org.junit.Test;
 import ru.titov.taskmanagerserver.api.repository.ProjectRepository;
-import ru.titov.taskmanagerserver.database.DatabaseConnection;
 import ru.titov.taskmanagerserver.entity.Project;
 import ru.titov.taskmanagerserver.entity.User;
+import ru.titov.taskmanagerserver.util.MyBatisUtil;
 
 import java.sql.SQLException;
 
 public class ProjectRepositoryTest {
 
     @Test
-    public void testAddProjectPositive() throws SQLException {
-        final ProjectRepository projectRepository = new ProjectRepositoryImpl();
+    public void testAddProjectPositive() {
+        final SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+        final ProjectRepository projectRepository = sqlSession.getMapper(ProjectRepository.class);
         final User user = new User();
         final Project project = new Project();
         project.setUserId(user.getId());
-        projectRepository.merge(project);
-        Assert.assertTrue(projectRepository.isExists(project.getId()));
-        projectRepository.removeById(project.getId());
-    }
-
-    @Test()
-    public void testAddProjectNegative() throws SQLException {
-        final ProjectRepository projectRepository = new ProjectRepositoryImpl();
-        final Project project = projectRepository.merge(null);
-        Assert.assertNull(project);
+        projectRepository.insertProject(project);
+        final Project createdProject = projectRepository.selectProjectById(project.getId());
+        Assert.assertEquals(project.getId(), createdProject.getId());
+        projectRepository.deleteProjectById(project.getId());
     }
 
     @Test
-    public void testUpdateProjectPositive() throws SQLException {
+    public void testUpdateProjectPositive() {
         final String updatedName = "updated project name";
-        final ProjectRepository projectRepository = new ProjectRepositoryImpl();
+        final SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+        final ProjectRepository projectRepository = sqlSession.getMapper(ProjectRepository.class);
         final User user = new User();
         final Project project = new Project();
         project.setUserId(user.getId());
-        projectRepository.merge(project);
-        final Project createdProject = projectRepository.getById(project.getId());
+        projectRepository.insertProject(project);
+        final Project createdProject = projectRepository.selectProjectById(project.getId());
         createdProject.setName(updatedName);
-        projectRepository.merge(createdProject);
-        final String updatedProjectName = projectRepository.getById(createdProject.getId()).getName();
+        projectRepository.updateProject(createdProject);
+        final String updatedProjectName = projectRepository.selectProjectById(createdProject.getId()).getName();
         Assert.assertEquals(updatedName, updatedProjectName);
-        projectRepository.removeById(createdProject.getId());
+        projectRepository.deleteProjectById(createdProject.getId());
     }
 
     @Test
-    public void testDeleteProjectByIdPositive() throws SQLException {
-        final ProjectRepository projectRepository = new ProjectRepositoryImpl();
+    public void testDeleteProjectByIdPositive() {
+        final SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+        final ProjectRepository projectRepository = sqlSession.getMapper(ProjectRepository.class);
         final User user = new User();
         final Project project = new Project();
         project.setUserId(user.getId());
-        projectRepository.merge(project);
-        projectRepository.removeById(project.getId());
-        Assert.assertFalse(projectRepository.isExists(project.getId()));
+        projectRepository.insertProject(project);
+        projectRepository.deleteProjectById(project.getId());
+        Assert.assertNull(projectRepository.selectProjectById(project.getId()));
     }
 
 }

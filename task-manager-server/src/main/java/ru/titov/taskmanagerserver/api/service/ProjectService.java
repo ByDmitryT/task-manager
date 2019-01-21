@@ -9,19 +9,21 @@ import java.util.List;
 
 public interface ProjectService {
 
-    Project add(Project project) throws AbstractProjectException, SQLException;
+    void add(Project project) throws AbstractProjectException;
 
-    Project getByOrderIndex(String userId, Integer projectOrderIndex) throws AbstractProjectException, AbstractUserException, SQLException;
+    Project getByOrderIndex(String userId, Integer projectOrderIndex) throws AbstractProjectException, AbstractUserException;
 
-    Project getById(String projectId) throws AbstractProjectException, SQLException;
+    Project getById(String projectId) throws AbstractProjectException;
 
-    Project update(Project project) throws AbstractProjectException, SQLException;
+    void update(Project project) throws AbstractProjectException;
 
-    Project removeByOrderIndex(String userId, Integer projectOrderIndex) throws AbstractProjectException, AbstractUserException, SQLException;
+    void removeByOrderIndex(String userId, Integer projectOrderIndex) throws AbstractProjectException, AbstractUserException;
 
-    Project removeById(String projectId) throws AbstractProjectException, SQLException;
+    void removeById(String projectId) throws AbstractProjectException;
 
-    List<Project> getAll() throws SQLException;
+    boolean doesExists(String projectId);
 
-    List<Project> getAllByUserId(String userId) throws AbstractUserException, SQLException;
+    List<Project> getAll();
+
+    List<Project> getAllByUserId(String userId) throws AbstractUserException;
 }
