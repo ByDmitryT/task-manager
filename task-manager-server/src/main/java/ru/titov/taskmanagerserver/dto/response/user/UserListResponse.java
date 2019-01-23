@@ -13,6 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 public class UserListResponse extends Response {
 
-    private List<SimpleUser> users;
+    public List<SimpleUser> users;
 
 }

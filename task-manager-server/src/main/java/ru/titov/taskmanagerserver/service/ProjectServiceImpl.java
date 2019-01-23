@@ -2,12 +2,12 @@ package ru.titov.taskmanagerserver.service;
 
 import ru.titov.taskmanagerserver.api.repository.ProjectRepository;
 import ru.titov.taskmanagerserver.api.service.ProjectService;
-import ru.titov.taskmanagerserver.api.service.ServiceLocator;
 import ru.titov.taskmanagerserver.entity.Project;
 import ru.titov.taskmanagerserver.error.project.*;
 import ru.titov.taskmanagerserver.error.user.AbstractUserException;
 import ru.titov.taskmanagerserver.error.user.InvalidUserInputException;
 
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -17,11 +17,8 @@ public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
 
-    private final ServiceLocator serviceLocator;
-
-    public ProjectServiceImpl(ProjectRepository projectRepository, ServiceLocator serviceLocator) {
+    public ProjectServiceImpl(ProjectRepository projectRepository) {
         this.projectRepository = projectRepository;
-        this.serviceLocator = serviceLocator;
     }
 
     @Override
@@ -29,8 +26,9 @@ public class ProjectServiceImpl implements ProjectService {
         if (project == null) throw new InvalidProjectInputException();
         if (project.getName() == null || project.getName().isEmpty()) throw new InvalidProjectNameException();
         if (doesExists(project.getId())) throw new ProjectExistsException();
-        projectRepository.insertProject(project);
-        serviceLocator.getTransactionService().commit();
+        projectRepository.beginTransaction();
+        projectRepository.persist(project);
+        projectRepository.commitTransaction();
     }
 
     @Override
@@ -47,7 +45,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Project getById(final String projectId) throws AbstractProjectException {
         if (projectId == null) throw new InvalidProjectIdException();
-        final Project project = projectRepository.selectProjectById(projectId);
+        final Project project = projectRepository.getById(projectId);
         if (project == null) throw new ProjectNotFoundException();
         return project;
     }
@@ -57,8 +55,9 @@ public class ProjectServiceImpl implements ProjectService {
         if (project == null || !doesExists(project.getId())) {
             throw new InvalidProjectInputException();
         }
-        projectRepository.updateProject(project);
-        serviceLocator.getTransactionService().commit();
+        projectRepository.beginTransaction();
+        projectRepository.merge(project);
+        projectRepository.commitTransaction();
     }
 
     @Override
@@ -73,34 +72,28 @@ public class ProjectServiceImpl implements ProjectService {
         if (projectId == null || !doesExists(projectId)) {
             throw new InvalidProjectIdException();
         }
-        projectRepository.deleteProjectById(projectId);
-        serviceLocator.getTransactionService().commit();
+        final Project project = new Project();
+        project.setId(projectId);
+        projectRepository.beginTransaction();
+        projectRepository.removeById(projectId);
+        projectRepository.commitTransaction();
     }
 
     @Override
-    public boolean doesExists(String projectId) {
-        return projectRepository.selectProjectById(projectId) != null;
+    public boolean doesExists(final String projectId) throws InvalidProjectIdException {
+        if (projectId == null || projectId.isEmpty()) throw new InvalidProjectIdException();
+        return projectRepository.containsById(projectId);
     }
 
     @Override
     public List<Project> getAll() {
-        return projectRepository.selectProjects();
+        return projectRepository.getAll();
     }
 
     @Override
     public List<Project> getAllByUserId(final String userId) throws AbstractUserException {
         if (userId == null || userId.isEmpty()) throw new InvalidUserInputException();
-        final Collection<Project> projects = getAll();
-        if (projects.isEmpty()) return Collections.emptyList();
-        final List<Project> userProjects = new ArrayList<>();
-        for (Project project : projects) {
-            if (project == null) continue;
-            if (userId.equals(project.getUserId())) {
-                userProjects.add(project);
-            }
-        }
-        if (userProjects.isEmpty()) return Collections.emptyList();
-        return userProjects;
+        return projectRepository.getAllByUserId(userId);
     }
 
 }

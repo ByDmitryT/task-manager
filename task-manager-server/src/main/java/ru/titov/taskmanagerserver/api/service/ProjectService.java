@@ -2,9 +2,9 @@ package ru.titov.taskmanagerserver.api.service;
 
 import ru.titov.taskmanagerserver.entity.Project;
 import ru.titov.taskmanagerserver.error.project.AbstractProjectException;
+import ru.titov.taskmanagerserver.error.project.InvalidProjectIdException;
 import ru.titov.taskmanagerserver.error.user.AbstractUserException;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface ProjectService {
@@ -21,9 +21,9 @@ public interface ProjectService {
 
     void removeById(String projectId) throws AbstractProjectException;
 
-    boolean doesExists(String projectId);
+    boolean doesExists(String projectId) throws InvalidProjectIdException;
 
-    List<Project> getAll();
+    List getAll();
 
     List<Project> getAllByUserId(String userId) throws AbstractUserException;
 }

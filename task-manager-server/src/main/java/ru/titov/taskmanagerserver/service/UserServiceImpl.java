@@ -1,7 +1,6 @@
 package ru.titov.taskmanagerserver.service;
 
 import ru.titov.taskmanagerserver.api.repository.UserRepository;
-import ru.titov.taskmanagerserver.api.service.ServiceLocator;
 import ru.titov.taskmanagerserver.api.service.UserService;
 import ru.titov.taskmanagerserver.dto.secure.TokenData;
 import ru.titov.taskmanagerserver.entity.User;
@@ -9,6 +8,8 @@ import ru.titov.taskmanagerserver.error.user.*;
 import ru.titov.taskmanagerserver.util.PasswordHashUtil;
 import ru.titov.taskmanagerserver.util.TokenUtil;
 
+import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,11 +17,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    private final ServiceLocator serviceLocator;
-
-    public UserServiceImpl(final UserRepository userRepository, ServiceLocator serviceLocator) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.serviceLocator = serviceLocator;
     }
 
     @Override
@@ -65,22 +63,23 @@ public class UserServiceImpl implements UserService {
             throw new InvalidUserPasswordException();
         }
         if (doesExistsByLogin(user.getLogin())) throw new UserLoginExistsException();
-        userRepository.insertUser(user);
-        serviceLocator.getTransactionService().commit();
+        userRepository.beginTransaction();
+        userRepository.persist(user);
+        userRepository.commitTransaction();
     }
 
     @Override
     public User getByLogin(final String login) throws AbstractUserException {
         if (login == null || login.isEmpty()) throw new InvalidUserLoginException();
-        final User user = userRepository.selectUserByLogin(login);
+        final User user = userRepository.getByLogin(login);
         if (user == null) throw new UserNotFoundException();
         return user;
     }
 
     @Override
     public User getById(final String id) throws AbstractUserException {
-        if (id == null || id.isEmpty()) throw new InvalidUserInputException();
-        final User user = userRepository.selectUserById(id);
+        if (id == null || id.isEmpty()) throw new InvalidUserIdException();
+        final User user = userRepository.getById(id);
         if (user == null) throw new UserNotFoundException();
         return user;
     }
@@ -92,40 +91,43 @@ public class UserServiceImpl implements UserService {
         final TokenData tokenData = TokenUtil.decrypt(token);
         final User user = getById(tokenData.getUserId());
         user.setPasswordHash(newPasswordHash);
-        userRepository.updateUser(user);
-        serviceLocator.getTransactionService().commit();
+        userRepository.beginTransaction();
+        userRepository.merge(user);
+        userRepository.commitTransaction();
     }
 
     @Override
     public void removeByLogin(final String login) throws AbstractUserException {
         if (login == null) throw new InvalidUserLoginException();
-        if (!doesExistsByLogin(login)) throw new InvalidUserLoginException();
-        userRepository.deleteUserByLogin(login);
-        serviceLocator.getTransactionService().commit();
+        final User user = getByLogin(login);
+        userRepository.beginTransaction();
+        userRepository.remove(user);
+        userRepository.commitTransaction();
     }
 
     @Override
     public void removeById(final String id) throws AbstractUserException {
         if (id == null || id.isEmpty()) throw new InvalidUserInputException();
-        userRepository.deleteUserById(id);
-        serviceLocator.getTransactionService().commit();
+        userRepository.beginTransaction();
+        userRepository.removeById(id);
+        userRepository.commitTransaction();
     }
 
     @Override
     public boolean doesExistsById(final String id) throws AbstractUserException {
         if (id == null || id.isEmpty()) throw new InvalidUserLoginException();
-        return userRepository.selectUserById(id) != null;
+        return userRepository.containsById(id);
     }
 
     @Override
-    public boolean doesExistsByLogin(String login) throws AbstractUserException {
+    public boolean doesExistsByLogin(final String login) throws AbstractUserException {
         if (login == null || login.isEmpty()) throw new InvalidUserLoginException();
-        return userRepository.selectUserByLogin(login) != null;
+        return userRepository.containsByLogin(login);
     }
 
     @Override
     public List<User> getAll() {
-        return userRepository.selectUsers();
+        return userRepository.getAll();
     }
 
 }

@@ -8,6 +8,4 @@ public interface ServiceLocator {
 
     UserService getUserService();
 
-    TransactionService getTransactionService();
-
 }

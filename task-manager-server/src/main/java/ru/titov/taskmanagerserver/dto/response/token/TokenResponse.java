@@ -10,6 +10,6 @@ import ru.titov.taskmanagerserver.dto.response.Response;
 @NoArgsConstructor
 public class TokenResponse extends Response {
 
-    private String token;
+    public String token;
 
 }

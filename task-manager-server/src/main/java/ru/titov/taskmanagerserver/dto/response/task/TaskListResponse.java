@@ -12,6 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 public class TaskListResponse extends Response {
 
-    private List<SimpleTask> tasks;
+    public List<SimpleTask> tasks;
 
 }

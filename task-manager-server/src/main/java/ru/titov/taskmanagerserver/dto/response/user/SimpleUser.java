@@ -10,7 +10,7 @@ import ru.titov.taskmanagerserver.entity.User;
 @NoArgsConstructor
 public class SimpleUser {
 
-    private String login;
+    public String login;
 
     public SimpleUser(User user) {
         if (user != null) login = user.getLogin();

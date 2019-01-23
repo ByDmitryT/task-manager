@@ -10,6 +10,6 @@ import ru.titov.taskmanagerserver.dto.response.Response;
 @NoArgsConstructor
 public class TaskResponse extends Response {
 
-    private SimpleTask task;
+    public SimpleTask task;
 
 }

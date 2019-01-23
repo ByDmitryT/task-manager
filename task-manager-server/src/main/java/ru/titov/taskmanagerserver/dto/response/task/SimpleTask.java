@@ -10,9 +10,9 @@ import ru.titov.taskmanagerserver.entity.Task;
 @NoArgsConstructor
 public class SimpleTask {
 
-    private String name;
+    public String name;
 
-    private String description;
+    public String description;
 
     public SimpleTask(Task task) {
         if (task != null) {

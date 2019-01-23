@@ -12,6 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 public class ProjectListResponse extends Response {
 
-    private List<SimpleProject> projects;
+    public List<SimpleProject> projects;
 
 }

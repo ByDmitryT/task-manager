@@ -10,7 +10,7 @@ import ru.titov.taskmanagerserver.entity.Project;
 @NoArgsConstructor
 public class SimpleProject {
 
-    private String name;
+    public String name;
 
     public SimpleProject(final Project project) {
         if (project != null) name = project.getName();
