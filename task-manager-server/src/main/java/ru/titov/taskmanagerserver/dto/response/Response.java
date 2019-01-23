@@ -1,8 +1,5 @@
 package ru.titov.taskmanagerserver.dto.response;
 
-import lombok.Getter;
-import lombok.Setter;
-
 public class Response {
 
     private boolean success = true;
@@ -24,4 +21,5 @@ public class Response {
     public void setMessage(String message) {
         this.message = message;
     }
+
 }

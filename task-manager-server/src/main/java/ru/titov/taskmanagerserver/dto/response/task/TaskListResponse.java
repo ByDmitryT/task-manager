@@ -1,17 +1,21 @@
 package ru.titov.taskmanagerserver.dto.response.task;
 
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import ru.titov.taskmanagerserver.dto.response.Response;
 
 import java.util.List;
 
-@Getter
-@Setter
 @NoArgsConstructor
 public class TaskListResponse extends Response {
 
-    public List<SimpleTask> tasks;
+    private List<SimpleTask> tasks;
+
+    public List<SimpleTask> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<SimpleTask> tasks) {
+        this.tasks = tasks;
+    }
 
 }

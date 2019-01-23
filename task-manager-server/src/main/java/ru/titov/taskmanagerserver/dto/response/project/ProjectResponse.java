@@ -5,11 +5,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.titov.taskmanagerserver.dto.response.Response;
 
-@Getter
-@Setter
 @NoArgsConstructor
 public class ProjectResponse extends Response {
 
-    public SimpleProject project;
+    private SimpleProject project;
+
+    public SimpleProject getProject() {
+        return project;
+    }
+
+    public void setProject(SimpleProject project) {
+        this.project = project;
+    }
 
 }
