@@ -51,12 +51,9 @@ public class BootstrapImpl implements Bootstrap, ServiceLocator {
         endpointAddress.append(":");
         endpointAddress.append(AppConfig.SERVER_PORT);
         endpointAddress.append("/");
-        Endpoint.publish(endpointAddress.toString() + ("UserEndpoint?wsdl"),
-                new UserEndpoint(userService));
-        Endpoint.publish(endpointAddress.toString() + ("TaskEndpoint?wsdl"),
-                new TaskEndpoint(taskService, projectService));
-        Endpoint.publish(endpointAddress.toString() + ("ProjectEndpoint?wsdl"),
-                new ProjectEndpoint(projectService, taskService));
+        Endpoint.publish(endpointAddress.toString() + ("UserEndpoint?wsdl"), new UserEndpoint(this));
+        Endpoint.publish(endpointAddress.toString() + ("TaskEndpoint?wsdl"), new TaskEndpoint(this));
+        Endpoint.publish(endpointAddress.toString() + ("ProjectEndpoint?wsdl"), new ProjectEndpoint(this));
         System.out.println("[SERVER START]");
     }
 

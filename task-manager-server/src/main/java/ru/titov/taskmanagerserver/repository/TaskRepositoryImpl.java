@@ -35,14 +35,14 @@ public class TaskRepositoryImpl extends AbstractRepository<Task> implements Task
 
     @Override
     public List<Task> getAllByUserId(String userId) {
-        final TypedQuery<Task> query = entityManager.createQuery("FROM Task WHERE userId = :userId", Task.class);
+        final TypedQuery<Task> query = entityManager.createQuery("FROM Task t WHERE t.user.id = :userId", Task.class);
         query.setParameter("userId", userId);
         return query.getResultList();
     }
 
     @Override
     public List<Task> getAllByProjectId(String projectId) {
-        final TypedQuery<Task> query = entityManager.createQuery("FROM Task WHERE projectId = :projectId", Task.class);
+        final TypedQuery<Task> query = entityManager.createQuery("FROM Task t WHERE t.project.id = :projectId", Task.class);
         query.setParameter("projectId", projectId);
         return query.getResultList();
     }

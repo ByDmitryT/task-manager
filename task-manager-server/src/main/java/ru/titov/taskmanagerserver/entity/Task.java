@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -15,12 +16,11 @@ import java.util.UUID;
 @Entity
 public class Task extends AbstractEntity implements Serializable {
 
-    @Id
-    private String id = UUID.randomUUID().toString();
+    @ManyToOne
+    private User user;
 
-    private String userId;
-
-    private String projectId;
+    @ManyToOne
+    private Project project;
 
     private String name;
 

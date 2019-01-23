@@ -20,8 +20,8 @@ public class TaskServiceTest {
         final User user = new User();
         final Project project = new Project();
         final Task task = new Task();
-        task.setUserId(user.getId());
-        task.setProjectId(project.getId());
+        task.setUser(user);
+        task.setProject(project);
         task.setName(taskName);
         taskService.add(task);
         final Task createdTask = taskService.getById(task.getId());
@@ -45,8 +45,8 @@ public class TaskServiceTest {
         final User user = new User();
         final Project project = new Project();
         final Task task = new Task();
-        task.setUserId(user.getId());
-        task.setProjectId(project.getId());
+        task.setUser(user);
+        task.setProject(project);
         task.setName(taskName);
         taskService.add(task);
         final Task createdTask = taskService.getById(task.getId());
@@ -71,8 +71,8 @@ public class TaskServiceTest {
         final User user = new User();
         final Project project = new Project();
         final Task task = new Task();
-        task.setUserId(user.getId());
-        task.setProjectId(project.getId());
+        task.setUser(user);
+        task.setProject(project);
         taskService.add(task);
         taskService.removeById(task.getId());
         taskService.getById(task.getId());

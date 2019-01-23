@@ -1,7 +1,6 @@
 package ru.titov.taskmanagerserver.endpoint.task;
 
-import ru.titov.taskmanagerserver.api.service.ProjectService;
-import ru.titov.taskmanagerserver.api.service.TaskService;
+import ru.titov.taskmanagerserver.api.service.ServiceLocator;
 import ru.titov.taskmanagerserver.dto.response.Response;
 import ru.titov.taskmanagerserver.dto.response.task.SimpleTask;
 import ru.titov.taskmanagerserver.dto.response.task.TaskListResponse;
@@ -9,6 +8,7 @@ import ru.titov.taskmanagerserver.dto.response.task.TaskResponse;
 import ru.titov.taskmanagerserver.dto.secure.TokenData;
 import ru.titov.taskmanagerserver.entity.Project;
 import ru.titov.taskmanagerserver.entity.Task;
+import ru.titov.taskmanagerserver.entity.User;
 import ru.titov.taskmanagerserver.util.TokenUtil;
 
 import javax.jws.WebMethod;
@@ -20,12 +20,10 @@ import java.util.List;
 @WebService
 public class TaskEndpoint {
 
-    private final TaskService taskService;
-    private final ProjectService projectService;
+    private final ServiceLocator serviceLocator;
 
-    public TaskEndpoint(final TaskService taskService, final ProjectService projectService) {
-        this.taskService = taskService;
-        this.projectService = projectService;
+    public TaskEndpoint(ServiceLocator serviceLocator) {
+        this.serviceLocator = serviceLocator;
     }
 
     @WebMethod
@@ -39,12 +37,13 @@ public class TaskEndpoint {
         try {
             final TokenData tokenData = TokenUtil.decrypt(token);
             final Task task = new Task();
-            final Project project = projectService.getByOrderIndex(tokenData.getUserId(), projectOrderIndex);
-            task.setUserId(tokenData.getUserId());
-            task.setProjectId(project.getId());
+            final Project project = serviceLocator.getProjectService().getByOrderIndex(tokenData.getUserId(), projectOrderIndex);
+            final User user = serviceLocator.getUserService().getById(tokenData.getUserId());
+            task.setUser(user);
+            task.setProject(project);
             task.setName(name);
             task.setDescription(description);
-            taskService.add(task);
+            serviceLocator.getTaskService().add(task);
         } catch (Exception e) {
             response.setSuccess(false);
             response.setMessage(e.getMessage());
@@ -60,7 +59,7 @@ public class TaskEndpoint {
         final Response response = new Response();
         try {
             final TokenData tokenData = TokenUtil.decrypt(token);
-            taskService.removeByOrderIndex(tokenData.getUserId(), taskOrderIndex);
+            serviceLocator.getTaskService().removeByOrderIndex(tokenData.getUserId(), taskOrderIndex);
         } catch (Exception e) {
             response.setSuccess(false);
             response.setMessage(e.getMessage());
@@ -79,13 +78,14 @@ public class TaskEndpoint {
         final Response response = new Response();
         try {
             final TokenData tokenData = TokenUtil.decrypt(token);
-            final Task task = taskService.getByOrderIndex(tokenData.getUserId(), taskOrderIndex);
-            final Project project = projectService.getByOrderIndex(tokenData.getUserId(), projectOrderIndex);
-            task.setUserId(tokenData.getUserId());
-            task.setProjectId(project.getId());
+            final Task task = serviceLocator.getTaskService().getByOrderIndex(tokenData.getUserId(), taskOrderIndex);
+            final Project project = serviceLocator.getProjectService().getByOrderIndex(tokenData.getUserId(), projectOrderIndex);
+            final User user = serviceLocator.getUserService().getById(tokenData.getUserId());
+            task.setUser(user);
+            task.setProject(project);
             task.setName(name);
             task.setDescription(description);
-            taskService.update(task);
+            serviceLocator.getTaskService().update(task);
         } catch (Exception e) {
             response.setSuccess(false);
             response.setMessage(e.getMessage());
@@ -101,7 +101,7 @@ public class TaskEndpoint {
         final TaskResponse taskResponse = new TaskResponse();
         try {
             final TokenData tokenData = TokenUtil.decrypt(token);
-            final Task task = taskService.getByOrderIndex(tokenData.getUserId(), taskOrderIndex);
+            final Task task = serviceLocator.getTaskService().getByOrderIndex(tokenData.getUserId(), taskOrderIndex);
             final SimpleTask simpleTask = new SimpleTask(task);
             taskResponse.setTask(simpleTask);
         } catch (Exception e) {
@@ -119,7 +119,7 @@ public class TaskEndpoint {
         try {
             final TokenData tokenData = TokenUtil.decrypt(token);
             final List<SimpleTask> simpleTasks = new ArrayList<>();
-            final List<Task> tasks = taskService.getAllByUserId(tokenData.getUserId());
+            final List<Task> tasks = serviceLocator.getTaskService().getAllByUserId(tokenData.getUserId());
             for (final Task task : tasks) {
                 if (task == null) continue;
                 simpleTasks.add(new SimpleTask(task));

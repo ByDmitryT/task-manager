@@ -6,7 +6,10 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -15,12 +18,13 @@ import java.util.UUID;
 @Entity
 public class Project extends AbstractEntity implements Serializable {
 
-    @Id
-    private String id = UUID.randomUUID().toString();
-
-    private String userId;
+    @ManyToOne
+    private User user;
 
     private String name;
+
+    @OneToMany(mappedBy = "project")
+    private List<Task> tasks;
 
     @Override
     public String toString() {

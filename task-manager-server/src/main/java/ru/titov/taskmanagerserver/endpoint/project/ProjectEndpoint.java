@@ -1,7 +1,6 @@
 package ru.titov.taskmanagerserver.endpoint.project;
 
-import ru.titov.taskmanagerserver.api.service.ProjectService;
-import ru.titov.taskmanagerserver.api.service.TaskService;
+import ru.titov.taskmanagerserver.api.service.ServiceLocator;
 import ru.titov.taskmanagerserver.dto.response.Response;
 import ru.titov.taskmanagerserver.dto.response.project.ProjectListResponse;
 import ru.titov.taskmanagerserver.dto.response.project.ProjectResponse;
@@ -9,6 +8,7 @@ import ru.titov.taskmanagerserver.dto.response.project.SimpleProject;
 import ru.titov.taskmanagerserver.dto.secure.TokenData;
 import ru.titov.taskmanagerserver.entity.Project;
 import ru.titov.taskmanagerserver.entity.Task;
+import ru.titov.taskmanagerserver.entity.User;
 import ru.titov.taskmanagerserver.util.TokenUtil;
 
 import javax.jws.WebMethod;
@@ -20,13 +20,10 @@ import java.util.List;
 @WebService
 public class ProjectEndpoint {
 
-    private final ProjectService projectService;
+    private final ServiceLocator serviceLocator;
 
-    private final TaskService taskService;
-
-    public ProjectEndpoint(final ProjectService projectService, final TaskService taskService) {
-        this.projectService = projectService;
-        this.taskService = taskService;
+    public ProjectEndpoint(ServiceLocator serviceLocator) {
+        this.serviceLocator = serviceLocator;
     }
 
     @WebMethod
@@ -38,9 +35,10 @@ public class ProjectEndpoint {
         final Project project = new Project();
         try {
             final TokenData tokenData = TokenUtil.decrypt(token);
-            project.setUserId(tokenData.getUserId());
+            final User user = serviceLocator.getUserService().getById(tokenData.getUserId());
+            project.setUser(user);
             project.setName(name);
-            projectService.add(project);
+            serviceLocator.getProjectService().add(project);
         } catch (Exception e) {
             response.setSuccess(false);
             response.setMessage(e.getMessage());
@@ -56,14 +54,14 @@ public class ProjectEndpoint {
         final Response response = new Response();
         try {
             final TokenData tokenData = TokenUtil.decrypt(token);
-            final Project project = projectService.getByOrderIndex(tokenData.getUserId(), projectOrderIndex);
-            projectService.removeByOrderIndex(tokenData.getUserId(), projectOrderIndex);
-            for (final Task task : taskService.getAll()) {
+            final Project project = serviceLocator.getProjectService().getByOrderIndex(tokenData.getUserId(), projectOrderIndex);
+            for (final Task task : project.getTasks()) {
                 if (task == null) continue;
-                if (project.getId().equals(task.getProjectId())) {
-                    taskService.removeById(task.getId());
+                if (project.getId().equals(task.getProject().getId())) {
+                    serviceLocator.getTaskService().removeById(task.getId());
                 }
             }
+            serviceLocator.getProjectService().removeByOrderIndex(tokenData.getUserId(), projectOrderIndex);
         } catch (Exception e) {
             response.setSuccess(false);
             response.setMessage(e.getMessage());
@@ -80,9 +78,9 @@ public class ProjectEndpoint {
         final Response response = new Response();
         try {
             final TokenData tokenData = TokenUtil.decrypt(token);
-            final Project project = projectService.getByOrderIndex(tokenData.getUserId(), projectOrderIndex);
+            final Project project = serviceLocator.getProjectService().getByOrderIndex(tokenData.getUserId(), projectOrderIndex);
             project.setName(name);
-            projectService.update(project);
+            serviceLocator.getProjectService().update(project);
         } catch (Exception e) {
             response.setSuccess(false);
             response.setMessage(e.getMessage());
@@ -98,7 +96,7 @@ public class ProjectEndpoint {
         final ProjectResponse projectResponse = new ProjectResponse();
         try {
             final TokenData tokenData = TokenUtil.decrypt(token);
-            final Project project = projectService.getByOrderIndex(tokenData.getUserId(), projectOrderIndex);
+            final Project project = serviceLocator.getProjectService().getByOrderIndex(tokenData.getUserId(), projectOrderIndex);
             projectResponse.setProject(new SimpleProject(project));
         } catch (Exception e) {
             projectResponse.setSuccess(false);
@@ -115,7 +113,7 @@ public class ProjectEndpoint {
         try {
             final TokenData tokenData = TokenUtil.decrypt(token);
             final List<SimpleProject> simpleProjects = new ArrayList<>();
-            final List<Project> projects = projectService.getAllByUserId(tokenData.getUserId());
+            final List<Project> projects = serviceLocator.getProjectService().getAllByUserId(tokenData.getUserId());
             for (final Project project : projects) {
                 if (project == null) continue;
                 simpleProjects.add(new SimpleProject(project));

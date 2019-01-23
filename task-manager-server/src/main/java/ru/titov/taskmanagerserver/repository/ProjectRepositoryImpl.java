@@ -35,7 +35,7 @@ public class ProjectRepositoryImpl extends AbstractRepository<Project> implement
 
     @Override
     public List<Project> getAllByUserId(String userId) {
-        final TypedQuery<Project> query = entityManager.createQuery("FROM Project WHERE userId = :userId", Project.class);
+        final TypedQuery<Project> query = entityManager.createQuery("FROM Project p WHERE p.user.id = :userId", Project.class);
         query.setParameter("userId", userId);
         return query.getResultList();
     }

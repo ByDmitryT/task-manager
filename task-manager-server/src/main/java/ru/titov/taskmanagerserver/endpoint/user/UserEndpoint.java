@@ -1,13 +1,12 @@
 package ru.titov.taskmanagerserver.endpoint.user;
 
-import ru.titov.taskmanagerserver.api.service.UserService;
-import ru.titov.taskmanagerserver.dto.response.user.SimpleUser;
+import ru.titov.taskmanagerserver.api.service.ServiceLocator;
 import ru.titov.taskmanagerserver.dto.response.Response;
 import ru.titov.taskmanagerserver.dto.response.token.TokenResponse;
+import ru.titov.taskmanagerserver.dto.response.user.SimpleUser;
 import ru.titov.taskmanagerserver.dto.response.user.UserListResponse;
 import ru.titov.taskmanagerserver.dto.secure.TokenData;
 import ru.titov.taskmanagerserver.entity.User;
-import ru.titov.taskmanagerserver.error.user.AbstractUserException;
 import ru.titov.taskmanagerserver.util.PasswordHashUtil;
 import ru.titov.taskmanagerserver.util.TokenUtil;
 
@@ -20,10 +19,10 @@ import java.util.List;
 @WebService
 public class UserEndpoint {
 
-    final private UserService userService;
+    private final ServiceLocator serviceLocator;
 
-    public UserEndpoint(final UserService userService) {
-        this.userService = userService;
+    public UserEndpoint(ServiceLocator serviceLocator) {
+        this.serviceLocator = serviceLocator;
     }
 
     @WebMethod
@@ -33,7 +32,7 @@ public class UserEndpoint {
     ) {
         final TokenResponse tokenResponse = new TokenResponse();
         try {
-            final String token = userService.signIn(login, PasswordHashUtil.md5(password));
+            final String token = serviceLocator.getUserService().signIn(login, PasswordHashUtil.md5(password));
             tokenResponse.setToken(token);
         } catch (Exception e) {
             tokenResponse.setSuccess(false);
@@ -49,7 +48,7 @@ public class UserEndpoint {
     ) {
         final Response response = new Response();
         try {
-            userService.signUp(login, PasswordHashUtil.md5(password));
+            serviceLocator.getUserService().signUp(login, PasswordHashUtil.md5(password));
         } catch (Exception e) {
             response.setSuccess(false);
             response.setMessage(e.getMessage());
@@ -64,7 +63,7 @@ public class UserEndpoint {
     ) {
         final Response resultResponse = new Response();
         try {
-            userService.changePassword(token, PasswordHashUtil.md5(newPassword));
+            serviceLocator.getUserService().changePassword(token, PasswordHashUtil.md5(newPassword));
         } catch (Exception e) {
             resultResponse.setSuccess(false);
             resultResponse.setMessage(e.getMessage());
@@ -79,9 +78,9 @@ public class UserEndpoint {
         final UserListResponse userListResponse = new UserListResponse();
         try {
             final TokenData tokenData = TokenUtil.decrypt(token);
-            userService.getById(tokenData.getUserId());
+            serviceLocator.getUserService().getById(tokenData.getUserId());
             final List<SimpleUser> users = new ArrayList<>();
-            for (final User user : userService.getAll()) {
+            for (final User user : serviceLocator.getUserService().getAll()) {
                 if (user == null) continue;
                 users.add(new SimpleUser(user));
             }

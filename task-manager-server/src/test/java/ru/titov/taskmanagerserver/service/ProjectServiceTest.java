@@ -18,7 +18,7 @@ public class ProjectServiceTest {
         final ProjectService projectService = new ProjectServiceImpl(projectRepository);
         final User user = new User();
         final Project project = new Project();
-        project.setUserId(user.getId());
+        project.setUser(user);
         project.setName(projectName);
         projectService.add(project);
         final Project createdProject = projectService.getById(project.getId());
@@ -41,7 +41,7 @@ public class ProjectServiceTest {
         final ProjectService projectService = new ProjectServiceImpl(projectRepository);
         final User user = new User();
         final Project project = new Project();
-        project.setUserId(user.getId());
+        project.setUser(user);
         project.setName(projectName);
         projectService.add(project);
         final Project createdProject = projectService.getById(project.getId());
@@ -65,7 +65,7 @@ public class ProjectServiceTest {
         final ProjectService projectService = new ProjectServiceImpl(projectRepository);
         final User user = new User();
         final Project project = new Project();
-        project.setUserId(user.getId());
+        project.setUser(user);
         projectService.add(project);
         projectService.removeById(project.getId());
         projectService.getById(project.getId());
