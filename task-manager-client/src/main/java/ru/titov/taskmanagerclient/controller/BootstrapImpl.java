@@ -1,32 +1,33 @@
 package ru.titov.taskmanagerclient.controller;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.reflections.Reflections;
 import ru.titov.taskmanagerclient.api.controller.Bootstrap;
 import ru.titov.taskmanagerclient.command.AbstractCommand;
 import ru.titov.taskmanagerclient.error.command.NoSuchCommandsException;
 import ru.titov.taskmanagerserver.endpoint.project.ProjectEndpoint;
-import ru.titov.taskmanagerserver.endpoint.project.ProjectEndpointService;
 import ru.titov.taskmanagerserver.endpoint.task.TaskEndpoint;
-import ru.titov.taskmanagerserver.endpoint.task.TaskEndpointService;
 import ru.titov.taskmanagerserver.endpoint.user.UserEndpoint;
-import ru.titov.taskmanagerserver.endpoint.user.UserEndpointService;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
 @Getter
-@Setter
+@ApplicationScoped
 public class BootstrapImpl implements Bootstrap {
 
-    private final UserEndpoint userEndpoint = new UserEndpointService().getUserEndpointPort();
+    @Inject
+    private UserEndpoint userEndpoint;
 
-    private final TaskEndpoint taskEndpoint = new TaskEndpointService().getTaskEndpointPort();
+    @Inject
+    private TaskEndpoint taskEndpoint;
 
-    private final ProjectEndpoint projectEndpoint = new ProjectEndpointService().getProjectEndpointPort();
+    @Inject
+    private ProjectEndpoint projectEndpoint;
 
     private final Scanner scanner = new Scanner(System.in);
 

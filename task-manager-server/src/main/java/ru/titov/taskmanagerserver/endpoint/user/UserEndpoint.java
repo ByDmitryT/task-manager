@@ -1,5 +1,7 @@
 package ru.titov.taskmanagerserver.endpoint.user;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.titov.taskmanagerserver.api.service.ServiceLocator;
 import ru.titov.taskmanagerserver.dto.response.Response;
 import ru.titov.taskmanagerserver.dto.response.token.TokenResponse;
@@ -10,6 +12,7 @@ import ru.titov.taskmanagerserver.entity.User;
 import ru.titov.taskmanagerserver.util.PasswordHashUtil;
 import ru.titov.taskmanagerserver.util.TokenUtil;
 
+import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -19,16 +22,17 @@ import java.util.List;
 @WebService
 public class UserEndpoint {
 
-    private final ServiceLocator serviceLocator;
-
-    public UserEndpoint(ServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
-    }
+    @Inject
+    private ServiceLocator serviceLocator;
 
     @WebMethod
+    @NotNull
     public TokenResponse signIn(
-            @WebParam(name = "login", partName = "login") final String login,
-            @WebParam(name = "password", partName = "password") final String password
+            @WebParam(name = "login", partName = "login")
+            @Nullable final String login,
+
+            @WebParam(name = "password", partName = "password")
+            @Nullable final String password
     ) {
         final TokenResponse tokenResponse = new TokenResponse();
         try {
@@ -42,9 +46,10 @@ public class UserEndpoint {
     }
 
     @WebMethod
+    @NotNull
     public Response signUp(
-            @WebParam(name = "login", partName = "login") final String login,
-            @WebParam(name = "password", partName = "password") final String password
+            @Nullable @WebParam(name = "login", partName = "login") final String login,
+            @Nullable @WebParam(name = "password", partName = "password") final String password
     ) {
         final Response response = new Response();
         try {
@@ -57,9 +62,10 @@ public class UserEndpoint {
     }
 
     @WebMethod
+    @NotNull
     public Response changePassword(
-            @WebParam(name = "token", partName = "token") final String token,
-            @WebParam(name = "newPassword", partName = "newPassword") final String newPassword
+            @Nullable @WebParam(name = "token", partName = "token") final String token,
+            @Nullable @WebParam(name = "newPassword", partName = "newPassword") final String newPassword
     ) {
         final Response resultResponse = new Response();
         try {
@@ -72,8 +78,9 @@ public class UserEndpoint {
     }
 
     @WebMethod
+    @NotNull
     public UserListResponse viewAll(
-            @WebParam(name = "token", partName = "token") final String token
+            @Nullable @WebParam(name = "token", partName = "token") final String token
     ) {
         final UserListResponse userListResponse = new UserListResponse();
         try {

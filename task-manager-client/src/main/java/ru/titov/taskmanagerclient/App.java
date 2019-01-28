@@ -1,11 +1,11 @@
 package ru.titov.taskmanagerclient;
 
 import ru.titov.taskmanagerclient.api.controller.Bootstrap;
-import ru.titov.taskmanagerclient.controller.BootstrapImpl;
+
+import javax.enterprise.inject.se.SeContainerInitializer;
 
 public class App {
     public static void main(String[] args) {
-        final Bootstrap bootstrap = new BootstrapImpl();
-        bootstrap.start();
+        SeContainerInitializer.newInstance().addPackages(App.class).initialize().select(Bootstrap.class).get().start();
     }
 }

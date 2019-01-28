@@ -1,5 +1,7 @@
 package ru.titov.taskmanagerserver.endpoint.task;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.titov.taskmanagerserver.api.service.ServiceLocator;
 import ru.titov.taskmanagerserver.dto.response.Response;
 import ru.titov.taskmanagerserver.dto.response.task.SimpleTask;
@@ -11,6 +13,7 @@ import ru.titov.taskmanagerserver.entity.Task;
 import ru.titov.taskmanagerserver.entity.User;
 import ru.titov.taskmanagerserver.util.TokenUtil;
 
+import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -20,18 +23,16 @@ import java.util.List;
 @WebService
 public class TaskEndpoint {
 
-    private final ServiceLocator serviceLocator;
-
-    public TaskEndpoint(ServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
-    }
+    @Inject
+    private ServiceLocator serviceLocator;
 
     @WebMethod
+    @NotNull
     public Response create(
-            @WebParam(name = "token", partName = "token") final String token,
-            @WebParam(name = "projectOrderIndex", partName = "projectOrderIndex") final Integer projectOrderIndex,
-            @WebParam(name = "name", partName = "name") final String name,
-            @WebParam(name = "description", partName = "description") final String description
+            @Nullable @WebParam(name = "token", partName = "token") final String token,
+            @Nullable @WebParam(name = "projectOrderIndex", partName = "projectOrderIndex") final Integer projectOrderIndex,
+            @Nullable @WebParam(name = "name", partName = "name") final String name,
+            @Nullable @WebParam(name = "description", partName = "description") final String description
     ) {
         final Response response = new Response();
         try {
@@ -52,9 +53,10 @@ public class TaskEndpoint {
     }
 
     @WebMethod
+    @NotNull
     public Response remove(
-            @WebParam(name = "token", partName = "token") final String token,
-            @WebParam(name = "taskOrderIndex", partName = "taskOrderIndex") final Integer taskOrderIndex
+            @Nullable @WebParam(name = "token", partName = "token") final String token,
+            @Nullable @WebParam(name = "taskOrderIndex", partName = "taskOrderIndex") final Integer taskOrderIndex
     ) {
         final Response response = new Response();
         try {
@@ -68,12 +70,13 @@ public class TaskEndpoint {
     }
 
     @WebMethod
+    @NotNull
     public Response update(
-            @WebParam(name = "token", partName = "token") final String token,
-            @WebParam(name = "taskOrderIndex", partName = "taskOrderIndex") final Integer taskOrderIndex,
-            @WebParam(name = "projectOrderIndex", partName = "projectOrderIndex") final Integer projectOrderIndex,
-            @WebParam(name = "name", partName = "name") final String name,
-            @WebParam(name = "description", partName = "description") final String description
+            @Nullable @WebParam(name = "token", partName = "token") final String token,
+            @Nullable @WebParam(name = "taskOrderIndex", partName = "taskOrderIndex") final Integer taskOrderIndex,
+            @Nullable @WebParam(name = "projectOrderIndex", partName = "projectOrderIndex") final Integer projectOrderIndex,
+            @Nullable @WebParam(name = "name", partName = "name") final String name,
+            @Nullable @WebParam(name = "description", partName = "description") final String description
     ) {
         final Response response = new Response();
         try {
@@ -94,9 +97,10 @@ public class TaskEndpoint {
     }
 
     @WebMethod
+    @NotNull
     public TaskResponse view(
-            @WebParam(name = "token", partName = "token") final String token,
-            @WebParam(name = "taskOrderIndex", partName = "taskOrderIndex") final Integer taskOrderIndex
+            @Nullable @WebParam(name = "token", partName = "token") final String token,
+            @Nullable @WebParam(name = "taskOrderIndex", partName = "taskOrderIndex") final Integer taskOrderIndex
     ) {
         final TaskResponse taskResponse = new TaskResponse();
         try {
@@ -112,8 +116,9 @@ public class TaskEndpoint {
     }
 
     @WebMethod
+    @NotNull
     public TaskListResponse viewAll(
-            @WebParam(name = "token", partName = "token") final String token
+            @Nullable @WebParam(name = "token", partName = "token") final String token
     ) {
         final TaskListResponse taskListResponse = new TaskListResponse();
         try {

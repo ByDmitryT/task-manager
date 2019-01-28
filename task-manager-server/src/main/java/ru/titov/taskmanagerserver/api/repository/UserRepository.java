@@ -1,13 +1,14 @@
 package ru.titov.taskmanagerserver.api.repository;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.titov.taskmanagerserver.entity.User;
 
 public interface UserRepository extends Repository<User> {
 
-    User getByLogin(String login);
+    @Nullable
+    User getByLogin(@NotNull String login);
 
-    void removeByLogin(String login);
-
-    boolean containsByLogin(String login);
+    boolean containsByLogin(@NotNull String login);
 
 }

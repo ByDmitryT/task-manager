@@ -1,5 +1,7 @@
 package ru.titov.taskmanagerserver.endpoint.project;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.titov.taskmanagerserver.api.service.ServiceLocator;
 import ru.titov.taskmanagerserver.dto.response.Response;
 import ru.titov.taskmanagerserver.dto.response.project.ProjectListResponse;
@@ -11,6 +13,7 @@ import ru.titov.taskmanagerserver.entity.Task;
 import ru.titov.taskmanagerserver.entity.User;
 import ru.titov.taskmanagerserver.util.TokenUtil;
 
+import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -20,16 +23,14 @@ import java.util.List;
 @WebService
 public class ProjectEndpoint {
 
-    private final ServiceLocator serviceLocator;
-
-    public ProjectEndpoint(ServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
-    }
+    @Inject
+    private ServiceLocator serviceLocator;
 
     @WebMethod
+    @NotNull
     public Response create(
-            @WebParam(name = "token", partName = "token") final String token,
-            @WebParam(name = "name", partName = "name") final String name
+            @Nullable @WebParam(name = "token", partName = "token") final String token,
+            @Nullable @WebParam(name = "name", partName = "name") final String name
     ) {
         final Response response = new Response();
         final Project project = new Project();
@@ -47,9 +48,10 @@ public class ProjectEndpoint {
     }
 
     @WebMethod
+    @NotNull
     public Response remove(
-            @WebParam(name = "token", partName = "token") final String token,
-            @WebParam(name = "projectOrderIndex", partName = "projectOrderIndex") final Integer projectOrderIndex
+            @Nullable @WebParam(name = "token", partName = "token") final String token,
+            @Nullable @WebParam(name = "projectOrderIndex", partName = "projectOrderIndex") final Integer projectOrderIndex
     ) {
         final Response response = new Response();
         try {
@@ -66,14 +68,16 @@ public class ProjectEndpoint {
             response.setSuccess(false);
             response.setMessage(e.getMessage());
         }
+        System.out.println(response.getMessage());
         return response;
     }
 
     @WebMethod
+    @NotNull
     public Response update(
-            @WebParam(name = "token", partName = "token") final String token,
-            @WebParam(name = "projectOrderIndex", partName = "projectOrderIndex") final Integer projectOrderIndex,
-            @WebParam(name = "name", partName = "name") final String name
+            @Nullable @WebParam(name = "token", partName = "token") final String token,
+            @Nullable @WebParam(name = "projectOrderIndex", partName = "projectOrderIndex") final Integer projectOrderIndex,
+            @Nullable  @WebParam(name = "name", partName = "name") final String name
     ) {
         final Response response = new Response();
         try {
@@ -89,9 +93,10 @@ public class ProjectEndpoint {
     }
 
     @WebMethod
+    @NotNull
     public ProjectResponse view(
-            @WebParam(name = "token", partName = "token") final String token,
-            @WebParam(name = "projectOrderIndex", partName = "projectOrderIndex") final Integer projectOrderIndex
+            @Nullable @WebParam(name = "token", partName = "token") final String token,
+            @Nullable @WebParam(name = "projectOrderIndex", partName = "projectOrderIndex") final Integer projectOrderIndex
     ) {
         final ProjectResponse projectResponse = new ProjectResponse();
         try {
@@ -106,8 +111,9 @@ public class ProjectEndpoint {
     }
 
     @WebMethod
+    @NotNull
     public ProjectListResponse viewAll(
-            @WebParam(name = "token", partName = "token") final String token
+            @Nullable @WebParam(name = "token", partName = "token") final String token
     ) {
         final ProjectListResponse projectListResponse = new ProjectListResponse();
         try {

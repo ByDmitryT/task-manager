@@ -1,4 +1,4 @@
-package ru.titov.taskmanagerserver.util;
+package ru.titov.taskmanagerserver.service;
 
 import lombok.Getter;
 import org.hibernate.SessionFactory;
@@ -7,21 +7,23 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Environment;
+import ru.titov.taskmanagerserver.api.service.HibernateService;
 import ru.titov.taskmanagerserver.config.AppConfig;
 import ru.titov.taskmanagerserver.entity.Project;
 import ru.titov.taskmanagerserver.entity.Task;
 import ru.titov.taskmanagerserver.entity.User;
 
+import javax.enterprise.context.ApplicationScoped;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum HibernateUtil {
-    ;
+@ApplicationScoped
+public class HibernateServiceImpl implements HibernateService {
 
     @Getter
-    private static SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
-    static {
+    {
         final Map<String, String> settings = new HashMap<>();
         settings.put(Environment.DRIVER, AppConfig.DB_DRIVER);
         settings.put(Environment.URL, AppConfig.DB_URL);

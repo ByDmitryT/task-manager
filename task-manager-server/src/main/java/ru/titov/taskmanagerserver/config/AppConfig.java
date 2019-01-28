@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public enum  AppConfig {
+public enum AppConfig {
     ;
 
     public static final String RESOURCE = "application.properties";
@@ -33,7 +33,7 @@ public enum  AppConfig {
 
     static {
         final Properties properties = new Properties();
-        try (final InputStream inputStream = AppConfig.class.getClassLoader().getResourceAsStream(RESOURCE)){
+        try (final InputStream inputStream = AppConfig.class.getClassLoader().getResourceAsStream(RESOURCE)) {
             properties.load(inputStream);
         } catch (IOException e) {
             e.printStackTrace();

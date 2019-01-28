@@ -2,6 +2,8 @@ package ru.titov.taskmanagerserver.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.titov.taskmanagerserver.config.AppConfig;
 import ru.titov.taskmanagerserver.dto.secure.TokenData;
 import ru.titov.taskmanagerserver.error.user.AbstractUserException;
@@ -39,7 +41,8 @@ public enum TokenUtil {
         }
     }
 
-    public static String encrypt(final TokenData tokenData) throws AbstractUserException {
+    @NotNull
+    public static String encrypt(@Nullable final TokenData tokenData) throws AbstractUserException {
         if (tokenData == null) throw new InvalidUserInputException();
         try {
             final ObjectWriter objectWriter = new ObjectMapper().writer();
@@ -52,7 +55,9 @@ public enum TokenUtil {
         }
     }
 
-    public static TokenData decrypt(final String token) throws AbstractUserException {
+    @NotNull
+    public static TokenData decrypt(@Nullable final String token) throws AbstractUserException {
+        if (token == null) throw new InvalidUserTokenException();
         final TokenData tokenData;
         try {
             final Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");

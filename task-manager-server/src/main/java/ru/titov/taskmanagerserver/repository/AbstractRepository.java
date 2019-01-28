@@ -1,16 +1,24 @@
 package ru.titov.taskmanagerserver.repository;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.titov.taskmanagerserver.api.repository.Repository;
+import ru.titov.taskmanagerserver.api.service.HibernateService;
 import ru.titov.taskmanagerserver.entity.AbstractEntity;
-import ru.titov.taskmanagerserver.util.HibernateUtil;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
 public abstract class AbstractRepository<E extends AbstractEntity> implements Repository<E> {
 
-    protected final EntityManager entityManager = HibernateUtil.getSessionFactory().createEntityManager();
+    protected EntityManager entityManager;
+
+    @Inject
+    public void setEntityManager(final HibernateService hibernateService) {
+        entityManager = hibernateService.getSessionFactory().createEntityManager();
+    }
 
     @Override
     public void beginTransaction() {
@@ -28,38 +36,34 @@ public abstract class AbstractRepository<E extends AbstractEntity> implements Re
     }
 
     @Override
-    public void persist(final E entity) {
-        if (entity == null) return;
+    public void persist(@NotNull final E entity) {
         entityManager.persist(entity);
     }
 
     @Override
-    public void merge(final E entity) {
-        if (entity == null) return;
+    public void merge(@NotNull final E entity) {
         entityManager.merge(entity);
     }
 
     @Override
-    public void refresh(final E entity) {
-        if (entity == null) return;
+    public void refresh(@NotNull final E entity) {
         entityManager.refresh(entity);
     }
 
     @Override
-    public void remove(final E entity) {
-        if (entity == null) return;
+    public void remove(@NotNull final E entity) {
         entityManager.remove(entity);
     }
 
     @Override
-    public boolean contains(final E entity) {
-        if (entity == null) return false;
+    public boolean contains(@NotNull final E entity) {
         return entityManager.contains(entity);
     }
 
     @Override
-    public E getFirstResult(final TypedQuery<E> query) {
-        List<E> resultList = query.getResultList();
+    @Nullable
+    public E getFirstResult(@NotNull final TypedQuery<E> query) {
+        final List<E> resultList = query.getResultList();
         if (resultList.isEmpty()) return null;
         return resultList.get(0);
     }

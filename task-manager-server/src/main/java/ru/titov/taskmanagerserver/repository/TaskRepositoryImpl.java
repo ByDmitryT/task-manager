@@ -1,47 +1,46 @@
 package ru.titov.taskmanagerserver.repository;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.titov.taskmanagerserver.api.repository.TaskRepository;
 import ru.titov.taskmanagerserver.entity.Task;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+@ApplicationScoped
 public class TaskRepositoryImpl extends AbstractRepository<Task> implements TaskRepository {
 
     @Override
-    public Task getById(final String id) {
-        if (id == null || id.isEmpty()) return null;
+    @Nullable
+    public Task getById(@NotNull final String id) {
         return entityManager.find(Task.class, id);
     }
 
     @Override
-    public void removeById(final String id) {
-        if (id == null || id.isEmpty()) return;
-        final Task task = getById(id);
-        remove(task);
-    }
-
-    @Override
-    public boolean containsById(String id) {
-        if (id == null || id.isEmpty()) return false;
+    public boolean containsById(@NotNull final String id) {
         return getById(id) != null;
     }
 
     @Override
+    @NotNull
     public List<Task> getAll() {
         final TypedQuery<Task> query = entityManager.createQuery("FROM Task", Task.class);
         return query.getResultList();
     }
 
     @Override
-    public List<Task> getAllByUserId(String userId) {
+    @NotNull
+    public List<Task> getAllByUserId(@NotNull String userId) {
         final TypedQuery<Task> query = entityManager.createQuery("FROM Task t WHERE t.user.id = :userId", Task.class);
         query.setParameter("userId", userId);
         return query.getResultList();
     }
 
     @Override
-    public List<Task> getAllByProjectId(String projectId) {
+    @NotNull
+    public List<Task> getAllByProjectId(@NotNull String projectId) {
         final TypedQuery<Task> query = entityManager.createQuery("FROM Task t WHERE t.project.id = :projectId", Task.class);
         query.setParameter("projectId", projectId);
         return query.getResultList();

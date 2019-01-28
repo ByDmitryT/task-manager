@@ -1,56 +1,44 @@
 package ru.titov.taskmanagerserver.repository;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.titov.taskmanagerserver.api.repository.UserRepository;
 import ru.titov.taskmanagerserver.entity.User;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+@ApplicationScoped
 public class UserRepositoryImpl extends AbstractRepository<User> implements UserRepository {
 
     @Override
-    public User getById(final String id) {
-        if (id == null || id.isEmpty()) return null;
+    public User getById(@NotNull final String id) {
         return entityManager.find(User.class, id);
     }
 
     @Override
-    public User getByLogin(final String login) {
-        if (login == null || login.isEmpty()) return null;
+    @Nullable
+    public User getByLogin(@NotNull final String login) {
         final TypedQuery<User> query = entityManager.createQuery("FROM User WHERE login = :login", User.class);
         query.setParameter("login", login);
         return getFirstResult(query);
     }
 
     @Override
-    public void removeById(final String id) {
-        if (id == null || id.isEmpty()) return;
-        final User user = getById(id);
-        remove(user);
-    }
-
-    @Override
-    public void removeByLogin(final String login) {
-        if (login == null || login.isEmpty()) return;
-        final User user = getByLogin(login);
-        remove(user);
-    }
-
-    @Override
-    public boolean containsById(final String id) {
-        if (id == null || id.isEmpty()) return false;
+    public boolean containsById(@NotNull final String id) {
         return getById(id) != null;
     }
 
     @Override
-    public boolean containsByLogin(final String login) {
-        if (login == null || login.isEmpty()) return false;
+    public boolean containsByLogin(@NotNull final String login) {
         final TypedQuery<User> query = entityManager.createQuery("FROM User WHERE login = :login", User.class);
         query.setParameter("login", login);
         return !query.getResultList().isEmpty();
     }
 
     @Override
+    @NotNull
     public List<User> getAll() {
         final TypedQuery<User> query = entityManager.createQuery("FROM User", User.class);
         return query.getResultList();

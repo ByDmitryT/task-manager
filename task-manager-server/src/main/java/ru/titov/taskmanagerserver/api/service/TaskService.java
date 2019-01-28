@@ -1,5 +1,7 @@
 package ru.titov.taskmanagerserver.api.service;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.titov.taskmanagerserver.entity.Task;
 import ru.titov.taskmanagerserver.error.project.AbstractProjectException;
 import ru.titov.taskmanagerserver.error.task.AbstractTaskException;
@@ -11,23 +13,28 @@ import java.util.List;
 
 public interface TaskService {
 
-    void add(Task task) throws AbstractTaskException;
+    void add(@Nullable Task task) throws AbstractTaskException;
 
-    Task getByOrderIndex(String userId, Integer taskOrderIndex) throws AbstractTaskException, AbstractUserException;
+    @NotNull
+    Task getByOrderIndex(@Nullable String userId, @Nullable Integer taskOrderIndex) throws AbstractTaskException, AbstractUserException;
 
-    Task getById(String taskId) throws AbstractTaskException;
+    @NotNull
+    Task getById(@Nullable String taskId) throws AbstractTaskException;
 
-    void update(Task task) throws AbstractTaskException;
+    void update(@Nullable Task task) throws AbstractTaskException;
 
-    void removeByOrderIndex(String userId, Integer taskOrderIndex) throws AbstractTaskException, AbstractUserException;
+    void removeByOrderIndex(@Nullable String userId, @Nullable Integer taskOrderIndex) throws AbstractTaskException, AbstractUserException;
 
-    void removeById(String taskId) throws AbstractTaskException;
+    void removeById(@Nullable String taskId) throws AbstractTaskException;
 
-    boolean doesExists(String taskId) throws InvalidTaskIdException;
+    boolean doesExists(@Nullable String taskId) throws InvalidTaskIdException;
 
+    @NotNull
     List<Task> getAll();
 
-    List<Task> getAllByUserId(String userId) throws AbstractUserException;
+    @NotNull
+    List<Task> getAllByUserId(@Nullable String userId) throws AbstractUserException;
 
-    List<Task> getAllByProjectId(String projectId) throws AbstractProjectException;
+    @NotNull
+    List<Task> getAllByProjectId(@Nullable String projectId) throws AbstractProjectException;
 }

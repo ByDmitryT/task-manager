@@ -1,5 +1,7 @@
 package ru.titov.taskmanagerserver.api.service;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.titov.taskmanagerserver.entity.Project;
 import ru.titov.taskmanagerserver.error.project.AbstractProjectException;
 import ru.titov.taskmanagerserver.error.project.InvalidProjectIdException;
@@ -9,21 +11,25 @@ import java.util.List;
 
 public interface ProjectService {
 
-    void add(Project project) throws AbstractProjectException;
+    void add(@Nullable Project project) throws AbstractProjectException;
 
-    Project getByOrderIndex(String userId, Integer projectOrderIndex) throws AbstractProjectException, AbstractUserException;
+    @NotNull
+    Project getByOrderIndex(@Nullable String userId, @Nullable Integer projectOrderIndex) throws AbstractProjectException, AbstractUserException;
 
-    Project getById(String projectId) throws AbstractProjectException;
+    @NotNull
+    Project getById(@Nullable String projectId) throws AbstractProjectException;
 
-    void update(Project project) throws AbstractProjectException;
+    void update(@Nullable Project project) throws AbstractProjectException;
 
-    void removeByOrderIndex(String userId, Integer projectOrderIndex) throws AbstractProjectException, AbstractUserException;
+    void removeByOrderIndex(@Nullable String userId, @Nullable Integer projectOrderIndex) throws AbstractProjectException, AbstractUserException;
 
-    void removeById(String projectId) throws AbstractProjectException;
+    void removeById(@Nullable String projectId) throws AbstractProjectException;
 
-    boolean doesExists(String projectId) throws InvalidProjectIdException;
+    boolean doesExists(@Nullable String projectId) throws InvalidProjectIdException;
 
-    List getAll();
+    @NotNull
+    List<Project> getAll();
 
-    List<Project> getAllByUserId(String userId) throws AbstractUserException;
+    @NotNull
+    List<Project> getAllByUserId(@Nullable String userId) throws AbstractUserException;
 }

@@ -1,13 +1,16 @@
 package ru.titov.taskmanagerserver.api.repository;
 
+import org.jetbrains.annotations.NotNull;
 import ru.titov.taskmanagerserver.entity.Task;
 
 import java.util.List;
 
 public interface TaskRepository extends Repository<Task> {
 
-    List<Task> getAllByUserId(String userId);
+    @NotNull
+    List<Task> getAllByUserId(@NotNull String userId);
 
-    List<Task> getAllByProjectId(String projectId);
+    @NotNull
+    List<Task> getAllByProjectId(@NotNull String projectId);
 
 }

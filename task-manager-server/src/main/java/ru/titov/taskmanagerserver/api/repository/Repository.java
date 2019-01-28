@@ -1,5 +1,7 @@
 package ru.titov.taskmanagerserver.api.repository;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.titov.taskmanagerserver.entity.AbstractEntity;
 
 import javax.persistence.TypedQuery;
@@ -13,24 +15,24 @@ public interface Repository<E extends AbstractEntity> {
 
     void rollbackTransaction();
 
-    void persist(E entity);
+    void persist(@NotNull E entity);
 
-    void merge(E entity);
+    void merge(@NotNull E entity);
 
-    E getById(String id);
+    void refresh(@NotNull E entity);
 
-    void refresh(E entity);
+    @Nullable
+    E getById(@NotNull String id);
 
-    void remove(E entity);
+    void remove(@NotNull E entity);
 
-    void removeById(String id);
+    boolean contains(@NotNull E entity);
 
-    boolean containsById(String id);
+    boolean containsById(@NotNull String id);
 
-    boolean contains(E entity);
-
+    @NotNull
     List<E> getAll();
 
-    E getFirstResult(TypedQuery<E> query);
-
+    @Nullable
+    E getFirstResult(@NotNull TypedQuery<E> query);
 }
