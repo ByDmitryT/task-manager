@@ -8,13 +8,12 @@ public class ProjectUpdateCommand extends AbstractCommand {
     @Override
     public void execute() {
         System.out.println("[UPDATE PROJECT]");
-        System.out.println("Enter token:");
-        final String token = bootstrap.nextLine();
+        final String token = authorization.getToken();
         System.out.println("Enter order index:");
         final Integer orderId = bootstrap.nextInt();
         System.out.println("Enter new project name:");
         final String projectName = bootstrap.nextLine();
-        final Response response = bootstrap.getProjectEndpoint().update(token, orderId, projectName);
+        final Response response = projectEndpoint.update(token, orderId, projectName);
         System.out.println(response.getMessage());
     }
 

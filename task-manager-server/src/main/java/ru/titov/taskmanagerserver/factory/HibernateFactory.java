@@ -1,29 +1,26 @@
-package ru.titov.taskmanagerserver.service;
+package ru.titov.taskmanagerserver.factory;
 
-import lombok.Getter;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Environment;
-import ru.titov.taskmanagerserver.api.service.HibernateService;
 import ru.titov.taskmanagerserver.config.AppConfig;
 import ru.titov.taskmanagerserver.entity.Project;
 import ru.titov.taskmanagerserver.entity.Task;
 import ru.titov.taskmanagerserver.entity.User;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Produces;
 import java.util.HashMap;
 import java.util.Map;
 
-@ApplicationScoped
-public class HibernateServiceImpl implements HibernateService {
+public class HibernateFactory {
 
-    @Getter
-    private SessionFactory sessionFactory;
-
-    {
+    @ApplicationScoped
+    @Produces
+    public SessionFactory getSessionFactory() {
         final Map<String, String> settings = new HashMap<>();
         settings.put(Environment.DRIVER, AppConfig.DB_DRIVER);
         settings.put(Environment.URL, AppConfig.DB_URL);
@@ -41,7 +38,7 @@ public class HibernateServiceImpl implements HibernateService {
         sources.addAnnotatedClass(Task.class);
         sources.addAnnotatedClass(User.class);
         final Metadata metadata = sources.getMetadataBuilder().build();
-        sessionFactory = metadata.getSessionFactoryBuilder().build();
+        return metadata.getSessionFactoryBuilder().build();
     }
 
 }

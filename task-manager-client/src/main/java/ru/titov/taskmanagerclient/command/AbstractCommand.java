@@ -1,14 +1,29 @@
 package ru.titov.taskmanagerclient.command;
 
-import lombok.Getter;
-import lombok.Setter;
 import ru.titov.taskmanagerclient.api.controller.Bootstrap;
+import ru.titov.taskmanagerclient.security.Authorization;
+import ru.titov.taskmanagerserver.endpoint.project.ProjectEndpoint;
+import ru.titov.taskmanagerserver.endpoint.task.TaskEndpoint;
+import ru.titov.taskmanagerserver.endpoint.user.UserEndpoint;
 
-@Getter
-@Setter
+import javax.inject.Inject;
+
 public abstract class AbstractCommand {
 
+    @Inject
     protected Bootstrap bootstrap;
+
+    @Inject
+    protected ProjectEndpoint projectEndpoint;
+
+    @Inject
+    protected TaskEndpoint taskEndpoint;
+
+    @Inject
+    protected UserEndpoint userEndpoint;
+
+    @Inject
+    protected Authorization authorization;
 
     public abstract void execute();
 

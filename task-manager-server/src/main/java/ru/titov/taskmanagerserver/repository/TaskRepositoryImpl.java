@@ -15,6 +15,7 @@ public class TaskRepositoryImpl extends AbstractRepository<Task> implements Task
     @Override
     @Nullable
     public Task getById(@NotNull final String id) {
+        entityManager.clear();
         return entityManager.find(Task.class, id);
     }
 
@@ -26,6 +27,7 @@ public class TaskRepositoryImpl extends AbstractRepository<Task> implements Task
     @Override
     @NotNull
     public List<Task> getAll() {
+        entityManager.clear();
         final TypedQuery<Task> query = entityManager.createQuery("FROM Task", Task.class);
         return query.getResultList();
     }
@@ -33,6 +35,7 @@ public class TaskRepositoryImpl extends AbstractRepository<Task> implements Task
     @Override
     @NotNull
     public List<Task> getAllByUserId(@NotNull String userId) {
+        entityManager.clear();
         final TypedQuery<Task> query = entityManager.createQuery("FROM Task t WHERE t.user.id = :userId", Task.class);
         query.setParameter("userId", userId);
         return query.getResultList();
@@ -41,6 +44,7 @@ public class TaskRepositoryImpl extends AbstractRepository<Task> implements Task
     @Override
     @NotNull
     public List<Task> getAllByProjectId(@NotNull String projectId) {
+        entityManager.clear();
         final TypedQuery<Task> query = entityManager.createQuery("FROM Task t WHERE t.project.id = :projectId", Task.class);
         query.setParameter("projectId", projectId);
         return query.getResultList();

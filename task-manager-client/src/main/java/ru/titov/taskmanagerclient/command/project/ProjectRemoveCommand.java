@@ -8,11 +8,10 @@ public class ProjectRemoveCommand extends AbstractCommand {
     @Override
     public void execute() {
         System.out.println("[REMOVE PROJECT]");
-        System.out.println("Enter token");
-        final String token = bootstrap.nextLine();
+        final String token = authorization.getToken();
         System.out.println("Enter order index:");
         final Integer orderIndex = bootstrap.nextInt();
-        final Response response = bootstrap.getProjectEndpoint().remove(token, orderIndex);
+        final Response response = projectEndpoint.remove(token, orderIndex);
         System.out.println(response.getMessage());
     }
 

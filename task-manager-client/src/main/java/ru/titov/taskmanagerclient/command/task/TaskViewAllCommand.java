@@ -11,9 +11,8 @@ public class TaskViewAllCommand extends AbstractCommand {
     @Override
     public void execute() {
         System.out.println("[VIEW TASKS]");
-        System.out.println("Enter token:");
-        final String token = bootstrap.nextLine();
-        final TaskListResponse taskListResponse = bootstrap.getTaskEndpoint().viewAll(token);
+        final String token = authorization.getToken();
+        final TaskListResponse taskListResponse = taskEndpoint.viewAll(token);
         if (taskListResponse.isSuccess()) {
             final Collection<SimpleTask> tasks = taskListResponse.getTasks();
             int orderId = 0;

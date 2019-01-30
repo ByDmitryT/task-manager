@@ -7,29 +7,29 @@ import java.util.Properties;
 public enum AppConfig {
     ;
 
-    public static final String RESOURCE = "application.properties";
+    public static String RESOURCE = "application.properties";
 
-    public static final String DB_DRIVER;
+    public static String DB_DRIVER;
 
-    public static final String DB_URL;
+    public static String DB_URL;
 
-    public static final String DB_LOGIN;
+    public static String DB_LOGIN;
 
-    public static final String DB_PASSWORD;
+    public static String DB_PASSWORD;
 
-    public static final String DB_DIALECT;
+    public static String DB_DIALECT;
 
-    public static final String DB_HBM2DDL_AUTO;
+    public static String DB_HBM2DDL_AUTO;
 
-    public static final String DB_SHOW_SQL;
+    public static String DB_SHOW_SQL;
 
-    public static final String SERVER_HOST;
+    public static String SERVER_HOST;
 
-    public static final String SERVER_PORT;
+    public static String SERVER_PORT;
 
-    public static final String TOKEN_SECRET;
+    public static String TOKEN_SECRET;
 
-    public static final long TOKEN_TIMEOUT;
+    public static long TOKEN_TIMEOUT;
 
     static {
         final Properties properties = new Properties();
@@ -45,8 +45,10 @@ public enum AppConfig {
         DB_DIALECT = properties.getProperty("datasource.dialect");
         DB_HBM2DDL_AUTO = properties.getProperty("datasource.hbm2ddlauto");
         DB_SHOW_SQL = properties.getProperty("datasource.showSql");
-        SERVER_HOST = properties.getProperty("server.host");
-        SERVER_PORT = properties.getProperty("server.port");
+        SERVER_HOST = System.getProperty("server.host");
+        if (SERVER_HOST == null) SERVER_HOST = properties.getProperty("server.host");
+        SERVER_PORT = System.getProperty("server.port");
+        if (SERVER_PORT == null) SERVER_PORT = properties.getProperty("server.port");
         TOKEN_SECRET = properties.getProperty("token.secret");
         TOKEN_TIMEOUT = Long.parseLong(properties.getProperty("token.timeout"));
     }

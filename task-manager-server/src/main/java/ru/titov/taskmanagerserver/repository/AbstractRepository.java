@@ -3,7 +3,6 @@ package ru.titov.taskmanagerserver.repository;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.titov.taskmanagerserver.api.repository.Repository;
-import ru.titov.taskmanagerserver.api.service.HibernateService;
 import ru.titov.taskmanagerserver.entity.AbstractEntity;
 
 import javax.inject.Inject;
@@ -13,12 +12,8 @@ import java.util.List;
 
 public abstract class AbstractRepository<E extends AbstractEntity> implements Repository<E> {
 
-    protected EntityManager entityManager;
-
     @Inject
-    public void setEntityManager(final HibernateService hibernateService) {
-        entityManager = hibernateService.getSessionFactory().createEntityManager();
-    }
+    protected EntityManager entityManager;
 
     @Override
     public void beginTransaction() {

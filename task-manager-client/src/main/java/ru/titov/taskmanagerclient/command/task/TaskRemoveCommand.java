@@ -8,11 +8,10 @@ public class TaskRemoveCommand extends AbstractCommand {
     @Override
     public void execute() {
         System.out.println("[REMOVE TASK]");
-        System.out.println("Enter token:");
-        final String token = bootstrap.nextLine();
+        final String token = authorization.getToken();
         System.out.println("Enter task order index:");
         final Integer orderIndex = bootstrap.nextInt();
-        final Response response = bootstrap.getTaskEndpoint().remove(token, orderIndex);
+        final Response response = taskEndpoint.remove(token, orderIndex);
         System.out.println(response.getMessage());
     }
 

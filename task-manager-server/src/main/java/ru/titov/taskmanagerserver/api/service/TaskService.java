@@ -8,7 +8,6 @@ import ru.titov.taskmanagerserver.error.task.AbstractTaskException;
 import ru.titov.taskmanagerserver.error.task.InvalidTaskIdException;
 import ru.titov.taskmanagerserver.error.user.AbstractUserException;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface TaskService {

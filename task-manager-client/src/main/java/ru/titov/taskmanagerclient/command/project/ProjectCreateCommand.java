@@ -5,14 +5,14 @@ import ru.titov.taskmanagerserver.endpoint.project.Response;
 
 public class ProjectCreateCommand extends AbstractCommand {
 
+
     @Override
     public void execute() {
         System.out.println("[CREATE PROJECT]");
-        System.out.println("Enter token:");
-        final String token = bootstrap.nextLine();
+        final String token = authorization.getToken();
         System.out.println("Enter project name:");
         final String projectName = bootstrap.nextLine();
-        final Response response = bootstrap.getProjectEndpoint().create(token, projectName);
+        final Response response = projectEndpoint.create(token, projectName);
         System.out.println(response.getMessage());
     }
 

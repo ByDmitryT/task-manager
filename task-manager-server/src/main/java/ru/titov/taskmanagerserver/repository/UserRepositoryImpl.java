@@ -14,12 +14,14 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 
     @Override
     public User getById(@NotNull final String id) {
+        entityManager.clear();
         return entityManager.find(User.class, id);
     }
 
     @Override
     @Nullable
     public User getByLogin(@NotNull final String login) {
+        entityManager.clear();
         final TypedQuery<User> query = entityManager.createQuery("FROM User WHERE login = :login", User.class);
         query.setParameter("login", login);
         return getFirstResult(query);
@@ -32,6 +34,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 
     @Override
     public boolean containsByLogin(@NotNull final String login) {
+        entityManager.clear();
         final TypedQuery<User> query = entityManager.createQuery("FROM User WHERE login = :login", User.class);
         query.setParameter("login", login);
         return !query.getResultList().isEmpty();
@@ -40,6 +43,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
     @Override
     @NotNull
     public List<User> getAll() {
+        entityManager.clear();
         final TypedQuery<User> query = entityManager.createQuery("FROM User", User.class);
         return query.getResultList();
     }

@@ -8,15 +8,14 @@ public class TaskCreateCommand extends AbstractCommand {
     @Override
     public void execute() {
         System.out.println("[CREATE TASK]");
-        System.out.println("Enter token:");
-        final String token = bootstrap.nextLine();
+        final String token = authorization.getToken();
         System.out.println("Enter project order index:");
         final Integer projectOrderId = bootstrap.nextInt();
         System.out.println("Enter task name:");
         final String taskName = bootstrap.nextLine();
         System.out.println("Enter task description:");
         final String taskDescription = bootstrap.nextLine();
-        final Response response = bootstrap.getTaskEndpoint().create(token, projectOrderId, taskName, taskDescription);
+        final Response response = taskEndpoint.create(token, projectOrderId, taskName, taskDescription);
         System.out.println(response.getMessage());
     }
 

@@ -9,11 +9,10 @@ public class TaskViewCommand extends AbstractCommand {
     @Override
     public void execute() {
         System.out.println("[VIEW TASK]");
-        System.out.println("Enter token:");
-        final String token = bootstrap.nextLine();
+        final String token = authorization.getToken();
         System.out.println("Enter order index:");
         final Integer orderIndex = bootstrap.nextInt();
-        final TaskResponse taskResponse = bootstrap.getTaskEndpoint().view(token, orderIndex);
+        final TaskResponse taskResponse = taskEndpoint.view(token, orderIndex);
         if (taskResponse.isSuccess()) {
             final SimpleTask simpleTask = taskResponse.getTask();
             System.out.println(orderIndex + ". " + simpleTask.getName() + " " + simpleTask.getDescription());

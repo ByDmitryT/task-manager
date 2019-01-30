@@ -8,11 +8,10 @@ public class UserChangePasswordCommand extends AbstractCommand {
     @Override
     public void execute() {
         System.out.println("[CHANGE PASSWORD]");
-        System.out.println("Enter token:");
-        final String token = bootstrap.nextLine();
+        final String token = authorization.getToken();
         System.out.println("Enter new password:");
         final String password = bootstrap.nextLine();
-        final Response response = bootstrap.getUserEndpoint().changePassword(token, password);
+        final Response response = userEndpoint.changePassword(token, password);
         System.out.println(response.getMessage());
     }
 

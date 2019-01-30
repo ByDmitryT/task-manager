@@ -5,32 +5,20 @@ import org.reflections.Reflections;
 import ru.titov.taskmanagerclient.api.controller.Bootstrap;
 import ru.titov.taskmanagerclient.command.AbstractCommand;
 import ru.titov.taskmanagerclient.error.command.NoSuchCommandsException;
-import ru.titov.taskmanagerserver.endpoint.project.ProjectEndpoint;
-import ru.titov.taskmanagerserver.endpoint.task.TaskEndpoint;
-import ru.titov.taskmanagerserver.endpoint.user.UserEndpoint;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import javax.enterprise.inject.spi.CDI;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-@Getter
 @ApplicationScoped
 public class BootstrapImpl implements Bootstrap {
 
-    @Inject
-    private UserEndpoint userEndpoint;
-
-    @Inject
-    private TaskEndpoint taskEndpoint;
-
-    @Inject
-    private ProjectEndpoint projectEndpoint;
-
     private final Scanner scanner = new Scanner(System.in);
 
+    @Getter
     private final Map<String, AbstractCommand> commandsMapping = new LinkedHashMap<>();
 
     @Override
@@ -51,13 +39,12 @@ public class BootstrapImpl implements Bootstrap {
         }
     }
 
-    private void initCommands() throws IllegalAccessException, InstantiationException, NoSuchCommandsException {
+    private void initCommands() throws NoSuchCommandsException {
         final Reflections reflections = new Reflections("ru.titov.taskmanagerclient.command");
         final Set<Class<? extends AbstractCommand>> commandClasses = reflections.getSubTypesOf(AbstractCommand.class);
         if (commandClasses.isEmpty()) throw new NoSuchCommandsException();
         for (final Class<? extends AbstractCommand> commandClass : commandClasses) {
-            final AbstractCommand command = commandClass.newInstance();
-            command.setBootstrap(this);
+            final AbstractCommand command = CDI.current().select(commandClass).get();
             commandsMapping.put(command.command(), command);
         }
     }

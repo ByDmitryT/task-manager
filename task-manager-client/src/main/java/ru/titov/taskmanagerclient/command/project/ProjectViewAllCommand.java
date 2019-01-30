@@ -10,10 +10,9 @@ public class ProjectViewAllCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        System.out.println("[VIEW PROJECT]");
-        System.out.println("Enter token:");
-        final String token = bootstrap.nextLine();
-        final ProjectListResponse projectListResponse = bootstrap.getProjectEndpoint().viewAll(token);
+        System.out.println("[VIEW PROJECTS]");
+        final String token = authorization.getToken();
+        final ProjectListResponse projectListResponse = projectEndpoint.viewAll(token);
         if (projectListResponse.isSuccess()) {
             final Collection<SimpleProject> projects = projectListResponse.getProjects();
             int orderId = 0;

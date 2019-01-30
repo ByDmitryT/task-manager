@@ -8,8 +8,7 @@ public class TaskUpdateCommand extends AbstractCommand {
     @Override
     public void execute() {
         System.out.println("[UPDATE TASK]");
-        System.out.println("Enter token:");
-        final String token = bootstrap.nextLine();
+        final String token = authorization.getToken();
         System.out.println("Enter task order index:");
         final Integer taskOrderIndex = bootstrap.nextInt();
         System.out.println("Enter new project order index:");
@@ -18,7 +17,7 @@ public class TaskUpdateCommand extends AbstractCommand {
         final String taskName = bootstrap.nextLine();
         System.out.println("Enter new task description:");
         final String taskDescription = bootstrap.nextLine();
-        final Response response = bootstrap.getTaskEndpoint().update(
+        final Response response = taskEndpoint.update(
                 token,
                 taskOrderIndex,
                 projectOrderIndex,

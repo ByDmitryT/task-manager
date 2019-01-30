@@ -9,11 +9,10 @@ public class ProjectViewCommand extends AbstractCommand {
     @Override
     public void execute() {
         System.out.println("[VIEW PROJECT]");
-        System.out.println("Enter token");
-        final String token = bootstrap.nextLine();
+        final String token = authorization.getToken();
         System.out.println("Enter order index:");
         final Integer orderIndex = bootstrap.nextInt();
-        final ProjectResponse projectResponse = bootstrap.getProjectEndpoint().view(token, orderIndex);
+        final ProjectResponse projectResponse = projectEndpoint.view(token, orderIndex);
         if (projectResponse.isSuccess()) {
             final SimpleProject project = projectResponse.getProject();
             System.out.println(orderIndex + ". " + project.getName());
