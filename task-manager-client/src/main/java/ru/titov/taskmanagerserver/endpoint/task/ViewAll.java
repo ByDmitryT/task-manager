@@ -1,4 +1,3 @@
-
 package ru.titov.taskmanagerserver.endpoint.task;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -8,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for viewAll complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="viewAll"&gt;
  *   &lt;complexContent&gt;
@@ -22,12 +21,10 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "viewAll", propOrder = {
-    "token"
+        "token"
 })
 public class ViewAll {
 
@@ -35,11 +32,9 @@ public class ViewAll {
 
     /**
      * Gets the value of the token property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getToken() {
         return token;
@@ -47,11 +42,9 @@ public class ViewAll {
 
     /**
      * Sets the value of the token property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setToken(String value) {
         this.token = value;

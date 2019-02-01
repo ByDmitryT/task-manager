@@ -1,4 +1,3 @@
-
 package ru.titov.taskmanagerserver.endpoint.project;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -8,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for update complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="update"&gt;
  *   &lt;complexContent&gt;
@@ -24,14 +23,12 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "update", propOrder = {
-    "token",
-    "projectOrderIndex",
-    "name"
+        "token",
+        "projectOrderIndex",
+        "name"
 })
 public class Update {
 
@@ -41,11 +38,9 @@ public class Update {
 
     /**
      * Gets the value of the token property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getToken() {
         return token;
@@ -53,11 +48,9 @@ public class Update {
 
     /**
      * Sets the value of the token property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setToken(String value) {
         this.token = value;
@@ -65,11 +58,9 @@ public class Update {
 
     /**
      * Gets the value of the projectOrderIndex property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
+     *
+     * @return possible object is
+     * {@link Integer }
      */
     public Integer getProjectOrderIndex() {
         return projectOrderIndex;
@@ -77,11 +68,9 @@ public class Update {
 
     /**
      * Sets the value of the projectOrderIndex property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Integer }
      */
     public void setProjectOrderIndex(Integer value) {
         this.projectOrderIndex = value;
@@ -89,11 +78,9 @@ public class Update {
 
     /**
      * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getName() {
         return name;
@@ -101,11 +88,9 @@ public class Update {
 
     /**
      * Sets the value of the name property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setName(String value) {
         this.name = value;

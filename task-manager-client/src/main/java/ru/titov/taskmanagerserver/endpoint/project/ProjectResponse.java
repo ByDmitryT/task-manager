@@ -1,4 +1,3 @@
-
 package ru.titov.taskmanagerserver.endpoint.project;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -8,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for projectResponse complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="projectResponse"&gt;
  *   &lt;complexContent&gt;
@@ -22,26 +21,21 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "projectResponse", propOrder = {
-    "project"
+        "project"
 })
 public class ProjectResponse
-    extends Response
-{
+        extends Response {
 
     protected SimpleProject project;
 
     /**
      * Gets the value of the project property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link SimpleProject }
-     *     
+     *
+     * @return possible object is
+     * {@link SimpleProject }
      */
     public SimpleProject getProject() {
         return project;
@@ -49,11 +43,9 @@ public class ProjectResponse
 
     /**
      * Sets the value of the project property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link SimpleProject }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link SimpleProject }
      */
     public void setProject(SimpleProject value) {
         this.project = value;

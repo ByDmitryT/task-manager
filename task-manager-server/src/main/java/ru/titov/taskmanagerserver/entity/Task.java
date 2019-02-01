@@ -26,7 +26,7 @@ public class Task extends AbstractEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "name: " + name + " description:" + description;
+        return "name: " + name + " description: " + description;
     }
 
 }

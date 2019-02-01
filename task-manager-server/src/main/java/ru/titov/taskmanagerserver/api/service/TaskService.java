@@ -26,7 +26,7 @@ public interface TaskService {
 
     void removeById(@Nullable String taskId) throws AbstractTaskException;
 
-    boolean doesExists(@Nullable String taskId) throws InvalidTaskIdException;
+    boolean exists(@Nullable String taskId) throws InvalidTaskIdException;
 
     @NotNull
     List<Task> getAll();

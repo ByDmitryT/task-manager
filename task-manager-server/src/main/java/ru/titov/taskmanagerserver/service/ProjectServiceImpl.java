@@ -1,5 +1,6 @@
 package ru.titov.taskmanagerserver.service;
 
+import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.titov.taskmanagerserver.api.repository.ProjectRepository;
@@ -14,12 +15,18 @@ import ru.titov.taskmanagerserver.error.project.ProjectExistsException;
 import ru.titov.taskmanagerserver.error.project.ProjectNotFoundException;
 import ru.titov.taskmanagerserver.error.user.AbstractUserException;
 import ru.titov.taskmanagerserver.error.user.InvalidUserInputException;
+import ru.titov.taskmanagerserver.interceptor.ServiceMethodInterceptor;
+import ru.titov.taskmanagerserver.interceptor.ServiceTime;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.interceptor.Interceptors;
 import java.util.List;
 
+@ServiceTime
+@Transactional
 @ApplicationScoped
+@Interceptors(ServiceMethodInterceptor.class)
 public class ProjectServiceImpl implements ProjectService {
 
     @Inject
@@ -29,10 +36,8 @@ public class ProjectServiceImpl implements ProjectService {
     public void add(@Nullable final Project project) throws AbstractProjectException {
         if (project == null) throw new InvalidProjectInputException();
         if (project.getName() == null || project.getName().isEmpty()) throw new InvalidProjectNameException();
-        if (doesExists(project.getId())) throw new ProjectExistsException();
-        projectRepository.beginTransaction();
-        projectRepository.persist(project);
-        projectRepository.commitTransaction();
+        if (exists(project.getId())) throw new ProjectExistsException();
+        projectRepository.save(project);
     }
 
     @Override
@@ -51,19 +56,17 @@ public class ProjectServiceImpl implements ProjectService {
     @NotNull
     public Project getById(@Nullable final String projectId) throws AbstractProjectException {
         if (projectId == null) throw new InvalidProjectIdException();
-        final Project project = projectRepository.getById(projectId);
+        final Project project = projectRepository.findBy(projectId);
         if (project == null) throw new ProjectNotFoundException();
         return project;
     }
 
     @Override
     public void update(@Nullable final Project project) throws AbstractProjectException {
-        if (project == null || !doesExists(project.getId())) {
+        if (project == null || !exists(project.getId())) {
             throw new InvalidProjectInputException();
         }
-        projectRepository.beginTransaction();
-        projectRepository.merge(project);
-        projectRepository.commitTransaction();
+        projectRepository.refresh(project);
     }
 
     @Override
@@ -75,33 +78,31 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void removeById(@Nullable final String projectId) throws AbstractProjectException {
-        if (projectId == null || !doesExists(projectId)) {
+        if (projectId == null || !exists(projectId)) {
             throw new InvalidProjectIdException();
         }
-        projectRepository.beginTransaction();
-        final Project project = projectRepository.getById(projectId);
+        final Project project = projectRepository.findBy(projectId);
         if (project == null) throw new InvalidProjectIdException();
         projectRepository.remove(project);
-        projectRepository.commitTransaction();
     }
 
     @Override
-    public boolean doesExists(@Nullable final String projectId) throws InvalidProjectIdException {
+    public boolean exists(@Nullable final String projectId) throws InvalidProjectIdException {
         if (projectId == null || projectId.isEmpty()) throw new InvalidProjectIdException();
-        return projectRepository.containsById(projectId);
+        return projectRepository.findBy(projectId) != null;
     }
 
     @Override
     @NotNull
     public List<Project> getAll() {
-        return projectRepository.getAll();
+        return projectRepository.findAll();
     }
 
     @Override
     @NotNull
     public List<Project> getAllByUserId(@Nullable final String userId) throws AbstractUserException {
         if (userId == null || userId.isEmpty()) throw new InvalidUserInputException();
-        return projectRepository.getAllByUserId(userId);
+        return projectRepository.findAllByUserId(userId);
     }
 
 }

@@ -1,4 +1,3 @@
-
 package ru.titov.taskmanagerserver.endpoint.user;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -8,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for changePassword complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="changePassword"&gt;
  *   &lt;complexContent&gt;
@@ -23,13 +22,11 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "changePassword", propOrder = {
-    "token",
-    "newPassword"
+        "token",
+        "newPassword"
 })
 public class ChangePassword {
 
@@ -38,11 +35,9 @@ public class ChangePassword {
 
     /**
      * Gets the value of the token property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getToken() {
         return token;
@@ -50,11 +45,9 @@ public class ChangePassword {
 
     /**
      * Sets the value of the token property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setToken(String value) {
         this.token = value;
@@ -62,11 +55,9 @@ public class ChangePassword {
 
     /**
      * Gets the value of the newPassword property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getNewPassword() {
         return newPassword;
@@ -74,11 +65,9 @@ public class ChangePassword {
 
     /**
      * Sets the value of the newPassword property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setNewPassword(String value) {
         this.newPassword = value;

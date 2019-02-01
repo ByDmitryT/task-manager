@@ -9,7 +9,6 @@ import ru.titov.taskmanagerserver.dto.response.project.ProjectResponse;
 import ru.titov.taskmanagerserver.dto.response.project.SimpleProject;
 import ru.titov.taskmanagerserver.dto.secure.TokenData;
 import ru.titov.taskmanagerserver.entity.Project;
-import ru.titov.taskmanagerserver.entity.Task;
 import ru.titov.taskmanagerserver.entity.User;
 import ru.titov.taskmanagerserver.util.TokenUtil;
 
@@ -56,13 +55,6 @@ public class ProjectEndpoint {
         final Response response = new Response();
         try {
             final TokenData tokenData = TokenUtil.decrypt(token);
-            final Project project = serviceLocator.getProjectService().getByOrderIndex(tokenData.getUserId(), projectOrderIndex);
-            for (final Task task : project.getTasks()) {
-                if (task == null) continue;
-                if (project.getId().equals(task.getProject().getId())) {
-                    serviceLocator.getTaskService().removeById(task.getId());
-                }
-            }
             serviceLocator.getProjectService().removeByOrderIndex(tokenData.getUserId(), projectOrderIndex);
         } catch (Exception e) {
             response.setSuccess(false);
@@ -77,7 +69,7 @@ public class ProjectEndpoint {
     public Response update(
             @Nullable @WebParam(name = "token", partName = "token") final String token,
             @Nullable @WebParam(name = "projectOrderIndex", partName = "projectOrderIndex") final Integer projectOrderIndex,
-            @Nullable  @WebParam(name = "name", partName = "name") final String name
+            @Nullable @WebParam(name = "name", partName = "name") final String name
     ) {
         final Response response = new Response();
         try {

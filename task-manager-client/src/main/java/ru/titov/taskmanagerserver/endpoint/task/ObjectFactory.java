@@ -1,4 +1,3 @@
-
 package ru.titov.taskmanagerserver.endpoint.task;
 
 import javax.xml.bind.JAXBElement;
@@ -8,18 +7,17 @@ import javax.xml.namespace.QName;
 
 
 /**
- * This object contains factory methods for each 
- * Java content interface and Java element interface 
- * generated in the ru.titov.taskmanagerserver.endpoint.task package. 
- * <p>An ObjectFactory allows you to programatically 
- * construct new instances of the Java representation 
- * for XML content. The Java representation of XML 
- * content can consist of schema derived interfaces 
- * and classes representing the binding of schema 
- * type definitions, element declarations and model 
- * groups.  Factory methods for each of these are 
+ * This object contains producer methods for each
+ * Java content interface and Java element interface
+ * generated in the ru.titov.taskmanagerserver.endpoint.task package.
+ * <p>An ObjectFactory allows you to programatically
+ * construct new instances of the Java representation
+ * for XML content. The Java representation of XML
+ * content can consist of schema derived interfaces
+ * and classes representing the binding of schema
+ * type definitions, element declarations and model
+ * groups.  Factory methods for each of these are
  * provided in this class.
- * 
  */
 @XmlRegistry
 public class ObjectFactory {
@@ -37,14 +35,12 @@ public class ObjectFactory {
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: ru.titov.taskmanagerserver.endpoint.task
-     * 
      */
     public ObjectFactory() {
     }
 
     /**
      * Create an instance of {@link Create }
-     * 
      */
     public Create createCreate() {
         return new Create();
@@ -52,7 +48,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link CreateResponse }
-     * 
      */
     public CreateResponse createCreateResponse() {
         return new CreateResponse();
@@ -60,7 +55,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Remove }
-     * 
      */
     public Remove createRemove() {
         return new Remove();
@@ -68,7 +62,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link RemoveResponse }
-     * 
      */
     public RemoveResponse createRemoveResponse() {
         return new RemoveResponse();
@@ -76,7 +69,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Update }
-     * 
      */
     public Update createUpdate() {
         return new Update();
@@ -84,7 +76,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link UpdateResponse }
-     * 
      */
     public UpdateResponse createUpdateResponse() {
         return new UpdateResponse();
@@ -92,7 +83,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link View }
-     * 
      */
     public View createView() {
         return new View();
@@ -100,7 +90,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ViewAll }
-     * 
      */
     public ViewAll createViewAll() {
         return new ViewAll();
@@ -108,7 +97,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ViewAllResponse }
-     * 
      */
     public ViewAllResponse createViewAllResponse() {
         return new ViewAllResponse();
@@ -116,7 +104,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ViewResponse }
-     * 
      */
     public ViewResponse createViewResponse() {
         return new ViewResponse();
@@ -124,7 +111,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Response }
-     * 
      */
     public Response createResponse() {
         return new Response();
@@ -132,7 +118,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TaskListResponse }
-     * 
      */
     public TaskListResponse createTaskListResponse() {
         return new TaskListResponse();
@@ -140,7 +125,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SimpleTask }
-     * 
      */
     public SimpleTask createSimpleTask() {
         return new SimpleTask();
@@ -148,7 +132,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TaskResponse }
-     * 
      */
     public TaskResponse createTaskResponse() {
         return new TaskResponse();
@@ -156,7 +139,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link Create }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "http://task.endpoint.taskmanagerserver.titov.ru/", name = "create")
     public JAXBElement<Create> createCreate(Create value) {
@@ -165,7 +147,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link CreateResponse }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "http://task.endpoint.taskmanagerserver.titov.ru/", name = "createResponse")
     public JAXBElement<CreateResponse> createCreateResponse(CreateResponse value) {
@@ -174,7 +155,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link Remove }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "http://task.endpoint.taskmanagerserver.titov.ru/", name = "remove")
     public JAXBElement<Remove> createRemove(Remove value) {
@@ -183,7 +163,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link RemoveResponse }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "http://task.endpoint.taskmanagerserver.titov.ru/", name = "removeResponse")
     public JAXBElement<RemoveResponse> createRemoveResponse(RemoveResponse value) {
@@ -192,7 +171,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link Update }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "http://task.endpoint.taskmanagerserver.titov.ru/", name = "update")
     public JAXBElement<Update> createUpdate(Update value) {
@@ -201,7 +179,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link UpdateResponse }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "http://task.endpoint.taskmanagerserver.titov.ru/", name = "updateResponse")
     public JAXBElement<UpdateResponse> createUpdateResponse(UpdateResponse value) {
@@ -210,7 +187,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link View }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "http://task.endpoint.taskmanagerserver.titov.ru/", name = "view")
     public JAXBElement<View> createView(View value) {
@@ -219,7 +195,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ViewAll }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "http://task.endpoint.taskmanagerserver.titov.ru/", name = "viewAll")
     public JAXBElement<ViewAll> createViewAll(ViewAll value) {
@@ -228,7 +203,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ViewAllResponse }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "http://task.endpoint.taskmanagerserver.titov.ru/", name = "viewAllResponse")
     public JAXBElement<ViewAllResponse> createViewAllResponse(ViewAllResponse value) {
@@ -237,7 +211,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ViewResponse }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "http://task.endpoint.taskmanagerserver.titov.ru/", name = "viewResponse")
     public JAXBElement<ViewResponse> createViewResponse(ViewResponse value) {

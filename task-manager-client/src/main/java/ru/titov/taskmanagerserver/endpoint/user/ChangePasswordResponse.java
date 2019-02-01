@@ -1,4 +1,3 @@
-
 package ru.titov.taskmanagerserver.endpoint.user;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -9,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for changePasswordResponse complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="changePasswordResponse"&gt;
  *   &lt;complexContent&gt;
@@ -23,12 +22,10 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "changePasswordResponse", propOrder = {
-    "_return"
+        "_return"
 })
 public class ChangePasswordResponse {
 
@@ -37,11 +34,9 @@ public class ChangePasswordResponse {
 
     /**
      * Gets the value of the return property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Response }
-     *     
+     *
+     * @return possible object is
+     * {@link Response }
      */
     public Response getReturn() {
         return _return;
@@ -49,11 +44,9 @@ public class ChangePasswordResponse {
 
     /**
      * Sets the value of the return property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Response }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Response }
      */
     public void setReturn(Response value) {
         this._return = value;

@@ -1,4 +1,3 @@
-
 package ru.titov.taskmanagerserver.endpoint.task;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -9,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for viewAllResponse complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="viewAllResponse"&gt;
  *   &lt;complexContent&gt;
@@ -23,12 +22,10 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "viewAllResponse", propOrder = {
-    "_return"
+        "_return"
 })
 public class ViewAllResponse {
 
@@ -37,11 +34,9 @@ public class ViewAllResponse {
 
     /**
      * Gets the value of the return property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TaskListResponse }
-     *     
+     *
+     * @return possible object is
+     * {@link TaskListResponse }
      */
     public TaskListResponse getReturn() {
         return _return;
@@ -49,11 +44,9 @@ public class ViewAllResponse {
 
     /**
      * Sets the value of the return property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TaskListResponse }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link TaskListResponse }
      */
     public void setReturn(TaskListResponse value) {
         this._return = value;

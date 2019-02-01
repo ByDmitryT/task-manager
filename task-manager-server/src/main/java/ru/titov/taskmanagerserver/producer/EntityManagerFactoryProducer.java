@@ -1,6 +1,5 @@
-package ru.titov.taskmanagerserver.factory;
+package ru.titov.taskmanagerserver.producer;
 
-import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
@@ -13,14 +12,15 @@ import ru.titov.taskmanagerserver.entity.User;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
+import javax.persistence.EntityManagerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HibernateFactory {
+public class EntityManagerFactoryProducer {
 
     @ApplicationScoped
     @Produces
-    public SessionFactory getSessionFactory() {
+    public EntityManagerFactory getEntityManagerFactory() {
         final Map<String, String> settings = new HashMap<>();
         settings.put(Environment.DRIVER, AppConfig.DB_DRIVER);
         settings.put(Environment.URL, AppConfig.DB_URL);

@@ -1,4 +1,3 @@
-
 package ru.titov.taskmanagerserver.endpoint.task;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -8,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for taskResponse complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="taskResponse"&gt;
  *   &lt;complexContent&gt;
@@ -22,26 +21,21 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "taskResponse", propOrder = {
-    "task"
+        "task"
 })
 public class TaskResponse
-    extends Response
-{
+        extends Response {
 
     protected SimpleTask task;
 
     /**
      * Gets the value of the task property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link SimpleTask }
-     *     
+     *
+     * @return possible object is
+     * {@link SimpleTask }
      */
     public SimpleTask getTask() {
         return task;
@@ -49,11 +43,9 @@ public class TaskResponse
 
     /**
      * Sets the value of the task property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link SimpleTask }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link SimpleTask }
      */
     public void setTask(SimpleTask value) {
         this.task = value;

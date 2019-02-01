@@ -1,4 +1,3 @@
-
 package ru.titov.taskmanagerserver.endpoint.user;
 
 import javax.xml.bind.JAXBElement;
@@ -8,18 +7,17 @@ import javax.xml.namespace.QName;
 
 
 /**
- * This object contains factory methods for each 
- * Java content interface and Java element interface 
- * generated in the ru.titov.taskmanagerserver.endpoint.user package. 
- * <p>An ObjectFactory allows you to programatically 
- * construct new instances of the Java representation 
- * for XML content. The Java representation of XML 
- * content can consist of schema derived interfaces 
- * and classes representing the binding of schema 
- * type definitions, element declarations and model 
- * groups.  Factory methods for each of these are 
+ * This object contains producer methods for each
+ * Java content interface and Java element interface
+ * generated in the ru.titov.taskmanagerserver.endpoint.user package.
+ * <p>An ObjectFactory allows you to programatically
+ * construct new instances of the Java representation
+ * for XML content. The Java representation of XML
+ * content can consist of schema derived interfaces
+ * and classes representing the binding of schema
+ * type definitions, element declarations and model
+ * groups.  Factory methods for each of these are
  * provided in this class.
- * 
  */
 @XmlRegistry
 public class ObjectFactory {
@@ -35,14 +33,12 @@ public class ObjectFactory {
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: ru.titov.taskmanagerserver.endpoint.user
-     * 
      */
     public ObjectFactory() {
     }
 
     /**
      * Create an instance of {@link ChangePassword }
-     * 
      */
     public ChangePassword createChangePassword() {
         return new ChangePassword();
@@ -50,7 +46,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ChangePasswordResponse }
-     * 
      */
     public ChangePasswordResponse createChangePasswordResponse() {
         return new ChangePasswordResponse();
@@ -58,7 +53,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SignIn }
-     * 
      */
     public SignIn createSignIn() {
         return new SignIn();
@@ -66,7 +60,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SignInResponse }
-     * 
      */
     public SignInResponse createSignInResponse() {
         return new SignInResponse();
@@ -74,7 +67,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SignUp }
-     * 
      */
     public SignUp createSignUp() {
         return new SignUp();
@@ -82,7 +74,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SignUpResponse }
-     * 
      */
     public SignUpResponse createSignUpResponse() {
         return new SignUpResponse();
@@ -90,7 +81,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ViewAll }
-     * 
      */
     public ViewAll createViewAll() {
         return new ViewAll();
@@ -98,7 +88,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ViewAllResponse }
-     * 
      */
     public ViewAllResponse createViewAllResponse() {
         return new ViewAllResponse();
@@ -106,7 +95,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TokenResponse }
-     * 
      */
     public TokenResponse createTokenResponse() {
         return new TokenResponse();
@@ -114,7 +102,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Response }
-     * 
      */
     public Response createResponse() {
         return new Response();
@@ -122,7 +109,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link UserListResponse }
-     * 
      */
     public UserListResponse createUserListResponse() {
         return new UserListResponse();
@@ -130,7 +116,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SimpleUser }
-     * 
      */
     public SimpleUser createSimpleUser() {
         return new SimpleUser();
@@ -138,7 +123,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ChangePassword }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "http://user.endpoint.taskmanagerserver.titov.ru/", name = "changePassword")
     public JAXBElement<ChangePassword> createChangePassword(ChangePassword value) {
@@ -147,7 +131,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ChangePasswordResponse }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "http://user.endpoint.taskmanagerserver.titov.ru/", name = "changePasswordResponse")
     public JAXBElement<ChangePasswordResponse> createChangePasswordResponse(ChangePasswordResponse value) {
@@ -156,7 +139,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link SignIn }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "http://user.endpoint.taskmanagerserver.titov.ru/", name = "signIn")
     public JAXBElement<SignIn> createSignIn(SignIn value) {
@@ -165,7 +147,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link SignInResponse }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "http://user.endpoint.taskmanagerserver.titov.ru/", name = "signInResponse")
     public JAXBElement<SignInResponse> createSignInResponse(SignInResponse value) {
@@ -174,7 +155,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link SignUp }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "http://user.endpoint.taskmanagerserver.titov.ru/", name = "signUp")
     public JAXBElement<SignUp> createSignUp(SignUp value) {
@@ -183,7 +163,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link SignUpResponse }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "http://user.endpoint.taskmanagerserver.titov.ru/", name = "signUpResponse")
     public JAXBElement<SignUpResponse> createSignUpResponse(SignUpResponse value) {
@@ -192,7 +171,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ViewAll }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "http://user.endpoint.taskmanagerserver.titov.ru/", name = "viewAll")
     public JAXBElement<ViewAll> createViewAll(ViewAll value) {
@@ -201,7 +179,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ViewAllResponse }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "http://user.endpoint.taskmanagerserver.titov.ru/", name = "viewAllResponse")
     public JAXBElement<ViewAllResponse> createViewAllResponse(ViewAllResponse value) {

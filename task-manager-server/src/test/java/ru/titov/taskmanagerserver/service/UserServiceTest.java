@@ -112,7 +112,7 @@ public class UserServiceTest {
                 .get();
         final UserService userService = serviceLocator.getUserService();
         userService.signUp(login, PasswordHashUtil.md5(password));
-        Assert.assertTrue(userService.doesExistsByLogin(login));
+        Assert.assertTrue(userService.existsByLogin(login));
     }
 
     @Test(expected = AbstractUserException.class)
@@ -122,7 +122,7 @@ public class UserServiceTest {
                 .select(ServiceLocator.class)
                 .get();
         final UserService userService = serviceLocator.getUserService();
-        userService.doesExistsByLogin(login);
+        userService.existsByLogin(login);
     }
 
 }

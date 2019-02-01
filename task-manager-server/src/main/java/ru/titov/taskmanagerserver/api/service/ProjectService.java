@@ -25,7 +25,7 @@ public interface ProjectService {
 
     void removeById(@Nullable String projectId) throws AbstractProjectException;
 
-    boolean doesExists(@Nullable String projectId) throws InvalidProjectIdException;
+    boolean exists(@Nullable String projectId) throws InvalidProjectIdException;
 
     @NotNull
     List<Project> getAll();

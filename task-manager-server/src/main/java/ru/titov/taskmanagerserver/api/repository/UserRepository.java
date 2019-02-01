@@ -1,14 +1,12 @@
 package ru.titov.taskmanagerserver.api.repository;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.apache.deltaspike.data.api.EntityRepository;
+import org.apache.deltaspike.data.api.Repository;
 import ru.titov.taskmanagerserver.entity.User;
 
-public interface UserRepository extends Repository<User> {
+@Repository
+public interface UserRepository extends EntityRepository<User, String> {
 
-    @Nullable
-    User getByLogin(@NotNull String login);
-
-    boolean containsByLogin(@NotNull String login);
+    User findByLogin(String login);
 
 }

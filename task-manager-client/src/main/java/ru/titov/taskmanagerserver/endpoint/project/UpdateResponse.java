@@ -1,4 +1,3 @@
-
 package ru.titov.taskmanagerserver.endpoint.project;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -9,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for updateResponse complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="updateResponse"&gt;
  *   &lt;complexContent&gt;
@@ -23,12 +22,10 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "updateResponse", propOrder = {
-    "_return"
+        "_return"
 })
 public class UpdateResponse {
 
@@ -37,11 +34,9 @@ public class UpdateResponse {
 
     /**
      * Gets the value of the return property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Response }
-     *     
+     *
+     * @return possible object is
+     * {@link Response }
      */
     public Response getReturn() {
         return _return;
@@ -49,11 +44,9 @@ public class UpdateResponse {
 
     /**
      * Sets the value of the return property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Response }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Response }
      */
     public void setReturn(Response value) {
         this._return = value;

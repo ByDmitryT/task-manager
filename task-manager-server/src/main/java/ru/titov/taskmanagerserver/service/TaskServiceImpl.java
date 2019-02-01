@@ -1,5 +1,6 @@
 package ru.titov.taskmanagerserver.service;
 
+import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.titov.taskmanagerserver.api.repository.TaskRepository;
@@ -16,11 +17,14 @@ import ru.titov.taskmanagerserver.error.task.TaskExistsException;
 import ru.titov.taskmanagerserver.error.task.TaskNotFoundException;
 import ru.titov.taskmanagerserver.error.user.AbstractUserException;
 import ru.titov.taskmanagerserver.error.user.InvalidUserIdException;
+import ru.titov.taskmanagerserver.interceptor.ServiceTime;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.List;
 
+@ServiceTime
+@Transactional
 @ApplicationScoped
 public class TaskServiceImpl implements TaskService {
 
@@ -31,10 +35,8 @@ public class TaskServiceImpl implements TaskService {
     public void add(@Nullable final Task task) throws AbstractTaskException {
         if (task == null) throw new InvalidTaskInputException();
         if (task.getName() == null || task.getName().isEmpty()) throw new InvalidTaskNameException();
-        if (doesExists(task.getId())) throw new TaskExistsException();
-        taskRepository.beginTransaction();
-        taskRepository.persist(task);
-        taskRepository.commitTransaction();
+        if (exists(task.getId())) throw new TaskExistsException();
+        taskRepository.save(task);
     }
 
     @Override
@@ -53,18 +55,16 @@ public class TaskServiceImpl implements TaskService {
     @NotNull
     public Task getById(@Nullable final String taskId) throws AbstractTaskException {
         if (taskId == null) throw new InvalidTaskIdException();
-        final Task task = taskRepository.getById(taskId);
+        final Task task = taskRepository.findBy(taskId);
         if (task == null) throw new TaskNotFoundException();
         return task;
     }
 
     @Override
     public void update(@Nullable final Task task) throws AbstractTaskException {
-        if (task == null || !doesExists(task.getId())) throw new InvalidTaskInputException();
+        if (task == null || !exists(task.getId())) throw new InvalidTaskInputException();
         if (task.getName() == null || task.getName().isEmpty()) throw new InvalidTaskNameException();
-        taskRepository.beginTransaction();
-        taskRepository.merge(task);
-        taskRepository.commitTransaction();
+        taskRepository.refresh(task);
     }
 
     @Override
@@ -77,37 +77,35 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void removeById(@Nullable final String taskId) throws AbstractTaskException {
         if (taskId == null) throw new InvalidTaskIdException();
-        taskRepository.beginTransaction();
-        final Task task = taskRepository.getById(taskId);
+        final Task task = taskRepository.findBy(taskId);
         if (task == null) throw new InvalidTaskIdException();
         taskRepository.remove(task);
-        taskRepository.commitTransaction();
     }
 
     @Override
-    public boolean doesExists(@Nullable final String taskId) throws InvalidTaskIdException {
+    public boolean exists(@Nullable final String taskId) throws InvalidTaskIdException {
         if (taskId == null || taskId.isEmpty()) throw new InvalidTaskIdException();
-        return taskRepository.containsById(taskId);
+        return taskRepository.findBy(taskId) != null;
     }
 
     @Override
     @NotNull
     public List<Task> getAll() {
-        return taskRepository.getAll();
+        return taskRepository.findAll();
     }
 
     @Override
     @NotNull
     public List<Task> getAllByUserId(@Nullable final String userId) throws AbstractUserException {
         if (userId == null || userId.isEmpty()) throw new InvalidUserIdException();
-        return taskRepository.getAllByUserId(userId);
+        return taskRepository.findAllByUserId(userId);
     }
 
     @Override
     @NotNull
     public List<Task> getAllByProjectId(@Nullable final String projectId) throws AbstractProjectException {
         if (projectId == null || projectId.isEmpty()) throw new InvalidProjectIdException();
-        return taskRepository.getAllByProjectId(projectId);
+        return taskRepository.findAllByProjectId(projectId);
     }
 
 }

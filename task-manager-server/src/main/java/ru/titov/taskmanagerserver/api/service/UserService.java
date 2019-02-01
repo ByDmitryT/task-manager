@@ -30,9 +30,9 @@ public interface UserService {
 
     void removeById(@Nullable String id) throws AbstractUserException;
 
-    boolean doesExistsById(@Nullable String id) throws AbstractUserException;
+    boolean existsById(@Nullable String id) throws AbstractUserException;
 
-    boolean doesExistsByLogin(@Nullable String login) throws AbstractUserException;
+    boolean existsByLogin(@Nullable String login) throws AbstractUserException;
 
     @NotNull
     List<User> getAll();
