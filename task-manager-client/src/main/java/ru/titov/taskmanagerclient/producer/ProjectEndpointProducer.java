@@ -1,4 +1,4 @@
-package ru.titov.taskmanagerclient.factory;
+package ru.titov.taskmanagerclient.producer;
 
 import ru.titov.taskmanagerserver.endpoint.project.ProjectEndpoint;
 import ru.titov.taskmanagerserver.endpoint.project.ProjectEndpointService;
@@ -7,7 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
-public class ProjectEndpointFactory {
+public class ProjectEndpointProducer {
 
     @Inject
     private ProjectEndpointService projectEndpointService;
