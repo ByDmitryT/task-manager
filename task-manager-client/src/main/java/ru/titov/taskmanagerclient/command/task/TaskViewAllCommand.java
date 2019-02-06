@@ -1,11 +1,13 @@
 package ru.titov.taskmanagerclient.command.task;
 
+import org.springframework.stereotype.Component;
 import ru.titov.taskmanagerclient.command.AbstractCommand;
 import ru.titov.taskmanagerserver.endpoint.task.SimpleTask;
 import ru.titov.taskmanagerserver.endpoint.task.TaskListResponse;
 
 import java.util.Collection;
 
+@Component
 public class TaskViewAllCommand extends AbstractCommand {
 
     @Override

@@ -3,13 +3,12 @@ package ru.titov.taskmanagerclient.security;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.enterprise.context.ApplicationScoped;
+import org.springframework.stereotype.Component;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@ApplicationScoped
+@Component
 public class Authorization {
 
     private String token;

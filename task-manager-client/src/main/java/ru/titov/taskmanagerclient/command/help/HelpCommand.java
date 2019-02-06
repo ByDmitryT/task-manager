@@ -1,7 +1,9 @@
 package ru.titov.taskmanagerclient.command.help;
 
+import org.springframework.stereotype.Component;
 import ru.titov.taskmanagerclient.command.AbstractCommand;
 
+@Component
 public class HelpCommand extends AbstractCommand {
 
     @Override

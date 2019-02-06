@@ -1,8 +1,10 @@
 package ru.titov.taskmanagerclient.command.project;
 
+import org.springframework.stereotype.Component;
 import ru.titov.taskmanagerclient.command.AbstractCommand;
 import ru.titov.taskmanagerserver.endpoint.project.Response;
 
+@Component
 public class ProjectUpdateCommand extends AbstractCommand {
 
     @Override

@@ -1,25 +1,27 @@
 package ru.titov.taskmanagerclient.controller;
 
 import lombok.Getter;
-import org.reflections.Reflections;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.titov.taskmanagerclient.api.controller.Bootstrap;
 import ru.titov.taskmanagerclient.command.AbstractCommand;
 import ru.titov.taskmanagerclient.error.command.NoSuchCommandsException;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.spi.CDI;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 
-@ApplicationScoped
+@Component
 public class BootstrapImpl implements Bootstrap {
 
     private final Scanner scanner = new Scanner(System.in);
 
     @Getter
     private final Map<String, AbstractCommand> commandsMapping = new LinkedHashMap<>();
+
+    @Autowired
+    private Collection<AbstractCommand> commands;
 
     @Override
     public void start() {
@@ -40,11 +42,8 @@ public class BootstrapImpl implements Bootstrap {
     }
 
     private void initCommands() throws NoSuchCommandsException {
-        final Reflections reflections = new Reflections("ru.titov.taskmanagerclient.command");
-        final Set<Class<? extends AbstractCommand>> commandClasses = reflections.getSubTypesOf(AbstractCommand.class);
-        if (commandClasses.isEmpty()) throw new NoSuchCommandsException();
-        for (final Class<? extends AbstractCommand> commandClass : commandClasses) {
-            final AbstractCommand command = CDI.current().select(commandClass).get();
+        if (commands.isEmpty()) throw new NoSuchCommandsException();
+        for (final AbstractCommand command : commands) {
             commandsMapping.put(command.command(), command);
         }
     }

@@ -1,7 +1,9 @@
 package ru.titov.taskmanagerclient.command.user;
 
+import org.springframework.stereotype.Component;
 import ru.titov.taskmanagerclient.command.AbstractCommand;
 
+@Component
 public class UserSignOutCommand extends AbstractCommand {
 
     @Override

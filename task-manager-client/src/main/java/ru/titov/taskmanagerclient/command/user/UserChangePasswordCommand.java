@@ -1,8 +1,10 @@
 package ru.titov.taskmanagerclient.command.user;
 
+import org.springframework.stereotype.Component;
 import ru.titov.taskmanagerclient.command.AbstractCommand;
 import ru.titov.taskmanagerserver.endpoint.user.Response;
 
+@Component
 public class UserChangePasswordCommand extends AbstractCommand {
 
     @Override

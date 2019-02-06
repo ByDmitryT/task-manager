@@ -1,28 +1,27 @@
 package ru.titov.taskmanagerclient.command;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.titov.taskmanagerclient.api.controller.Bootstrap;
 import ru.titov.taskmanagerclient.security.Authorization;
 import ru.titov.taskmanagerserver.endpoint.project.ProjectEndpoint;
 import ru.titov.taskmanagerserver.endpoint.task.TaskEndpoint;
 import ru.titov.taskmanagerserver.endpoint.user.UserEndpoint;
 
-import javax.inject.Inject;
-
 public abstract class AbstractCommand {
 
-    @Inject
+    @Autowired
     protected Bootstrap bootstrap;
 
-    @Inject
+    @Autowired
     protected ProjectEndpoint projectEndpoint;
 
-    @Inject
+    @Autowired
     protected TaskEndpoint taskEndpoint;
 
-    @Inject
+    @Autowired
     protected UserEndpoint userEndpoint;
 
-    @Inject
+    @Autowired
     protected Authorization authorization;
 
     public abstract void execute();
