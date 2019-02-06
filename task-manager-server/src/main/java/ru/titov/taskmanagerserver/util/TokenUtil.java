@@ -4,13 +4,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.titov.taskmanagerserver.config.AppConfig;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import ru.titov.taskmanagerserver.dto.secure.TokenData;
 import ru.titov.taskmanagerserver.error.user.AbstractUserException;
 import ru.titov.taskmanagerserver.error.user.InvalidUserInputException;
 import ru.titov.taskmanagerserver.error.user.InvalidUserTokenException;
 import ru.titov.taskmanagerserver.error.user.UserTokenTimeOutException;
 
+import javax.annotation.PostConstruct;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
@@ -19,19 +21,22 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
 
-public enum TokenUtil {
-    ;
+@Component
+public class TokenUtil {
 
-    private static final String SECRET = AppConfig.TOKEN_SECRET;
+    private SecretKeySpec secretKey;
 
-    private static final long TIMEOUT = AppConfig.TOKEN_TIMEOUT;
+    @Value("${token.secret}")
+    private String secret;
 
-    private static SecretKeySpec secretKey;
+    @Value("${token.timeout}")
+    private long timeout;
 
-    static {
+    @PostConstruct
+    public void setSecretKey() {
         MessageDigest sha;
         try {
-            byte[] key = SECRET.getBytes(StandardCharsets.UTF_8);
+            byte[] key = secret.getBytes(StandardCharsets.UTF_8);
             sha = MessageDigest.getInstance("SHA-1");
             key = sha.digest(key);
             key = Arrays.copyOf(key, 16);
@@ -42,7 +47,7 @@ public enum TokenUtil {
     }
 
     @NotNull
-    public static String encrypt(@Nullable final TokenData tokenData) throws AbstractUserException {
+    public String encrypt(@Nullable final TokenData tokenData) throws AbstractUserException {
         if (tokenData == null) throw new InvalidUserInputException();
         try {
             final ObjectWriter objectWriter = new ObjectMapper().writer();
@@ -56,7 +61,7 @@ public enum TokenUtil {
     }
 
     @NotNull
-    public static TokenData decrypt(@Nullable final String token) throws AbstractUserException {
+    public TokenData decrypt(@Nullable final String token) throws AbstractUserException {
         if (token == null) throw new InvalidUserTokenException();
         final TokenData tokenData;
         try {
@@ -68,7 +73,7 @@ public enum TokenUtil {
         } catch (Exception e) {
             throw new InvalidUserTokenException();
         }
-        if (tokenData.getCreated() / 1000 + TIMEOUT < new Date().getTime() / 1000)
+        if (tokenData.getCreated() / 1000 + timeout < new Date().getTime() / 1000)
             throw new UserTokenTimeOutException();
         return tokenData;
     }

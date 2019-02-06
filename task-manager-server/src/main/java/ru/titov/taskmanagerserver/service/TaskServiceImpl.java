@@ -1,8 +1,10 @@
 package ru.titov.taskmanagerserver.service;
 
-import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.titov.taskmanagerserver.api.repository.TaskRepository;
 import ru.titov.taskmanagerserver.api.service.TaskService;
 import ru.titov.taskmanagerserver.entity.Task;
@@ -17,18 +19,14 @@ import ru.titov.taskmanagerserver.error.task.TaskExistsException;
 import ru.titov.taskmanagerserver.error.task.TaskNotFoundException;
 import ru.titov.taskmanagerserver.error.user.AbstractUserException;
 import ru.titov.taskmanagerserver.error.user.InvalidUserIdException;
-import ru.titov.taskmanagerserver.interceptor.ServiceTime;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import java.util.List;
 
-@ServiceTime
 @Transactional
-@ApplicationScoped
+@Service
 public class TaskServiceImpl implements TaskService {
 
-    @Inject
+    @Autowired
     private TaskRepository taskRepository;
 
     @Override
@@ -55,7 +53,7 @@ public class TaskServiceImpl implements TaskService {
     @NotNull
     public Task getById(@Nullable final String taskId) throws AbstractTaskException {
         if (taskId == null) throw new InvalidTaskIdException();
-        final Task task = taskRepository.findBy(taskId);
+        final Task task = taskRepository.getOne(taskId);
         if (task == null) throw new TaskNotFoundException();
         return task;
     }
@@ -64,7 +62,7 @@ public class TaskServiceImpl implements TaskService {
     public void update(@Nullable final Task task) throws AbstractTaskException {
         if (task == null || !exists(task.getId())) throw new InvalidTaskInputException();
         if (task.getName() == null || task.getName().isEmpty()) throw new InvalidTaskNameException();
-        taskRepository.refresh(task);
+        taskRepository.save(task);
     }
 
     @Override
@@ -77,15 +75,15 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void removeById(@Nullable final String taskId) throws AbstractTaskException {
         if (taskId == null) throw new InvalidTaskIdException();
-        final Task task = taskRepository.findBy(taskId);
+        final Task task = taskRepository.getOne(taskId);
         if (task == null) throw new InvalidTaskIdException();
-        taskRepository.remove(task);
+        taskRepository.delete(task);
     }
 
     @Override
     public boolean exists(@Nullable final String taskId) throws InvalidTaskIdException {
         if (taskId == null || taskId.isEmpty()) throw new InvalidTaskIdException();
-        return taskRepository.findBy(taskId) != null;
+        return taskRepository.existsById(taskId);
     }
 
     @Override

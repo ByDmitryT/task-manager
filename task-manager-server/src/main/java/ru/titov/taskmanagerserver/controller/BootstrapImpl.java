@@ -1,6 +1,10 @@
 package ru.titov.taskmanagerserver.controller;
 
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 import ru.titov.taskmanagerserver.api.controller.Bootstrap;
 import ru.titov.taskmanagerserver.api.service.ProjectService;
 import ru.titov.taskmanagerserver.api.service.ServiceLocator;
@@ -11,31 +15,35 @@ import ru.titov.taskmanagerserver.endpoint.project.ProjectEndpoint;
 import ru.titov.taskmanagerserver.endpoint.task.TaskEndpoint;
 import ru.titov.taskmanagerserver.endpoint.user.UserEndpoint;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.xml.ws.Endpoint;
 
-@ApplicationScoped
 @Getter
+@Component
 public class BootstrapImpl implements Bootstrap, ServiceLocator {
 
-    @Inject
+    @Autowired
     private ProjectService projectService;
 
-    @Inject
+    @Autowired
     private TaskService taskService;
 
-    @Inject
+    @Autowired
     private UserService userService;
 
-    @Inject
+    @Autowired
     private UserEndpoint userEndpoint;
 
-    @Inject
+    @Autowired
     private ProjectEndpoint projectEndpoint;
 
-    @Inject
+    @Autowired
     private TaskEndpoint taskEndpoint;
+
+    @Value("${server.host}")
+    private String host;
+
+    @Value("${server.port}")
+    private String port;
 
     public void run() {
         try {
@@ -44,15 +52,11 @@ public class BootstrapImpl implements Bootstrap, ServiceLocator {
             e.printStackTrace();
         }
         final StringBuilder endpointAddress = new StringBuilder();
-        endpointAddress.append("http://");
-        endpointAddress.append(AppConfig.SERVER_HOST);
-        endpointAddress.append(":");
-        endpointAddress.append(AppConfig.SERVER_PORT);
-        endpointAddress.append("/");
+        endpointAddress.append("http://").append(host).append(":").append(port).append("/");
         Endpoint.publish(endpointAddress.toString() + ("UserEndpoint?wsdl"), userEndpoint);
         Endpoint.publish(endpointAddress.toString() + ("TaskEndpoint?wsdl"), taskEndpoint);
         Endpoint.publish(endpointAddress.toString() + ("ProjectEndpoint?wsdl"), projectEndpoint);
-        System.out.println("[SERVER START ON " + AppConfig.SERVER_HOST + ":" + AppConfig.SERVER_PORT + "]");
+        System.out.println("[SERVER START ON " + host + ":" + port + "]");
     }
 
 }

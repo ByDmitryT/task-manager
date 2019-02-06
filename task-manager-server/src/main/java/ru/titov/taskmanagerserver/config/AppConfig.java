@@ -1,56 +1,68 @@
 package ru.titov.taskmanagerserver.config;
 
-import java.io.IOException;
-import java.io.InputStream;
+import org.hibernate.cfg.Environment;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
 import java.util.Properties;
 
-public enum AppConfig {
-    ;
+@Configuration
+@ComponentScan("ru.titov.taskmanagerserver")
+@PropertySource("classpath:application.properties")
+@EnableTransactionManagement
+@EnableJpaRepositories("ru.titov.taskmanagerserver.api.repository")
+public class AppConfig {
 
-    public static String RESOURCE = "application.properties";
+    @Autowired
+    private org.springframework.core.env.Environment env;
 
-    public static String DB_DRIVER;
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+        em.setDataSource(dataSource());
+        em.setPackagesToScan("ru.titov.taskmanagerserver.entity");
+        final JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        em.setJpaVendorAdapter(vendorAdapter);
+        em.setJpaProperties(additionalProperties());
+        return em;
+    }
 
-    public static String DB_URL;
+    @Bean
+    public DataSource dataSource() {
+        final DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(env.getProperty("datasource.driverClassName"));
+        dataSource.setUrl(env.getProperty("datasource.url"));
+        dataSource.setUsername(env.getProperty("datasource.login"));
+        dataSource.setPassword(env.getProperty("datasource.password"));
+        return dataSource;
+    }
 
-    public static String DB_LOGIN;
+    @Bean
+    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
+        final JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(emf);
+        return transactionManager;
+    }
 
-    public static String DB_PASSWORD;
-
-    public static String DB_DIALECT;
-
-    public static String DB_HBM2DDL_AUTO;
-
-    public static String DB_SHOW_SQL;
-
-    public static String SERVER_HOST;
-
-    public static String SERVER_PORT;
-
-    public static String TOKEN_SECRET;
-
-    public static long TOKEN_TIMEOUT;
-
-    static {
+    private Properties additionalProperties() {
         final Properties properties = new Properties();
-        try (final InputStream inputStream = AppConfig.class.getClassLoader().getResourceAsStream(RESOURCE)) {
-            properties.load(inputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        DB_DRIVER = properties.getProperty("datasource.driverClassName");
-        DB_URL = properties.getProperty("datasource.url");
-        DB_LOGIN = properties.getProperty("datasource.login");
-        DB_PASSWORD = properties.getProperty("datasource.password");
-        DB_DIALECT = properties.getProperty("datasource.dialect");
-        DB_HBM2DDL_AUTO = properties.getProperty("datasource.hbm2ddlauto");
-        DB_SHOW_SQL = properties.getProperty("datasource.showSql");
-        SERVER_HOST = System.getProperty("server.host");
-        if (SERVER_HOST == null) SERVER_HOST = properties.getProperty("server.host");
-        SERVER_PORT = System.getProperty("server.port");
-        if (SERVER_PORT == null) SERVER_PORT = properties.getProperty("server.port");
-        TOKEN_SECRET = properties.getProperty("token.secret");
-        TOKEN_TIMEOUT = Long.parseLong(properties.getProperty("token.timeout"));
+        properties.setProperty(Environment.HBM2DDL_AUTO, env.getProperty("datasource.hbm2ddlauto"));
+        properties.setProperty(Environment.DIALECT, env.getProperty("datasource.dialect"));
+        properties.setProperty(Environment.SHOW_SQL, env.getProperty("datasource.showSql"));
+        return properties;
     }
 
 }

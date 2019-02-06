@@ -2,6 +2,8 @@ package ru.titov.taskmanagerserver.endpoint.project;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.titov.taskmanagerserver.api.service.ServiceLocator;
 import ru.titov.taskmanagerserver.dto.response.Response;
 import ru.titov.taskmanagerserver.dto.response.project.ProjectListResponse;
@@ -10,9 +12,9 @@ import ru.titov.taskmanagerserver.dto.response.project.SimpleProject;
 import ru.titov.taskmanagerserver.dto.secure.TokenData;
 import ru.titov.taskmanagerserver.entity.Project;
 import ru.titov.taskmanagerserver.entity.User;
+import ru.titov.taskmanagerserver.util.PasswordHashUtil;
 import ru.titov.taskmanagerserver.util.TokenUtil;
 
-import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -20,10 +22,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebService
+@Component
 public class ProjectEndpoint {
 
-    @Inject
+    @Autowired
     private ServiceLocator serviceLocator;
+
+    @Autowired
+    private TokenUtil tokenUtil;
 
     @WebMethod
     @NotNull
@@ -34,7 +40,7 @@ public class ProjectEndpoint {
         final Response response = new Response();
         final Project project = new Project();
         try {
-            final TokenData tokenData = TokenUtil.decrypt(token);
+            final TokenData tokenData = tokenUtil.decrypt(token);
             final User user = serviceLocator.getUserService().getById(tokenData.getUserId());
             project.setUser(user);
             project.setName(name);
@@ -54,7 +60,7 @@ public class ProjectEndpoint {
     ) {
         final Response response = new Response();
         try {
-            final TokenData tokenData = TokenUtil.decrypt(token);
+            final TokenData tokenData = tokenUtil.decrypt(token);
             serviceLocator.getProjectService().removeByOrderIndex(tokenData.getUserId(), projectOrderIndex);
         } catch (Exception e) {
             response.setSuccess(false);
@@ -73,7 +79,7 @@ public class ProjectEndpoint {
     ) {
         final Response response = new Response();
         try {
-            final TokenData tokenData = TokenUtil.decrypt(token);
+            final TokenData tokenData = tokenUtil.decrypt(token);
             final Project project = serviceLocator.getProjectService().getByOrderIndex(tokenData.getUserId(), projectOrderIndex);
             project.setName(name);
             serviceLocator.getProjectService().update(project);
@@ -92,7 +98,7 @@ public class ProjectEndpoint {
     ) {
         final ProjectResponse projectResponse = new ProjectResponse();
         try {
-            final TokenData tokenData = TokenUtil.decrypt(token);
+            final TokenData tokenData = tokenUtil.decrypt(token);
             final Project project = serviceLocator.getProjectService().getByOrderIndex(tokenData.getUserId(), projectOrderIndex);
             projectResponse.setProject(new SimpleProject(project));
         } catch (Exception e) {
@@ -109,7 +115,7 @@ public class ProjectEndpoint {
     ) {
         final ProjectListResponse projectListResponse = new ProjectListResponse();
         try {
-            final TokenData tokenData = TokenUtil.decrypt(token);
+            final TokenData tokenData = tokenUtil.decrypt(token);
             final List<SimpleProject> simpleProjects = new ArrayList<>();
             final List<Project> projects = serviceLocator.getProjectService().getAllByUserId(tokenData.getUserId());
             for (final Project project : projects) {

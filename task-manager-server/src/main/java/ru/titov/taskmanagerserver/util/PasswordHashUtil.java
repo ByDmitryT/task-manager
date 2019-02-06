@@ -1,16 +1,23 @@
 package ru.titov.taskmanagerserver.util;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.springframework.stereotype.Component;
 import ru.titov.taskmanagerserver.error.user.InvalidUserInputException;
 
-public enum PasswordHashUtil {
-    ;
+import java.security.MessageDigest;
 
-    public static String md5(String password) throws InvalidUserInputException {
+@Component
+public class PasswordHashUtil {
+
+    @NotNull
+    public String md5(@Nullable String password) throws InvalidUserInputException {
+        if (password == null || password.isEmpty()) throw new InvalidUserInputException();
         try {
-            java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
-            byte[] array = md.digest(password.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for (byte b : array) {
+            final MessageDigest md = MessageDigest.getInstance("MD5");
+            final byte[] array = md.digest(password.getBytes());
+            final StringBuilder sb = new StringBuilder();
+            for (final byte b : array) {
                 sb.append(Integer.toHexString((b & 0xFF) | 0x100), 1, 3);
             }
             return sb.toString();

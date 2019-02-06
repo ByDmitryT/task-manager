@@ -1,8 +1,10 @@
 package ru.titov.taskmanagerserver.service;
 
-import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.titov.taskmanagerserver.api.repository.ProjectRepository;
 import ru.titov.taskmanagerserver.api.service.ProjectService;
 import ru.titov.taskmanagerserver.entity.Project;
@@ -15,21 +17,14 @@ import ru.titov.taskmanagerserver.error.project.ProjectExistsException;
 import ru.titov.taskmanagerserver.error.project.ProjectNotFoundException;
 import ru.titov.taskmanagerserver.error.user.AbstractUserException;
 import ru.titov.taskmanagerserver.error.user.InvalidUserInputException;
-import ru.titov.taskmanagerserver.interceptor.ServiceMethodInterceptor;
-import ru.titov.taskmanagerserver.interceptor.ServiceTime;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.interceptor.Interceptors;
 import java.util.List;
 
-@ServiceTime
 @Transactional
-@ApplicationScoped
-@Interceptors(ServiceMethodInterceptor.class)
+@Service
 public class ProjectServiceImpl implements ProjectService {
 
-    @Inject
+    @Autowired
     private ProjectRepository projectRepository;
 
     @Override
@@ -56,7 +51,7 @@ public class ProjectServiceImpl implements ProjectService {
     @NotNull
     public Project getById(@Nullable final String projectId) throws AbstractProjectException {
         if (projectId == null) throw new InvalidProjectIdException();
-        final Project project = projectRepository.findBy(projectId);
+        final Project project = projectRepository.getOne(projectId);
         if (project == null) throw new ProjectNotFoundException();
         return project;
     }
@@ -66,7 +61,7 @@ public class ProjectServiceImpl implements ProjectService {
         if (project == null || !exists(project.getId())) {
             throw new InvalidProjectInputException();
         }
-        projectRepository.refresh(project);
+        projectRepository.save(project);
     }
 
     @Override
@@ -81,15 +76,15 @@ public class ProjectServiceImpl implements ProjectService {
         if (projectId == null || !exists(projectId)) {
             throw new InvalidProjectIdException();
         }
-        final Project project = projectRepository.findBy(projectId);
+        final Project project = projectRepository.getOne(projectId);
         if (project == null) throw new InvalidProjectIdException();
-        projectRepository.remove(project);
+        projectRepository.delete(project);
     }
 
     @Override
     public boolean exists(@Nullable final String projectId) throws InvalidProjectIdException {
         if (projectId == null || projectId.isEmpty()) throw new InvalidProjectIdException();
-        return projectRepository.findBy(projectId) != null;
+        return projectRepository.existsById(projectId);
     }
 
     @Override
