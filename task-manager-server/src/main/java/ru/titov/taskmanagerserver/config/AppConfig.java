@@ -30,7 +30,7 @@ public class AppConfig {
     private org.springframework.core.env.Environment env;
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws ClassNotFoundException {
         final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
         em.setPackagesToScan("ru.titov.taskmanagerserver.entity");
@@ -41,9 +41,11 @@ public class AppConfig {
     }
 
     @Bean
-    public DataSource dataSource() {
+    public DataSource dataSource() throws ClassNotFoundException {
         final DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(env.getProperty("datasource.driverClassName"));
+        final String driverClassName = env.getProperty("datasource.driverClassName");
+        if (driverClassName == null) throw new ClassNotFoundException();
+        dataSource.setDriverClassName(driverClassName);
         dataSource.setUrl(env.getProperty("datasource.url"));
         dataSource.setUsername(env.getProperty("datasource.login"));
         dataSource.setPassword(env.getProperty("datasource.password"));
