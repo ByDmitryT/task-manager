@@ -134,12 +134,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean existsByLogin(@Nullable final String login) throws AbstractUserException {
         if (login == null || login.isEmpty()) throw new InvalidUserLoginException();
-        try {
-            userRepository.findByLogin(login);
-            return true;
-        } catch (NoResultException e) {
-            return false;
-        }
+        final User user = userRepository.findByLogin(login);
+        return user != null;
     }
 
     @Override

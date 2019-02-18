@@ -9,19 +9,33 @@
         <h1>WELCOME USER : <c:out value="${user.login}"></c:out></h1>
         <h2>TASK EDIT:</h2>
         <form:form method="POST" action="/taskmanager/task-save" modelAttribute="task">
-            <span>
-                <form:label path="name">NAME:</form:label>
-                <form:input path="name"/>
-            </span>
-            <span>
-                <form:label path="description">DESCRIPTION:</form:label>
-                <form:input path="description"/>
-             </span>
+                <table cellpadding="10">
+                <tbody>
+                    <tr>
+                        <td>
+                            <form:label path="name">NAME:</form:label>
+                        </td>
+                        <td>
+                            <form:input path="name"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <form:label path="description">DESCRIPTION:</form:label>
+                        </td>
+                        <td>
+                            <form:input path="description"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input name="save-button" type="submit" value="SAVE" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <form:hidden path="id"/>
             <form:hidden path="project.id"/>
-            <p>
-                <input name="save-button" type="submit" value="SAVE" />
-            </p>
         </form:form>
     </body>
 </html>
