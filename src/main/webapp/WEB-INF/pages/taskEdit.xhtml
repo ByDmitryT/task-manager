@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Task manager</title>
+    <h:outputStylesheet library="webjars" name="font-awesome/4.7.0/css/font-awesome.min-jsf.css"/>
+</h:head>
+
+<h:body>
+    <p:megaMenu orientation="horizontal" style="margin-top:20px">
+        <p:menuitem value="PROJECT LIST" url="project-list" icon="fa fa-fw fa-laptop" />
+        <p:menuitem value="TASK LIST" url="task-list" icon="fa fa-fw fa-tasks" />
+    </p:megaMenu>
+    <h3>TASK EDIT:</h3>
+    <h:form>
+        <h:panelGrid columns="2" cellpadding="5">
+            <h:outputLabel for="name" value="NAME:" style="font-weight:bold"/>
+            <p:inputText id="name" value="#{taskEditView.task.name}"/>
+
+            <h:outputLabel for="description" value="DESCRIPTION:" style="font-weight:bold"/>
+            <p:inputText id="description" value="#{taskEditView.task.description}"/>
+
+            <h:outputLabel for="project" value="NAME:" style="font-weight:bold"/>
+            <p:selectOneMenu id="project" value="#{taskEditView.task.project.id}">
+                <f:selectItems var="project"
+                               value="#{projectListView.getAll()}"
+                               itemValue="#{project.id}"
+                               itemLabel="#{project.name}"/>
+            </p:selectOneMenu>
+
+            <h:outputLabel for="status" value="STATUS:" style="font-weight:bold"/>
+            <p:selectOneMenu id="status" value="#{taskEditView.task.status}">
+                <f:selectItems value="#{taskEditView.getStatuses()}" />
+            </p:selectOneMenu>
+
+            <h:outputLabel for="created" value="CREATED:" style="font-weight:bold" />
+            <p:calendar id="created" value="#{taskEditView.task.created}" pattern="dd.MM.yyyy HH:mm:ss" />
+
+        </h:panelGrid>
+        <p:commandButton value="SAVE" action="#{taskEditView.save()}"/>
+    </h:form>
+</h:body>
+</html>

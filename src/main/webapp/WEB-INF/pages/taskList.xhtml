@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Task manager</title>
+    <h:outputStylesheet library="webjars" name="font-awesome/4.7.0/css/font-awesome.min-jsf.css"/>
+</h:head>
+
+<h:body>
+    <p:megaMenu orientation="horizontal" style="margin-top:20px">
+        <p:menuitem value="PROJECT LIST" url="project-list" icon="fa fa-fw fa-laptop" />
+        <p:menuitem value="TASK LIST" url="task-list" icon="fa fa-fw fa-tasks" />
+    </p:megaMenu>
+    <h3>TASK LIST:</h3>
+    <h:form>
+        <p:dataTable id="task-table" var="task" value="#{taskListView.getAll()}" rowIndexVar="index">
+            <p:column headerText="#" style="width:30px;text-align:center">
+                <h:outputText value="#{index + 1}"/>
+            </p:column>
+            <p:column headerText="NAME">
+                <h:outputText value="#{task.name}"/>
+            </p:column>
+            <p:column headerText="DESCRIPTION">
+                <h:outputText value="#{task.description}"/>
+            </p:column>
+            <p:column headerText="PROJECT">
+                <h:outputText value="#{task.project.name}"/>
+            </p:column>
+            <p:column headerText="STATUS">
+                <h:outputText value="#{task.status}"/>
+            </p:column>
+            <p:column headerText="CREATED">
+                <h:outputText value="#{task.created}">
+                    <f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" />
+                </h:outputText>
+            </p:column>
+            <p:column style="width:40px;text-align:center">
+                <p:commandButton action="taskEdit?faces-redirect=true"
+                                 style="margin-right:20px;"
+                                 icon="fa fa-fw fa-edit">
+                    <f:setPropertyActionListener
+                            target = "#{taskEditView.task}" value = "#{task}" />
+                </p:commandButton>
+            </p:column>
+            <p:column style="width:40px;text-align:center">
+                <p:commandButton update="task-table"
+                                 action="#{taskListView.removeById(task.id)}"
+                                 style="margin-right:20px;"
+                                 icon="fa fa-fw fa-remove"/>
+            </p:column>
+        </p:dataTable>
+        <p:commandButton action="taskCreate?faces-redirect=true"
+                         value="CREATE"/>
+    </h:form>
+</h:body>
+</html>

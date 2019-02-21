@@ -20,7 +20,7 @@ public class Project extends AbstractEntity implements Serializable {
     @ManyToOne
     private User user;
 
-    private String name;
+    private String name = "new project";
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Task> tasks;

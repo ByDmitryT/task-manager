@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Task manager</title>
+    <h:outputStylesheet library="webjars" name="font-awesome/4.7.0/css/font-awesome.min-jsf.css"/>
+</h:head>
+
+<h:body>
+    <p:megaMenu orientation="horizontal" style="margin-top:20px">
+        <p:menuitem value="PROJECT LIST" url="project-list" icon="fa fa-fw fa-laptop" />
+        <p:menuitem value="TASK LIST" url="task-list" icon="fa fa-fw fa-tasks" />
+    </p:megaMenu>
+    <h3>PROJECT EDIT:</h3>
+    <h:form>
+        <h:panelGrid columns="2" cellpadding="5">
+            <h:outputLabel for="name" value="NAME:" style="font-weight:bold"/>
+            <p:inputText id="name" value="#{projectEditView.project.name}"/>
+        </h:panelGrid>
+        <p:commandButton value="SAVE" action="#{projectEditView.save()}"/>
+    </h:form>
+</h:body>
+</html>

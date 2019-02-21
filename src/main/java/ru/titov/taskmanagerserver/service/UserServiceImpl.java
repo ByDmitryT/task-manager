@@ -19,7 +19,6 @@ import ru.titov.taskmanagerserver.error.user.UserNotFoundException;
 import ru.titov.taskmanagerserver.util.PasswordHashUtil;
 import ru.titov.taskmanagerserver.util.TokenUtil;
 
-import javax.persistence.NoResultException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;

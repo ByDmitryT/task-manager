@@ -15,7 +15,6 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -68,14 +67,6 @@ public class AppConfig {
         final JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(emf);
         return transactionManager;
-    }
-
-    @Bean(name = "viewResolver")
-    public InternalResourceViewResolver getViewResolver() {
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setPrefix("/WEB-INF/pages/");
-        viewResolver.setSuffix(".jsp");
-        return viewResolver;
     }
 
 }
