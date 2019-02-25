@@ -11,37 +11,41 @@
 </h:head>
 
 <h:body>
-    <p:megaMenu orientation="horizontal" style="margin-top:20px">
-        <p:menuitem value="PROJECT LIST" url="project-list" icon="fa fa-fw fa-laptop" />
-        <p:menuitem value="TASK LIST" url="task-list" icon="fa fa-fw fa-tasks" />
-    </p:megaMenu>
+    <p:menubar style="margin-top:20px">
+        <p:menuitem value="PROJECT LIST" url="project-list" icon="fa fa-fw fa-laptop"/>
+        <p:menuitem value="TASK LIST" url="task-list" icon="fa fa-fw fa-tasks"/>
+        <p:submenu label="API" icon="fa fa-fw fa-buysellads" style="position:absolute;right:5px">
+            <p:menuitem value="SOAP" url="soap/apidocs/index.html" icon="fa fa-fw fa-desktop"/>
+            <p:menuitem value="REST" url="soap/apidocs/index.html" icon="fa fa-fw fa-laptop"/>
+        </p:submenu>
+    </p:menubar>
     <h3>TASK EDIT:</h3>
     <h:form>
         <h:panelGrid columns="2" cellpadding="5">
             <h:outputLabel for="name" value="NAME:" style="font-weight:bold"/>
-            <p:inputText id="name" value="#{taskEditView.task.name}"/>
+            <p:inputText id="name" value="#{taskEditBean.task.name}"/>
 
             <h:outputLabel for="description" value="DESCRIPTION:" style="font-weight:bold"/>
-            <p:inputText id="description" value="#{taskEditView.task.description}"/>
+            <p:inputText id="description" value="#{taskEditBean.task.description}"/>
 
             <h:outputLabel for="project" value="NAME:" style="font-weight:bold"/>
-            <p:selectOneMenu id="project" value="#{taskEditView.task.project.id}">
+            <p:selectOneMenu id="project" value="#{taskEditBean.task.project.id}">
                 <f:selectItems var="project"
-                               value="#{projectListView.getAll()}"
+                               value="#{projectListBean.getAll()}"
                                itemValue="#{project.id}"
                                itemLabel="#{project.name}"/>
             </p:selectOneMenu>
 
             <h:outputLabel for="status" value="STATUS:" style="font-weight:bold"/>
-            <p:selectOneMenu id="status" value="#{taskEditView.task.status}">
-                <f:selectItems value="#{taskEditView.getStatuses()}" />
+            <p:selectOneMenu id="status" value="#{taskEditBean.task.status}">
+                <f:selectItems value="#{taskEditBean.getStatuses()}" />
             </p:selectOneMenu>
 
             <h:outputLabel for="created" value="CREATED:" style="font-weight:bold" />
-            <p:calendar id="created" value="#{taskEditView.task.created}" pattern="dd.MM.yyyy HH:mm:ss" />
+            <p:calendar id="created" value="#{taskEditBean.task.created}" pattern="dd.MM.yyyy HH:mm:ss" />
 
         </h:panelGrid>
-        <p:commandButton value="SAVE" action="#{taskEditView.save()}"/>
+        <p:commandButton value="SAVE" action="#{taskEditBean.save()}"/>
     </h:form>
 </h:body>
 </html>

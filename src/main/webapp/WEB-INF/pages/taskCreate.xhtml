@@ -11,29 +11,33 @@
 </h:head>
 
 <h:body>
-    <p:megaMenu orientation="horizontal" style="margin-top:20px">
-        <p:menuitem value="PROJECT LIST" url="project-list" icon="fa fa-fw fa-laptop" />
-        <p:menuitem value="TASK LIST" url="task-list" icon="fa fa-fw fa-tasks" />
-    </p:megaMenu>
+    <p:menubar style="margin-top:20px">
+        <p:menuitem value="PROJECT LIST" url="project-list" icon="fa fa-fw fa-laptop"/>
+        <p:menuitem value="TASK LIST" url="task-list" icon="fa fa-fw fa-tasks"/>
+        <p:submenu label="API" icon="fa fa-fw fa-buysellads" style="position:absolute;right:5px">
+            <p:menuitem value="SOAP" url="soap/apidocs/index.html" icon="fa fa-fw fa-desktop"/>
+            <p:menuitem value="REST" url="soap/apidocs/index.html" icon="fa fa-fw fa-laptop"/>
+        </p:submenu>
+    </p:menubar>
     <h3>TASK CREATE:</h3>
     <h:form>
         <h:panelGrid columns="2" cellpadding="5">
             <h:outputLabel for="name" value="NAME:" style="font-weight:bold"/>
-            <p:inputText id="name" value="#{taskCreateView.task.name}"/>
+            <p:inputText id="name" value="#{taskCreateBean.task.name}"/>
 
             <h:outputLabel for="description" value="DESCRIPTION:" style="font-weight:bold"/>
-            <p:inputText id="description" value="#{taskCreateView.task.description}"/>
+            <p:inputText id="description" value="#{taskCreateBean.task.description}"/>
 
             <h:outputLabel for="project" value="PROJECT:" style="font-weight:bold"/>
-            <p:selectOneMenu id="project" value="#{taskCreateView.projectId}">
+            <p:selectOneMenu id="project" value="#{taskCreateBean.projectId}">
                 <f:selectItems var="project"
-                               value="#{projectListView.getAll()}"
+                               value="#{projectListBean.getAll()}"
                                itemValue="#{project.id}"
                                itemLabel="#{project.name}"/>
             </p:selectOneMenu>
 
         </h:panelGrid>
-        <p:commandButton value="CREATE" action="#{taskCreateView.create()}"/>
+        <p:commandButton value="CREATE" action="#{taskCreateBean.create()}"/>
     </h:form>
 </h:body>
 </html>

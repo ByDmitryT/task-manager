@@ -11,13 +11,17 @@
 </h:head>
 
 <h:body>
-    <p:megaMenu orientation="horizontal" style="margin-top:20px">
-        <p:menuitem value="PROJECT LIST" url="project-list" icon="fa fa-fw fa-laptop" />
-        <p:menuitem value="TASK LIST" url="task-list" icon="fa fa-fw fa-tasks" />
-    </p:megaMenu>
+    <p:menubar style="margin-top:20px">
+        <p:menuitem value="PROJECT LIST" url="project-list" icon="fa fa-fw fa-laptop"/>
+        <p:menuitem value="TASK LIST" url="task-list" icon="fa fa-fw fa-tasks"/>
+        <p:submenu label="API" icon="fa fa-fw fa-buysellads" style="position:absolute;right:5px">
+            <p:menuitem value="SOAP" url="soap/apidocs/index.html" icon="fa fa-fw fa-desktop"/>
+            <p:menuitem value="REST" url="soap/apidocs/index.html" icon="fa fa-fw fa-laptop"/>
+        </p:submenu>
+    </p:menubar>
     <h3>PROJECT LIST:</h3>
     <h:form>
-        <p:dataTable id="project-table" var="project" value="#{projectListView.getAll()}" rowIndexVar="index">
+        <p:dataTable id="project-table" var="project" value="#{projectListBean.getAll()}" rowIndexVar="index">
             <p:column headerText="#" style="width:30px;text-align:center">
                 <h:outputText value="#{index + 1}"/>
             </p:column>
@@ -26,21 +30,21 @@
             </p:column>
             <p:column style="width:40px;text-align:center">
                 <p:commandButton action="projectEdit?faces-redirect=true"
-                          style="margin-right:20px;"
-                          icon="fa fa-fw fa-edit">
+                                 style="margin-right:20px;"
+                                 icon="fa fa-fw fa-edit">
                     <f:setPropertyActionListener
-                            target = "#{projectEditView.project}" value = "#{project}" />
+                            target="#{projectEditBean.project}" value="#{project}"/>
                 </p:commandButton>
             </p:column>
             <p:column style="width:40px;text-align:center">
                 <p:commandButton update="project-table"
-                                 action="#{projectListView.removeById(project.id)}"
+                                 action="#{projectListBean.removeById(project.id)}"
                                  style="margin-right:20px;"
                                  icon="fa fa-fw fa-remove"/>
             </p:column>
         </p:dataTable>
         <p:commandButton update="project-table"
-                         action="#{projectListView.create()}"
+                         action="#{projectListBean.create()}"
                          value="CREATE"/>
     </h:form>
 </h:body>

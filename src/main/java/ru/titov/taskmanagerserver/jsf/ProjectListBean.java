@@ -1,4 +1,4 @@
-package ru.titov.taskmanagerserver.controller;
+package ru.titov.taskmanagerserver.jsf;
 
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +15,7 @@ import java.util.List;
 @Named
 @Scope("session")
 @URLMapping(id = "project-list", pattern = "/project-list", viewId = "/WEB-INF/pages/projectList.xhtml")
-public class ProjectListView {
+public class ProjectListBean {
 
     @Inject
     private ProjectService projectService;

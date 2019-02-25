@@ -10,17 +10,21 @@
 </h:head>
 
 <h:body>
-    <p:megaMenu orientation="horizontal" style="margin-top:20px">
-        <p:menuitem value="PROJECT LIST" url="project-list" icon="fa fa-fw fa-laptop" />
-        <p:menuitem value="TASK LIST" url="task-list" icon="fa fa-fw fa-tasks" />
-    </p:megaMenu>
+    <p:menubar style="margin-top:20px">
+        <p:menuitem value="PROJECT LIST" url="project-list" icon="fa fa-fw fa-laptop"/>
+        <p:menuitem value="TASK LIST" url="task-list" icon="fa fa-fw fa-tasks"/>
+        <p:submenu label="API" icon="fa fa-fw fa-buysellads" style="position:absolute;right:5px">
+            <p:menuitem value="SOAP" url="soap/apidocs/index.html" icon="fa fa-fw fa-desktop"/>
+            <p:menuitem value="REST" url="soap/apidocs/index.html" icon="fa fa-fw fa-laptop"/>
+        </p:submenu>
+    </p:menubar>
     <h3>PROJECT EDIT:</h3>
     <h:form>
         <h:panelGrid columns="2" cellpadding="5">
             <h:outputLabel for="name" value="NAME:" style="font-weight:bold"/>
-            <p:inputText id="name" value="#{projectEditView.project.name}"/>
+            <p:inputText id="name" value="#{projectEditBean.project.name}"/>
         </h:panelGrid>
-        <p:commandButton value="SAVE" action="#{projectEditView.save()}"/>
+        <p:commandButton value="SAVE" action="#{projectEditBean.save()}"/>
     </h:form>
 </h:body>
 </html>

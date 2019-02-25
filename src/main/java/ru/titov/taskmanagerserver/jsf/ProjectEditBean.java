@@ -1,4 +1,4 @@
-package ru.titov.taskmanagerserver.controller;
+package ru.titov.taskmanagerserver.jsf;
 
 
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
@@ -15,7 +15,7 @@ import javax.inject.Named;
 @Named
 @Scope("session")
 @URLMapping(id = "project-edit", pattern = "/project-edit", viewId = "/WEB-INF/pages/projectEdit.xhtml")
-public class ProjectEditView {
+public class ProjectEditBean {
 
     @Inject
     private ProjectService projectService;

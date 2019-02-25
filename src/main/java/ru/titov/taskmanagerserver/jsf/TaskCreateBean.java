@@ -1,4 +1,4 @@
-package ru.titov.taskmanagerserver.controller;
+package ru.titov.taskmanagerserver.jsf;
 
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import lombok.Getter;
@@ -18,7 +18,7 @@ import javax.inject.Named;
 @Named
 @Scope("session")
 @URLMapping(id = "task-create", pattern = "/task-create", viewId = "/WEB-INF/pages/taskCreate.xhtml")
-public class TaskCreateView {
+public class TaskCreateBean {
 
     @Inject
     private TaskService taskService;
